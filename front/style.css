@@ -1,0 +1,366 @@
+:root {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --button-bg: #555;
+    --button-text: #fff;
+    --link-color: #66b3ff;
+}
+
+[data-theme="light"] {
+    --background-color: #fff;
+    --text-color: #333;
+    --button-bg: #e0e0e0;
+    --button-text: #333;
+    --link-color: #0066cc;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    margin: 1rem;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+   
+}
+
+/* fond dela division principal */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #1e1e1e30;
+    padding: 20px;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+   
+}
+/* Ajout pour cacher initialement les blocs résultats */
+.results,
+#resultsWithCapping,
+#evolutionChartContainer,
+#investmentChartContainer,
+.download-button {
+    display: none;
+}
+
+select, input, button {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 0.5rem;
+    border: 1px solid #333;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    width: 20rem;
+}
+
+#advancedSection {
+    text-align: left;
+}
+
+#initialInvestment, #monthlyInvestment, #cappingPercentage, #minCappingAmount, #interestRate{
+    width: 5rem;
+    text-align: right;
+    
+}
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 6rem;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.download-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+   }
+   
+   .download-button:hover {
+    background-color: #0056b3;
+   }
+
+#cappedInvestmentChartContainer {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 0.5rem;
+    background-color: #1e1e1e00;
+}
+
+#loadingIndicator {
+    text-align: center;
+    margin: 20px 0;
+     display: none;
+    position: absolute; /* Ajout de la position absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001; /* Ajout du z-index pour être au dessus */
+     background: var(--background-color); /* pour cacher le texte en dessous */
+    padding: 20px;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+#loadingIndicator .spinner {
+    margin-top: 10px;
+    border: 4px solid #333;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+#suggestions {
+    border: 1px solid #333;
+    max-height: 6rem;
+    overflow-y: auto;
+    display: none;
+    background: #ffa500;
+    position: absolute;
+    z-index: 1000;
+    width: 30rem;
+    margin-left: 9rem;
+    color:#ffffff ;
+}
+
+#suggestions div {
+    padding: 5px;
+    cursor: pointer;
+}
+
+#suggestions div:hover {
+    background-color: #333;
+}
+#startDate, #endDate{
+    width: 7rem;    
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.results {
+    margin-top: 20px;
+}
+
+.results h2 {
+    border-bottom: 2px solid var(--text-color);
+    padding-bottom: 10px;
+}
+
+.results p {
+    margin: 5px 0;
+}
+
+.results .final-results {
+    margin-top: 20px;
+    border-top: 2px solid var(--text-color);
+    padding-top: 10px;
+}
+
+.stock-info {
+    text-align: left;
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid #333;
+    border-radius: 1rem;
+    background-color: #00000000;
+    position: relative; /* Ajout position relative */
+}
+
+.stock-info h2 {
+    border-bottom: 2px solid var(--text-color);
+    padding-bottom: 10px;
+}
+
+.stock-info p {
+    margin: 5px 0;
+}
+
+.table-container {
+    margin-top: 20px;
+    border-radius: 0.4rem; /* Arrondi des angles extérieurs */
+    overflow: hidden; /* Gère l'arrondi et évite le débordement */
+    border: 1px solid #333; /* Bordure visible autour du tableau */
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th, .table-container td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: left;
+}
+
+.table-container th {
+    background-color: #33333333;
+}
+
+.table-container td {
+    background-color: #1e1e1e00;
+}
+
+.table-container th:first-child, .table-container td:first-child {
+    width: 30%; /* Ajustez la largeur de la première colonne ici */
+}
+
+.table-container th.center, .table-container td.center {
+    text-align: center;
+}
+
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
+.download-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 8rem;
+}
+
+.download-button:hover {
+    background-color: #0056b3;
+}
+
+.theme-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 3rem; /* Largeur du bouton */
+    height: 3rem; /* Hauteur du bouton */
+    padding: 0; /* Suppression du padding */
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrage horizontal et vertical du dessin */
+}
+
+.theme-switch:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.theme-icon {
+    width: 2rem; /* Largeur du dessin */
+    height: 2rem; /* Hauteur du dessin */
+}
+.toggle-button {
+display: inline-flex;
+align-items: center;
+
+
+}
+#investmentChartContainer,
+#evolutionChartContainer,
+#valeursDateMontant
+{
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 0.5rem;
+    background-color: #1e1e1e00;
+     box-sizing: border-box;
+}
+
+
+#evolutionChartContainer canvas,
+#investmentChartContainer canvas {
+  width: 100% !important; /* !important pour forcer la prise en compte */
+  height: auto !important;
+  display: block;
+}
+
+/* Styles pour les écrans plus petits (mobiles) */
+@media (max-width: 768px) {
+  .container {
+    max-width: 95%;
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+}
+
+
+  .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+  }
+    
+  #suggestions {
+    width: 85%;
+    margin-left: 2rem;
+  }
+
+
+  .form-group input, .form-group select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem; 
+  }
+  #evolutionChartContainer canvas,
+  #investmentChartContainer canvas {
+    width: 100% !important; /* !important pour forcer la prise en compte */
+    height: 250px !important;
+    display: block;
+  }
+  /* Ajout des styles pour agrandir la police */
+  body {
+    font-size: 1rem; /* Taille de base de la police */
+  }
+   h1 {
+       font-size: 1.5rem; /* Titres h1 */
+   }
+   h2 {
+       font-size: 1.2rem;  /* Titres h2 */
+   }
+   
+ 
+
+  .table-container th:first-child, .table-container td:first-child {
+    width: auto; /* La largeur se définie automatiquement */
+  }
+    
+   .table-container{
+      overflow-x: auto; /* Ajout d'un overflow horizontal */
+    }
+    
+  .theme-switch {
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+    }
+    
+}
