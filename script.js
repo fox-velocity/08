@@ -93,11 +93,14 @@ function resetUIForSearch(query) {
     }
 
 }
-
+//Dans script.js
 async function fetchStockSuggestions(query) {
     const response = await fetch(`/api/searchStocks?query=${query}`);
-    const data = await response.json();
-    return data.quotes;
+   if (!response.ok) {
+        const errorData = await response.json()
+      throw new Error(`Error fetching stock suggestions: ${errorData.error || "unknown error"}`);
+    }
+     return await response.json();
 }
 
 function displayStockSuggestions(results, suggestionsContainer) {
