@@ -1,6 +1,6 @@
 // charts.js
 
-import { Chart } from 'chart.js';
+const { Chart } = window;
 
 let evolutionChart = null;
 let investmentChart = null;
