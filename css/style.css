@@ -39,6 +39,7 @@ body {
 #resultsWithCapping,
 #evolutionChartContainer,
 #investmentChartContainer,
+#savingsChartContainer,
 .download-button {
     display: none;
 }
@@ -282,7 +283,8 @@ align-items: center;
 }
 #investmentChartContainer,
 #evolutionChartContainer,
-#valeursDateMontant
+#valeursDateMontant,
+#savingsChartContainer
 {
     width: 100%;
     margin-top: 20px;
@@ -295,11 +297,15 @@ align-items: center;
 
 
 #evolutionChartContainer canvas,
-#investmentChartContainer canvas {
+#investmentChartContainer canvas,
+#savingsChartContainer canvas
+{
   width: 100% !important; /* !important pour forcer la prise en compte */
   height: auto !important;
   display: block;
+  background-color:#dddddd
 }
+
 
 /* Styles pour les écrans plus petits (mobiles) */
 @media (max-width: 768px) {
@@ -331,9 +337,10 @@ align-items: center;
     padding: 0.5rem; 
   }
   #evolutionChartContainer canvas,
-  #investmentChartContainer canvas {
+  #investmentChartContainer canvas,
+  #savingsChartContainer canvas {
     width: 100% !important; /* !important pour forcer la prise en compte */
-    height: 250px !important;
+    height: 300px !important;
     display: block;
   }
   /* Ajout des styles pour agrandir la police */

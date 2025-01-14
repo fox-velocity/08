@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+      <!-- Bibliothéque PDF -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -213,6 +216,14 @@
         </div>
     
     <button class="download-button"  id="download-button" onclick="downloadExcel()">Données format Excel</button>
+    <button onclick="generatePDF()">Télécharger en PDF</button>
+    
+    <!-- Conteneur pour le graphique d'évolution de l'épargne -->
+    <div id="savingsChartContainer">
+        <canvas id="savingsChart"></canvas>
+    </div>
+
+
     <div class="container" style="text-align: justify;">
         <p>Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d'investissement, afin d'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.</p>
     </div>
@@ -235,7 +246,7 @@
             <path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path>
         </svg>
     </button>
-    <script src="script"></script>
+    <script type="module" src="./js/script.js"></script>
 </body>
 
 </html>
