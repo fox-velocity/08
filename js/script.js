@@ -49,7 +49,7 @@ window.onload = function () {
         pdfMake = window.pdfMake;
          console.log("pdfMake is ready :", pdfMake)
        };
-   fetch('./logoBase64.txt')
+   fetch('./logoBase64.js')
         .then(response => response.text())
         .then(data => {
             logoBase64 = data;
