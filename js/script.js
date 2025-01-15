@@ -3,17 +3,19 @@ import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
 import { updateStockInfo, updateResultsDisplay, updateSecuredGainsTable, displaySuggestions, showLoadingIndicator, setElementVisibility } from './modules/dom.js';
-//import { generateExcelFile } from './modules/excel.js';
+import { generateExcelFile } from './modules/excel.js';
 import { generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput } from './modules/utils.js';
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
+
 let selectedSymbol = "";
 let currencySymbol = "";
 let excelData = null;
 let excelCappedDatesAndAmounts = null;
 let pdfMake = null;
 let logoBase64 = null;
+
 // Fonction pour basculer l'affichage de la section avancée
 function toggleSection() {
     var section = document.getElementById("advancedSection");
@@ -23,8 +25,9 @@ function toggleSection() {
         section.style.display = "none";
     }
 }
+
 // Initialisation au chargement de la page
-window.onload = async function () {
+window.addEventListener('load', async function() {
     const today = new Date();
     const lastYear = new Date();
     lastYear.setFullYear(today.getFullYear() - 1);
@@ -36,27 +39,34 @@ window.onload = async function () {
     const script = document.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
       document.head.appendChild(script);
+
     const script2 = document.createElement('script');
      script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js';
     document.head.appendChild(script2);
+
      // Attendre que pdfMake soit chargé
-        await new Promise(resolve => {
-            script2.onload = () => {
-            pdfMake = window.pdfMake;
-            console.log("pdfMake is ready :", pdfMake)
-                resolve();
-            };
-        });
-    fetch('./logoBase64.js')
-        .then(response => response.text())
-        .then(data => {
+    await new Promise(resolve => {
+      script2.onload = () => {
+        pdfMake = window.pdfMake;
+        console.log("pdfMake is ready :", pdfMake);
+            resolve();
+         };
+    });
+        fetch('./logoBase64.txt')
+            .then(response => response.text())
+           .then(data => {
             logoBase64 = data;
-        })
-        .catch(error => console.error('Error loading logo:', error));
-        // Ajout de l'écouteur d'événement sur searchInput
-        document.getElementById('searchInput').addEventListener('input', async function () {
+           console.log('logoBase64:', logoBase64);
+             })
+           .catch(error => console.error('Error loading logo:', error));
+});
+
+window.addEventListener('DOMContentLoaded', async function() {
+    try {
+        console.log("DOMContentLoaded")
+          document.getElementById('searchInput').addEventListener('input', async function () {
             const query = this.value.trim();
-            if (!query) {
+             if (!query) {
                 setElementVisibility('suggestions', false);
                 setElementVisibility('results', false);
                 setElementVisibility('resultsWithCapping', false);
@@ -81,11 +91,15 @@ window.onload = async function () {
                     setElementVisibility('investmentChartContainer', true);
                     setElementVisibility('results', true);
                     setElementVisibility('resultsWithCapping', true);
-                    setElementVisibility('savingsChartContainer', true);
+                   setElementVisibility('savingsChartContainer', true);
                 }
             }
         });
-};
+    } catch (error) {
+            console.error("Erreur lors de l'execution du code: ", error);
+        }
+});
+
 // Gestion des changements de date
 document.getElementById('startDate').addEventListener('change', function () {
     const startDateInput = document.getElementById('startDate');
@@ -96,6 +110,7 @@ document.getElementById('startDate').addEventListener('change', function () {
         endDateInput.value = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 1).toISOString().split('T')[0];
     }
 });
+
 document.getElementById('endDate').addEventListener('change', function () {
     const endDateInput = document.getElementById('endDate');
     const startDateInput = document.getElementById('startDate');
@@ -105,6 +120,7 @@ document.getElementById('endDate').addEventListener('change', function () {
         startDateInput.value = new Date(endDate.getFullYear(), endDate.getMonth() - 1, 1).toISOString().split('T')[0];
     }
 });
+
 // Sélection d'un symbole
 function selectSymbol(symbol, name, exchange, type, sector, industry) {
     selectedSymbol = symbol;
@@ -122,6 +138,7 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     fetchData();
 }
 window.selectSymbol = selectSymbol; // Rend selectSymbol accessible globalement
+
 // Récupération des données
 async function fetchData() {
     if (!selectedSymbol) {
@@ -179,8 +196,8 @@ function downloadExcel() {
     }
 }
 // Gestion du changement de thème
-console.log(document.getElementById('searchInput'));
 document.querySelector('.theme-toggle').addEventListener('click', toggleTheme);
+
 // Gestion du formatage des inputs
 document.getElementById('initialInvestment').addEventListener('input', function () {
     formatNumberInput(this);
@@ -188,6 +205,7 @@ document.getElementById('initialInvestment').addEventListener('input', function 
 document.getElementById('monthlyInvestment').addEventListener('input', function () {
     formatNumberInput(this);
 });
+
 // Gestion du téléchargement PDF
 async function generatePDFWrapper() {
     if(!pdfMake){
@@ -201,6 +219,7 @@ async function generatePDFWrapper() {
     }
 }
 document.getElementById('download-pdf').addEventListener('click', generatePDFWrapper);
+
 // Rendre generatePDFWrapper accessible globalement
 window.generatePDFWrapper = generatePDFWrapper;
 // Exporter les fonctions nécessaires pour les tests
