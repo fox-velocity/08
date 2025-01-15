@@ -212,3 +212,4 @@ document.getElementById('download-pdf').addEventListener('click', generatePDFWra
 window.generatePDFWrapper = generatePDFWrapper;
 // Exporter les fonctions nécessaires pour les tests
 export {toggleSection, selectSymbol, fetchData, downloadExcel, toggleTheme};
+window.fetchData = fetchData;
