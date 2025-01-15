@@ -1,15 +1,14 @@
-// pdf.js
+ // pdf.js
+ export async function generatePDF(pdfMake, logoBase64) {
+  if (!pdfMake) {
+      alert('pdfMake n\'est pas disponible');
+      console.error("pdfMake n'est pas chargé");
+      return;
+  }
 
-export async function generatePDF(pdfMake, logoBase64) {
-    if (!pdfMake) {
-        alert('pdfMake n\'est pas disponible');
-        console.error("pdfMake n'est pas chargé");
-        return;
-    }
-    
-    await waitForChart('investmentChart');
+  await waitForChart('investmentChart');
 
-    const docDefinition = {
+  const docDefinition = {
         pageSize: 'A4',
         pageMargins: [15, 15, 15, 70],
         content: [
@@ -74,6 +73,11 @@ export async function generatePDF(pdfMake, logoBase64) {
             return {
                 stack: [
                    {
+                      image: logoBase64,
+                       width: 50,
+                       alignment: 'center'
+                     },
+                   {
                       text: 'Fox Velocity',
                       alignment: 'center',
                       fontSize: 8,
@@ -89,11 +93,12 @@ export async function generatePDF(pdfMake, logoBase64) {
             };
         }
     };
-    // Création du pdf
+
+     // Création du pdf
     pdfMake.createPdf(docDefinition).download('investissement-chart.pdf');
 
-    //fonction attente 1 graphique
-        function waitForChart(chartId) {
+   //fonction attente 1 graphique
+     function waitForChart(chartId) {
           return new Promise((resolve) => {
               function checkChartReady() {
                    const isChartReady = document.getElementById(chartId) && document.getElementById(chartId).getContext('2d') && investmentChart;
@@ -106,6 +111,7 @@ export async function generatePDF(pdfMake, logoBase64) {
             checkChartReady();
         });
     }
+
     function getStockInfo() {
         const stockInfo = document.getElementById('stockInfo');
           if (!stockInfo) {
