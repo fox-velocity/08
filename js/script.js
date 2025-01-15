@@ -3,6 +3,7 @@ import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
 import { updateStockInfo, updateResultsDisplay, updateSecuredGainsTable, displaySuggestions, showLoadingIndicator, setElementVisibility } from './modules/dom.js';
+//import { generateExcelFile } from './modules/excel.js';
 import { generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput } from './modules/utils.js';
@@ -59,42 +60,47 @@ window.addEventListener('load', async function() {
 });
 
 window.addEventListener('DOMContentLoaded', async function() {
-    try {
-        const searchInput = document.getElementById('searchInput');
-         searchInput.addEventListener('input', async function () {
-            const query = this.value.trim();
-             if (!query) {
-                setElementVisibility('suggestions', false);
-                setElementVisibility('results', false);
-                setElementVisibility('resultsWithCapping', false);
-                return;
-            }
-            setElementVisibility('results', false);
-            setElementVisibility('resultsWithCapping', false);
-            const suggestionsContainer = document.getElementById('suggestions');
-            suggestionsContainer.innerHTML = "Chargement...";
-            setElementVisibility('suggestions', true);
-            try {
-                const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${query}^`;
-                const yahooData = await fetchYahooData(url);
-                const results = yahooData.quotes;
-                displaySuggestions(results);
-            } catch (error) {
-                console.error("Erreur lors de la recherche : ", error);
-                suggestionsContainer.innerHTML = "Erreur lors de la recherche.";
-            } finally {
-                if (query) {
-                    setElementVisibility('evolutionChartContainer', true);
-                    setElementVisibility('investmentChartContainer', true);
-                    setElementVisibility('results', true);
-                    setElementVisibility('resultsWithCapping', true);
-                   setElementVisibility('savingsChartContainer', true);
-                }
-            }
-        });
-    } catch (error) {
-            console.error("Erreur lors de l'execution du code: ", error);
-        }
+     let intervalId = setInterval(() => {
+      try {
+           const searchInput = document.getElementById('searchInput');
+            if(searchInput){
+               clearInterval(intervalId)
+                searchInput.addEventListener('input', async function () {
+                   const query = this.value.trim();
+                    if (!query) {
+                        setElementVisibility('suggestions', false);
+                        setElementVisibility('results', false);
+                        setElementVisibility('resultsWithCapping', false);
+                        return;
+                    }
+                    setElementVisibility('results', false);
+                    setElementVisibility('resultsWithCapping', false);
+                    const suggestionsContainer = document.getElementById('suggestions');
+                    suggestionsContainer.innerHTML = "Chargement...";
+                    setElementVisibility('suggestions', true);
+                    try {
+                        const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${query}^`;
+                        const yahooData = await fetchYahooData(url);
+                        const results = yahooData.quotes;
+                        displaySuggestions(results);
+                    } catch (error) {
+                        console.error("Erreur lors de la recherche : ", error);
+                        suggestionsContainer.innerHTML = "Erreur lors de la recherche.";
+                    } finally {
+                        if (query) {
+                            setElementVisibility('evolutionChartContainer', true);
+                            setElementVisibility('investmentChartContainer', true);
+                            setElementVisibility('results', true);
+                            setElementVisibility('resultsWithCapping', true);
+                           setElementVisibility('savingsChartContainer', true);
+                        }
+                    }
+                 });
+           }
+        } catch (error) {
+           console.error("Erreur lors de l'attente de l'element HTML: ", error);
+       }
+   }, 100)
 });
 
 // Gestion des changements de date
