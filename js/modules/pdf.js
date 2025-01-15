@@ -70,28 +70,35 @@
             }
         },
         footer: function(currentPage, pageCount) {
-            return {
-                stack: [
-                   {
-                      text: 'Fox Velocity',
-                      alignment: 'center',
-                      fontSize: 8,
-                      margin: [0, 0, 0, 0]
-                   },
-                   {
-                      image: logoBase64,
-                       width: 50,
-                       alignment: 'center'
-                     },
-                 
-                   {
-                         text: `Page ${currentPage.toString()} sur ${pageCount}`,
-                         alignment: 'right',
-                         fontSize: 8,
-                         margin: [0, 0, 10, 0]
+    return {
+        table: {
+            widths: ['*', 'auto', '*'],
+            body: [
+                [
+                    {
+                        text: 'Fox Velocity',
+                        alignment: 'center',
+                        fontSize: 8,
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        image: logoBase64,
+                        width: 25,
+                        alignment: 'center',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: `Page ${currentPage.toString()} sur ${pageCount}`,
+                        alignment: 'right',
+                        fontSize: 8,
+                        margin: [0, 0, 10, 0]
                     }
                 ]
-            };
+            ]
+        },
+        layout: 'noBorders'
+    };
+}
         }
     };
 
