@@ -350,3 +350,4 @@ export async function generatePDF(pdfMake, logoBase64) {
     }
 }
 window.generatePDF = generatePDF;
+window.pdfMake = pdfMake;
