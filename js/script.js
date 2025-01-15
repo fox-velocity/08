@@ -213,3 +213,4 @@ window.generatePDFWrapper = generatePDFWrapper;
 // Exporter les fonctions nécessaires pour les tests
 export {toggleSection, selectSymbol, fetchData, downloadExcel, toggleTheme};
 window.fetchData = fetchData;
+window.toggleTheme = toggleTheme; //  ajout pour rendre la fonction accesible globalement
