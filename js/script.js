@@ -28,6 +28,7 @@ function toggleSection() {
 
 // Initialisation au chargement de la page
 window.addEventListener('load', async function() {
+    console.log("étape 1: load");
     const today = new Date();
     const lastYear = new Date();
     lastYear.setFullYear(today.getFullYear() - 1);
@@ -61,9 +62,10 @@ window.addEventListener('load', async function() {
 });
 
 window.addEventListener('DOMContentLoaded', async function() {
+    console.log("étape 2: DOMContentLoaded");
     try {
-        console.log("DOMContentLoaded")
           document.getElementById('searchInput').addEventListener('input', async function () {
+            console.log("étape 3: écouteur d'évènement sur searchInput");
             const query = this.value.trim();
              if (!query) {
                 setElementVisibility('suggestions', false);
@@ -188,7 +190,7 @@ async function fetchData() {
 }
 // Gestion du téléchargement Excel
 function downloadExcel() {
-    if (excelData && excelCappedDatesAndAmounts) {
+     if (excelData && excelCappedDatesAndAmounts) {
         generateExcelFile(excelData, excelCappedDatesAndAmounts, currencySymbol);
     } else {
         alert("Aucune donnée à exporter, veuillez faire une simulation.");
