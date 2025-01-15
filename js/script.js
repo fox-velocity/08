@@ -4,7 +4,7 @@ import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from 
 import { calculateInvestmentData } from './modules/data.js';
 import { updateStockInfo, updateResultsDisplay, updateSecuredGainsTable, displaySuggestions, showLoadingIndicator, setElementVisibility } from './modules/dom.js';
 //import { generateExcelFile } from './modules/excel.js';
-import {  generatePDF } from './modules/pdf.js';
+import { generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput } from './modules/utils.js';
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
@@ -27,7 +27,7 @@ function toggleSection() {
 }
 
 // Initialisation au chargement de la page
-window.onload = function () {
+window.onload = async function () {
     const today = new Date();
     const lastYear = new Date();
     lastYear.setFullYear(today.getFullYear() - 1);
@@ -45,17 +45,20 @@ window.onload = function () {
     document.head.appendChild(script2);
 
      // Attendre que pdfMake soit chargé
-    script2.onload = () => {
-        pdfMake = window.pdfMake;
-         console.log("pdfMake is ready :", pdfMake)
-       };
-    fetch('./logoBase64.js')
-        .then(response => response.text())
+    await new Promise(resolve => {
+      script2.onload = () => {
+            pdfMake = window.pdfMake;
+            console.log("pdfMake is ready :", pdfMake)
+            resolve();
+          };
+    });
+     fetch('./logoBase64.txt')
+         .then(response => response.text())
         .then(data => {
-            logoBase64 = data;
-            //console.log('logoBase64:', logoBase64);
-        })
-        .catch(error => console.error('Error loading logo:', error));
+           logoBase64 = data;
+          console.log('logoBase64:', logoBase64);
+           })
+       .catch(error => console.error('Error loading logo:', error));
 };
 
 // Gestion des changements de date
@@ -200,15 +203,20 @@ document.getElementById('monthlyInvestment').addEventListener('input', function 
 
 // Gestion du téléchargement PDF
 async function generatePDFWrapper() {
-    try {
-        await generatePDF(pdfMake, logoBase64);
-    } catch (error) {
-        console.error('Erreur lors de la génération du PDF', error);
+    if(!pdfMake){
+        alert("pdfMake n'est pas disponible, veuillez recharger la page")
+         return;
     }
+      try {
+          await generatePDF(pdfMake, logoBase64);
+       } catch (error) {
+         console.error('Erreur lors de la génération du PDF', error);
+     }
 }
 document.getElementById('download-pdf').addEventListener('click', generatePDFWrapper);
 
 // Rendre generatePDFWrapper accessible globalement
 window.generatePDFWrapper = generatePDFWrapper;
+
 // Exporter les fonctions nécessaires pour les tests
 export {toggleSection, selectSymbol, fetchData, downloadExcel, toggleTheme};
