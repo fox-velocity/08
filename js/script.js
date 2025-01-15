@@ -3,7 +3,7 @@ import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
 import { updateStockInfo, updateResultsDisplay, updateSecuredGainsTable, displaySuggestions, showLoadingIndicator, setElementVisibility } from './modules/dom.js';
-//import { generateExcelFile } from './modules/excel.js';
+import { generateExcelFile } from './modules/excel.js';
 import { generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput } from './modules/utils.js';
@@ -37,31 +37,60 @@ window.onload = async function () {
     initializeTheme();
     //pdfMake
     const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
-    document.head.appendChild(script);
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
+      document.head.appendChild(script);
 
     const script2 = document.createElement('script');
-    script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js';
+     script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js';
     document.head.appendChild(script2);
 
-    // Attendre que pdfMake soit chargé
-    await new Promise(resolve => {
-        script2.onload = () => {
+     // Attendre que pdfMake soit chargé
+        await new Promise(resolve => {
+            script2.onload = () => {
             pdfMake = window.pdfMake;
             console.log("pdfMake is ready :", pdfMake)
-            resolve();
-         };
-    });
-     fetch('./logoBase64.js')
-      .then(response => response.text())
-         .then(data => {
-         logoBase64 = data;
-           console.log('logoBase64:', logoBase64);
+                resolve();
+            };
+        });
+    fetch('./logoBase64.js')
+        .then(response => response.text())
+        .then(data => {
+            logoBase64 = data;
         })
-     .catch(error => console.error('Error loading logo:', error));
+        .catch(error => console.error('Error loading logo:', error));
 
-     const downloadPdfButton = document.getElementById('download-pdf');
-       downloadPdfButton.addEventListener('click',  generatePDFWrapper);
+        // Ajout de l'écouteur d'événement sur searchInput
+        document.getElementById('searchInput').addEventListener('input', async function () {
+            const query = this.value.trim();
+            if (!query) {
+                setElementVisibility('suggestions', false);
+                setElementVisibility('results', false);
+                setElementVisibility('resultsWithCapping', false);
+                return;
+            }
+            setElementVisibility('results', false);
+            setElementVisibility('resultsWithCapping', false);
+            const suggestionsContainer = document.getElementById('suggestions');
+            suggestionsContainer.innerHTML = "Chargement...";
+            setElementVisibility('suggestions', true);
+            try {
+                const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${query}^`;
+                const yahooData = await fetchYahooData(url);
+                const results = yahooData.quotes;
+                displaySuggestions(results);
+            } catch (error) {
+                console.error("Erreur lors de la recherche : ", error);
+                suggestionsContainer.innerHTML = "Erreur lors de la recherche.";
+            } finally {
+                if (query) {
+                    setElementVisibility('evolutionChartContainer', true);
+                    setElementVisibility('investmentChartContainer', true);
+                    setElementVisibility('results', true);
+                    setElementVisibility('resultsWithCapping', true);
+                    setElementVisibility('savingsChartContainer', true);
+                }
+            }
+        });
 };
 
 // Gestion des changements de date
@@ -86,39 +115,6 @@ document.getElementById('endDate').addEventListener('change', function () {
 });
 
 
-// Recherche de symboles
-document.getElementById('searchInput').addEventListener('input', async function () {
-    const query = this.value.trim();
-    if (!query) {
-         setElementVisibility('suggestions', false);
-         setElementVisibility('results', false);
-         setElementVisibility('resultsWithCapping', false);
-        return;
-    }
-     setElementVisibility('results', false);
-     setElementVisibility('resultsWithCapping', false);
-    const suggestionsContainer = document.getElementById('suggestions');
-    suggestionsContainer.innerHTML = "Chargement...";
-    setElementVisibility('suggestions', true);
-    try {
-          const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${query}^`;
-         const yahooData = await fetchYahooData(url);
-          const results = yahooData.quotes;
-           displaySuggestions(results);
-    } catch (error) {
-        console.error("Erreur lors de la recherche : ", error);
-        suggestionsContainer.innerHTML = "Erreur lors de la recherche.";
-    } finally {
-        if (query) {
-            setElementVisibility('evolutionChartContainer', true);
-            setElementVisibility('investmentChartContainer', true);
-            setElementVisibility('results', true);
-            setElementVisibility('resultsWithCapping', true);
-             setElementVisibility('savingsChartContainer', true);
-        }
-    }
-});
-
 // Sélection d'un symbole
 function selectSymbol(symbol, name, exchange, type, sector, industry) {
     selectedSymbol = symbol;
@@ -129,7 +125,7 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     setElementVisibility('investmentChartContainer', true);
     setElementVisibility('download-button', true);
     setElementVisibility('results', true);
-     setElementVisibility('resultsWithCapping', true);
+    setElementVisibility('resultsWithCapping', true);
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
@@ -148,7 +144,7 @@ async function fetchData() {
     const endDateInput = new Date(document.getElementById('endDate').value);
     const startDate = startDateInput.getTime() / 1000;
     const endDate = endDateInput.getTime() / 1000;
-     // Récupérer la valeur numérique (sans espace) des champs de saisie
+    // Récupérer la valeur numérique (sans espace) des champs de saisie
     const initialInvestment = parseFloat(document.getElementById('initialInvestment').value.replace(/\s/g, '')) || 0;
     const monthlyInvestment = parseFloat(document.getElementById('monthlyInvestment').value.replace(/\s/g, '')) || 0;
     // Récupérer le pourcentage d'écrêtage depuis le select
@@ -159,8 +155,8 @@ async function fetchData() {
     const annualInterestRate = parseFloat(document.getElementById('interestRate').value) || 0.02;
     const monthlyInterestRate = Math.pow(1 + (annualInterestRate), 1 / 12) - 1;
     try {
-          const url = `https://query1.finance.yahoo.com/v8/finance/chart/${selectedSymbol}?period1=${startDate}&period2=${endDate}&interval=1mo`;
-          const yahooData = await fetchYahooData(url);
+        const url = `https://query1.finance.yahoo.com/v8/finance/chart/${selectedSymbol}?period1=${startDate}&period2=${endDate}&interval=1mo`;
+        const yahooData = await fetchYahooData(url);
         console.log('API Response:', yahooData); // Log the API response for debugging
         if (!yahooData.chart || !yahooData.chart.result) {
             alert('Aucune donnée disponible pour cet indice.');
@@ -170,13 +166,13 @@ async function fetchData() {
         const timestamps = result.timestamp;
         const prices = result.indicators.quote[0].close;
         const { chartData, cappedDatesAndAmountsWithInterest, results } = calculateInvestmentData(timestamps, prices, initialInvestment, monthlyInvestment, cappingPercentage, minCappingAmount, monthlyInterestRate);
-          updateResultsDisplay(results, currencySymbol);
-           updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
-             updateEvolutionChart(chartData.labels, chartData.prices);
-             updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-          updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio,monthlyInterestRate);
-         // Stocker les données pour le fichier excel
-         excelData = chartData;
+        updateResultsDisplay(results, currencySymbol);
+        updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
+        updateEvolutionChart(chartData.labels, chartData.prices);
+        updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
+        updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+        // Stocker les données pour le fichier excel
+        excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
     } catch (error) {
         console.error('Erreur lors de la récupération des données :', error);
@@ -209,18 +205,16 @@ async function generatePDFWrapper() {
     if(!pdfMake){
         alert("pdfMake n'est pas disponible, veuillez recharger la page")
          return;
-    }
-      try {
-          await generatePDF(pdfMake, logoBase64);
-       } catch (error) {
-         console.error('Erreur lors de la génération du PDF', error);
      }
+    try {
+        await generatePDF(pdfMake, logoBase64);
+    } catch (error) {
+        console.error('Erreur lors de la génération du PDF', error);
+    }
 }
-window.generatePDFWrapper = generatePDFWrapper; //Laisse l'exposition globale
 document.getElementById('download-pdf').addEventListener('click', generatePDFWrapper);
 
 // Rendre generatePDFWrapper accessible globalement
 window.generatePDFWrapper = generatePDFWrapper;
-
 // Exporter les fonctions nécessaires pour les tests
-export {toggleSection, selectSymbol, fetchData, downloadExcel, toggleTheme};
+export { toggleSection, selectSymbol, fetchData, downloadExcel, toggleTheme };
