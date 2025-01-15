@@ -79,7 +79,7 @@ footer: function(currentPage, pageCount) {
                         text: 'Fox Velocity',
                         alignment: 'center',
                         fontSize: 8,
-                        margin: [0, 0, 0, 0]
+                        margin: [0, 10, 0, 0]
                     },
                     {
                         image: logoBase64,
@@ -91,7 +91,7 @@ footer: function(currentPage, pageCount) {
                         text: `Page ${currentPage.toString()} sur ${pageCount}`,
                         alignment: 'center',
                         fontSize: 8,
-                         margin: [0, 0, 0, 0]
+                         margin: [0, 10, 0, 0]
                     }
                 ]
             ]
