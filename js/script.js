@@ -179,6 +179,7 @@ function downloadExcel() {
     }
 }
 // Gestion du changement de thème
+console.log(document.getElementById('searchInput'));
 document.querySelector('.theme-toggle').addEventListener('click', toggleTheme);
 // Gestion du formatage des inputs
 document.getElementById('initialInvestment').addEventListener('input', function () {
