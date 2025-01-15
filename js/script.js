@@ -3,7 +3,7 @@ import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
 import { updateStockInfo, updateResultsDisplay, updateSecuredGainsTable, displaySuggestions, showLoadingIndicator, setElementVisibility } from './modules/dom.js';
-import { generateExcelFile } from './modules/excel.js';
+//import { generateExcelFile } from './modules/excel.js';
 import {  generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput } from './modules/utils.js';
@@ -49,11 +49,11 @@ window.onload = function () {
         pdfMake = window.pdfMake;
          console.log("pdfMake is ready :", pdfMake)
        };
-    fetch('./logoBase64.txt')
+    fetch('./logoBase64.js')
         .then(response => response.text())
         .then(data => {
             logoBase64 = data;
-            console.log('logoBase64:', logoBase64);
+           
         })
         .catch(error => console.error('Error loading logo:', error));
 };
