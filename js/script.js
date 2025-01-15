@@ -32,14 +32,17 @@ window.addEventListener('load', async function() {
    
 });
 
-window.addEventListener('DOMContentLoaded', async function() {
-    console.log("DOMContentLoaded")
-     try {
+    window.addEventListener('load', async function() {
+      console.log("load");
+    });
+    window.addEventListener('DOMContentLoaded', async function() {
+         console.log("DOMContentLoaded");
          const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', async function () {
-                console.log("écouteur d'évènement")
-                });
-        } catch (error) {
-           console.error("Erreur lors de l'execution du code: ", error);
-        }
-  });
+          try {
+               searchInput.addEventListener('input', async function () {
+                   console.log("écouteur d'évènement")
+               });
+            } catch (error) {
+               console.error("Erreur lors de l'execution du code: ", error);
+            }
+     });
