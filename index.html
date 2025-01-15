@@ -1,12 +1,147 @@
-     <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <title>Test</title>
-    </head>
-    <body>
-         <input type="text" id="searchInput" placeholder="Rechercher un indice...">
-          <script type="module" src="./js/script.js"></script>
-   </body>
-   </html>
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fox Velocity - Simulateur</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Simulateur d'investissement</h1>
+        <div class="theme-toggle">
+            <span class="sun-icon">☀️</span>
+            <span class="moon-icon" style="display:none">🌙</span>
+        </div>
+        <div class="input-section">
+            <input type="text" id="searchInput" placeholder="Rechercher un indice...">
+            <div id="suggestions" class="suggestions"></div>
+            <div id="stockInfo" style="display:none">
+                <p>Nom: <span id="stockName"></span></p>
+                <p>Symbole: <span id="stockSymbol"></span></p>
+                 <p>Devise: <span id="stockCurrency"></span></p>
+                <p>Place de Cotation: <span id="stockExchange"></span></p>
+                 <p>Type: <span id="stockType"></span></p>
+                  <p>Industrie: <span id="stockIndustry"></span></p>
+            </div>
+            <div class="date-range">
+                <label for="startDate">Date de début:</label>
+                <input type="date" id="startDate" >
+                <label for="endDate">Date de fin:</label>
+                <input type="date" id="endDate" >
+            </div>
+        </div>
+        <div id="ModeEmploie">
+          <p>Bienvenue sur le simulateur d'investissement Fox Velocity !</p>
+          <p>Pour commencer, veuillez suivre les étapes suivantes :</p>
+           <p>1. **Recherche :** Entrez le nom ou le symbole de l'indice que vous souhaitez simuler dans la barre de recherche.
+           <p>2. **Sélection :** Cliquez sur le résultat approprié dans la liste des suggestions.
+            <p>3. **Dates :** Ajustez la plage de date de début et de fin pour spécifier votre période d'investissement.
+             <p>4. **Montants :** Entrez le montant initial de votre investissement, ainsi que le montant mensuel que vous souhaitez investir.
+            <p>5. **Paramètres d'écrêtage des gains :** Spécifiez le pourcentage de gains que vous souhaitez sécuriser à chaque mois. Vous pouvez également ajouter un montant minimum qui permettra de prendre en compte les petits gains.</p>
+           <p>6. **Taux d'intérêt annuel :** vous pouvez également simuler un placement à taux fixe avec un taux annuel.
+            <p>7. **Résultats :** Les résultats de la simulation s'afficheront après avoir sélectionné le symbole de l'indice.
+        </div>
+         <div id="loadingIndicator" style="display:none">Chargement des données...</div>
+
+        <button onclick="toggleSection()">Options avancées</button>
+
+        <div id="advancedSection" style="display:none;">
+            <div class="input-group">
+                <label for="initialInvestment">Montant initial investi :</label>
+                <input type="text" id="initialInvestment"  placeholder="Montant initial">
+                <label id="currencySymbolLabel"> </label>
+            </div>
+            <div class="input-group">
+                <label for="monthlyInvestment">Montant mensuel investi:</label>
+                <input type="text" id="monthlyInvestment"  placeholder="Montant mensuel">
+                  <label id="currencySymbolLabel"> </label>
+            </div>
+             <div class="input-group">
+               <label for="cappingPercentage">Pourcentage d'écrêtage des gains :</label>
+               <select id="cappingPercentage">
+                  <option value="0.05">5%</option>
+                    <option value="0.10">10%</option>
+                   <option value="0.15">15%</option>
+                    <option value="0.20">20%</option>
+                    <option value="0.25">25%</option>
+                </select>
+            </div>
+              <div class="input-group">
+                 <label for="minCappingAmount">Montant minimum d'écrêtage des gains :</label>
+                  <select id="minCappingAmount">
+                      <option value="100">100</option>
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                   <option value="5000">5000</option>
+                    <option value="10000">10000</option>
+               </select>
+            </div>
+             <div class="input-group">
+                <label for="interestRate">Taux d'intérêt annuel :</label>
+                 <select id="interestRate">
+                    <option value="0.02">2%</option>
+                    <option value="0.03">3%</option>
+                     <option value="0.04">4%</option>
+                    <option value="0.05">5%</option>
+                    <option value="0.06">6%</option>
+                </select>
+            </div>
+        </div>
+         <div id="results" class="results" style="display:none;">
+              <div id="topResults">
+              <p>Total investi: <span id="finalTotalInvested"></span></p>
+                <p>Durée de l'investissement : <span id="finalNumberOfPayments"></span></p>
+                <p>Évolution de l'instrument financier : <span id="finalStockChangePercentage"></span></p>
+             </div>
+               <p>Valeur finale du portefeuille: <span id="finalPortfolioValue"></span></p>
+             <p><span id="finalGainLossLabel"></span> :<span id="finalGainLossPercentage"></span></p>
+              <p>Montant de moins-value potentielle maximale : <span id="finalMaxLossAmount"></span></p>
+             <p>Montant de plus-value potentielle maximale : <span id="finalMaxGainAmount"></span></p>
+           </div>
+        <div id="resultsWithCapping" class="results" style="display:none;">
+             <p>Valeur portefeuille + Gain sécurisé : <span id="portfolioValueEcreteAvecGain"></span></p>
+            <p>Valeur finale du portefeuille écrêté : <span id="finalPortfolioValueEcrete"></span></p>
+             <p>Valeur totale écrêtée : <span id="finalTotalEcrete"></span></p>
+           <p>Valeur totale des intérêts des gains écrêtés : <span id="finalTotalEcreteInterest"></span></p>
+            <p>Gain ou Perte : <span id="finalGainEcrete"></span></p>
+               <p>Montant de moins-value potentielle maximale : <span id="finalMaxLossAmountEcrete"></span></p>
+            <p>Montant de plus-value potentielle maximale : <span id="finalMaxGainAmountEcrete"></span></p>
+            <h3>Gains sécurisés</h3>
+            <table class="secured-gains-table">
+                <thead>
+                    <tr>
+                      <th>Date</th>
+                        <th>Gain sécurisé</th>
+                        <th>Intérêt du gain sécurisé</th>
+                    </tr>
+                </thead>
+                 <tbody id="securedGainsTableBody">
+                </tbody>
+            </table>
+         </div>
+         <div id="evolutionChartContainer" style="display:none; margin-top: 20px;">
+            <canvas id="evolutionChart"  ></canvas>
+        </div>
+           <div id="investmentChartContainer" style="display:none; margin-top: 20px;">
+            <canvas id="investmentChart"  ></canvas>
+        </div>
+          <div id="savingsChartContainer" style="display:none; margin-top: 20px;">
+            <canvas id="savingsChart"  ></canvas>
+        </div>
+           <div class="button-container">
+            <button id="download-button" style="display: none;" onclick="downloadExcel()">Télécharger Excel</button>
+             <button id="download-pdf" style="display: none;">Télécharger PDF</button>
+        </div>
+    </div>
+        <script type="module" src="./js/script.js"></script>
+</body>
+
+</html>
