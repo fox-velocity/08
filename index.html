@@ -1,147 +1,253 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html>
 
 <head>
-    <meta charset="UTF-8">
+    <title>Simulateur de Rendement d'Investissement</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fox Velocity - Simulateur</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+      <!-- Bibliothéque PDF -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+     <script src="./js/script.js" type="module" defer></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>Simulateur d'investissement</h1>
-        <div class="theme-toggle">
-            <span class="sun-icon">☀️</span>
-            <span class="moon-icon" style="display:none">🌙</span>
-        </div>
-        <div class="input-section">
-            <input type="text" id="searchInput" placeholder="Rechercher un indice...">
-            <div id="suggestions" class="suggestions"></div>
-            <div id="stockInfo" style="display:none">
-                <p>Nom: <span id="stockName"></span></p>
-                <p>Symbole: <span id="stockSymbol"></span></p>
-                 <p>Devise: <span id="stockCurrency"></span></p>
-                <p>Place de Cotation: <span id="stockExchange"></span></p>
-                 <p>Type: <span id="stockType"></span></p>
-                  <p>Industrie: <span id="stockIndustry"></span></p>
-            </div>
-            <div class="date-range">
-                <label for="startDate">Date de début:</label>
-                <input type="date" id="startDate" >
-                <label for="endDate">Date de fin:</label>
-                <input type="date" id="endDate" >
-            </div>
-        </div>
-        <div id="ModeEmploie">
-          <p>Bienvenue sur le simulateur d'investissement Fox Velocity !</p>
-          <p>Pour commencer, veuillez suivre les étapes suivantes :</p>
-           <p>1. **Recherche :** Entrez le nom ou le symbole de l'indice que vous souhaitez simuler dans la barre de recherche.
-           <p>2. **Sélection :** Cliquez sur le résultat approprié dans la liste des suggestions.
-            <p>3. **Dates :** Ajustez la plage de date de début et de fin pour spécifier votre période d'investissement.
-             <p>4. **Montants :** Entrez le montant initial de votre investissement, ainsi que le montant mensuel que vous souhaitez investir.
-            <p>5. **Paramètres d'écrêtage des gains :** Spécifiez le pourcentage de gains que vous souhaitez sécuriser à chaque mois. Vous pouvez également ajouter un montant minimum qui permettra de prendre en compte les petits gains.</p>
-           <p>6. **Taux d'intérêt annuel :** vous pouvez également simuler un placement à taux fixe avec un taux annuel.
-            <p>7. **Résultats :** Les résultats de la simulation s'afficheront après avoir sélectionné le symbole de l'indice.
-        </div>
-         <div id="loadingIndicator" style="display:none">Chargement des données...</div>
+        <div>
+        <h1>Simulateur de Rendement d'Investissement</h1>
+        <div  id="ModeEmploie">
+            <p>Recherche : Entrez le nom ou le symbole d'une action dans le champ de recherche, puis sélectionnez la proposition qui correspond.</p>
 
-        <button onclick="toggleSection()">Options avancées</button>
-
-        <div id="advancedSection" style="display:none;">
-            <div class="input-group">
-                <label for="initialInvestment">Montant initial investi :</label>
-                <input type="text" id="initialInvestment"  placeholder="Montant initial">
-                <label id="currencySymbolLabel"> </label>
-            </div>
-            <div class="input-group">
-                <label for="monthlyInvestment">Montant mensuel investi:</label>
-                <input type="text" id="monthlyInvestment"  placeholder="Montant mensuel">
-                  <label id="currencySymbolLabel"> </label>
-            </div>
-             <div class="input-group">
-               <label for="cappingPercentage">Pourcentage d'écrêtage des gains :</label>
-               <select id="cappingPercentage">
-                  <option value="0.05">5%</option>
-                    <option value="0.10">10%</option>
-                   <option value="0.15">15%</option>
-                    <option value="0.20">20%</option>
-                    <option value="0.25">25%</option>
-                </select>
-            </div>
-              <div class="input-group">
-                 <label for="minCappingAmount">Montant minimum d'écrêtage des gains :</label>
-                  <select id="minCappingAmount">
-                      <option value="100">100</option>
-                    <option value="500">500</option>
-                    <option value="1000">1000</option>
-                   <option value="5000">5000</option>
-                    <option value="10000">10000</option>
-               </select>
-            </div>
-             <div class="input-group">
-                <label for="interestRate">Taux d'intérêt annuel :</label>
-                 <select id="interestRate">
-                    <option value="0.02">2%</option>
-                    <option value="0.03">3%</option>
-                     <option value="0.04">4%</option>
-                    <option value="0.05">5%</option>
-                    <option value="0.06">6%</option>
-                </select>
-            </div>
+            <p>Période : Choisissez la date de début et de fin de la période d'investissement que vous souhaitez analyser.</p>
+            
+            <p>Montants : Saisissez le versement initial ainsi que le montant mensuel que vous prévoyez d'investir.</p>
+            
+            <p>Calcul : Cliquez sur le bouton "Calculer" pour simuler votre investissement et afficher les résultats.</p>
+            
+            <p>Résultats : Consultez les graphiques et les tableaux pour visualiser l'évolution de votre investissement, avec ou sans écrêtage des gains.</p>
+            
+            <p>Téléchargement : Vous pouvez télécharger les données au format Excel en cliquant sur le bouton "Données format Excel".</p>  
         </div>
-         <div id="results" class="results" style="display:none;">
-              <div id="topResults">
-              <p>Total investi: <span id="finalTotalInvested"></span></p>
-                <p>Durée de l'investissement : <span id="finalNumberOfPayments"></span></p>
-                <p>Évolution de l'instrument financier : <span id="finalStockChangePercentage"></span></p>
-             </div>
-               <p>Valeur finale du portefeuille: <span id="finalPortfolioValue"></span></p>
-             <p><span id="finalGainLossLabel"></span> :<span id="finalGainLossPercentage"></span></p>
-              <p>Montant de moins-value potentielle maximale : <span id="finalMaxLossAmount"></span></p>
-             <p>Montant de plus-value potentielle maximale : <span id="finalMaxGainAmount"></span></p>
-           </div>
-        <div id="resultsWithCapping" class="results" style="display:none;">
-             <p>Valeur portefeuille + Gain sécurisé : <span id="portfolioValueEcreteAvecGain"></span></p>
-            <p>Valeur finale du portefeuille écrêté : <span id="finalPortfolioValueEcrete"></span></p>
-             <p>Valeur totale écrêtée : <span id="finalTotalEcrete"></span></p>
-           <p>Valeur totale des intérêts des gains écrêtés : <span id="finalTotalEcreteInterest"></span></p>
-            <p>Gain ou Perte : <span id="finalGainEcrete"></span></p>
-               <p>Montant de moins-value potentielle maximale : <span id="finalMaxLossAmountEcrete"></span></p>
-            <p>Montant de plus-value potentielle maximale : <span id="finalMaxGainAmountEcrete"></span></p>
-            <h3>Gains sécurisés</h3>
-            <table class="secured-gains-table">
-                <thead>
+
+        
+              
+        <div id="stockInfo" class="stock-info">
+
+            <div class="form-group">
+            <label for="searchInput">Recherche valeur :</label>
+            <input type="text" id="searchInput" placeholder="Entrez un symbole ou un nom d'entreprise">
+            <div id="suggestions"></div>
+        </div>
+
+            <h2>Informations sur l'instrument financier</h2>
+            <p><strong>Nom :</strong> <span id="stockName"></span></p>
+            <p><strong>Symbole :</strong> <span id="stockSymbol"></span></p>
+            <p><strong>Devise :</strong> <span id="stockCurrency"></span></p>
+            <p><strong>Place de Cotation :</strong> <span id="stockExchange"></span></p>
+            <p><strong>Type :</strong> <span id="stockType"></span></p>
+            <p><strong>Industrie :</strong> <span id="stockIndustry"></span></p>
+        </div>
+
+        <div class="form-group" id="valeursDateMontant">
+            <label for="startDate">Date de début :</label>
+            <input type="date" id="startDate">
+            <label for="endDate">Date de fin :</label>
+            <input type="date" id="endDate">
+        <div>
+            <label for="initialInvestment">Versement initial <span id="currencySymbolLabel"></span> :</label>
+            <input type="text" id="initialInvestment" value="0">
+            
+            <label for="monthlyInvestment">Montant mensuel investi <span id="currencySymbolLabel">€</span> :</label>
+            <input type="text" id="monthlyInvestment" value="100">
+        </div>  
+            <div class="form-group">
+                <button id="toggleButton" class="toggle-button"  onclick="toggleSection()">
+                    
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin-right: 0.5rem;" viewBox="-6 -6 12 12">
+                        <path transform="matrix(1,0,0,-1,0,0)" style="stroke:#000000;stroke-width:0.05mm;fill:#ffffff;fill-rule:evenodd" d="M-1.205101,5.969141L-1.544385,5.897552L-1.490522,5.289067C-1.440149,4.720015,-1.448221,4.669811,-1.615087,4.514351C-1.794403,4.347294,-2.278622,4.094426,-2.598617,4.000736C-2.73449,3.960954,-2.870871,4.042716,-3.249953,4.391216L-3.72943,4.832013L-3.956126,4.614825C-4.080809,4.495372,-4.182821,4.35787,-4.182821,4.309264C-4.182821,4.260658,-4.040679,4.030376,-3.866949,3.797526C-3.624214,3.472187,-3.562003,3.328873,-3.598266,3.178565C-3.663322,2.908917,-4.161088,2.166914,-4.317079,2.107055C-4.387342,2.080092,-4.683497,2.119514,-4.975201,2.194658C-5.266904,2.269802,-5.539042,2.310598,-5.57995,2.285315C-5.685225,2.220252,-5.842348,1.713512,-5.785679,1.621818C-5.759701,1.579785,-5.5422,1.483534,-5.302344,1.407926C-4.701406,1.218497,-4.615341,1.066839,-4.679313,0.310053C-4.707114,-0.01883,-4.765644,-0.324635,-4.809379,-0.369513C-4.853115,-0.41439,-5.142705,-0.523109,-5.452914,-0.61111C-6.058501,-0.782904,-6.063648,-0.79057,-5.937104,-1.332166C-5.897053,-1.503582,-5.868097,-1.509888,-5.22044,-1.48826L-4.545514,-1.465721L-4.290937,-1.894981C-3.862065,-2.61813,-3.866158,-2.678572,-4.380516,-3.217823L-4.828052,-3.687017L-4.618535,-3.961707C-4.503302,-4.112786,-4.379911,-4.236396,-4.344335,-4.236396C-4.308758,-4.236396,-4.073913,-4.076638,-3.822456,-3.881377C-3.293687,-3.47078,-3.220782,-3.471876,-2.57578,-3.900134C-2.000242,-4.28227,-1.983532,-4.371058,-2.28848,-5.426777C-2.31747,-5.52714,-2.253536,-5.594626,-2.048176,-5.680431C-1.894284,-5.744731,-1.730119,-5.79734,-1.683365,-5.79734C-1.636611,-5.79734,-1.490132,-5.552314,-1.357856,-5.252837C-1.208374,-4.914405,-1.058954,-4.689799,-0.963043,-4.659358C-0.878173,-4.632421,-0.57959,-4.634921,-0.299526,-4.664913C0.314624,-4.730683,0.533535,-4.909591,0.617168,-5.414093C0.693141,-5.872389,0.792683,-6.046803,0.953535,-6.003463C1.026041,-5.983927,1.184813,-5.945729,1.306363,-5.91858L1.527363,-5.869216L1.473757,-5.297162C1.440596,-4.943281,1.451214,-4.667065,1.501601,-4.572917C1.546398,-4.489213,1.812425,-4.304303,2.092772,-4.162006C2.54514,-3.932396,2.627625,-3.913696,2.825856,-3.995806C2.948706,-4.046692,3.179819,-4.244566,3.339442,-4.435526C3.499065,-4.626487,3.657187,-4.782727,3.690825,-4.782727C3.724463,-4.782727,3.886467,-4.666476,4.050835,-4.524391L4.349685,-4.266056L3.943067,-3.817054C3.495851,-3.323222,3.491751,-3.285303,3.823721,-2.713178C4.22151,-2.027617,4.381685,-1.957621,5.072877,-2.167301C5.595049,-2.325707,5.623708,-2.320058,5.721537,-2.039429C5.862935,-1.633814,5.830742,-1.584275,5.262714,-1.333384C4.924283,-1.183901,4.699677,-1.034482,4.669236,-0.938571C4.6423,-0.853701,4.644799,-0.555118,4.674791,-0.275054C4.740561,0.339097,4.919469,0.558007,5.42397,0.64164C5.8793,0.717122,6.033079,0.805378,5.999997,0.972232C5.984992,1.047914,5.951651,1.209285,5.925904,1.330835L5.879094,1.551835L5.30704,1.49823C4.936906,1.463545,4.677979,1.475132,4.573482,1.531057C4.484654,1.578597,4.299207,1.846562,4.161376,2.126537C3.863546,2.731516,3.895668,2.870119,4.445957,3.354504C4.636613,3.522326,4.79166,3.682991,4.790505,3.711537C4.789351,3.740084,4.687848,3.88472,4.564945,4.032949L4.341484,4.302458L3.903856,3.972046C3.66316,3.790318,3.41662,3.622597,3.355989,3.599331C3.214464,3.545023,2.814185,3.749141,2.392653,4.090573C2.015363,4.396172,1.983589,4.562219,2.187747,5.161388C2.300422,5.492072,2.301511,5.546535,2.197531,5.650515C2.133177,5.714869,1.965363,5.77318,1.824612,5.780094C1.580203,5.792103,1.559491,5.770233,1.363727,5.293439C1.122261,4.705337,0.981673,4.625319,0.317973,4.69823C-0.407172,4.77789,-0.489625,4.841476,-0.622359,5.423388C-0.685937,5.702116,-0.766725,5.955045,-0.801886,5.98545C-0.837048,6.015855,-1.018494,6.008516,-1.205101,5.969141zM0.836135,3.529949C2.155276,3.186357,3.083838,2.257796,3.427429,0.938655C4.089042,-1.601445,1.689371,-4.001116,-0.85073,-3.339504C-2.169871,-2.995911,-3.098431,-2.067351,-3.442024,-0.74821C-4.103625,1.791848,-1.703923,4.19155,0.836135,3.529949z"/>
+                    </svg>
+                    
+                      
+                    <span>Écrêtage</span>
+                </button>
+                <div id="advancedSection" style="display: none;">
+                
+
+                    <table>
+                        <tr>
+                            <th>Pourcentage d'écrêtage :</th>
+                            <td><select id="cappingPercentage">
+                                <option value="0.05">5%</option>
+                                <option value="0.10">10%</option>
+                                <option value="0.15">15%</option>
+                            </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Montant minimum d'écrêtage :</th>
+                            <td><select id="minCappingAmount">
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                </select> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Taux d'intérêt annuel :</th>
+                            <td><select id="interestRate">
+                                <option value="0.02">2%</option>
+                                <option value="0.025">2.5%</option>
+                                <option value="0.03">3%</option>
+                            </select>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        <button onclick="fetchData()">Calculer</button>
+        </div>
+    
+        <div id="loadingIndicator">
+            <span>Chargement des données...</span>
+            <div class="spinner"></div>
+        </div>
+                
+
+        <!-- Conteneur pour le graphique d'évolution -->
+        <div id="evolutionChartContainer">
+            <canvas id="evolutionChart"></canvas>
+        </div>
+        
+        <!-- Conteneur pour le graphique des montants investis et de l'évolution du portefeuille -->
+        <div id="investmentChartContainer">
+            <canvas id="investmentChart"></canvas>
+        </div>
+
+        <div class="results" id="results">
+            <h2>Synthèse investissement</h2>
+            <div class="table-container" id="topResults">
+                <table>
                     <tr>
-                      <th>Date</th>
+                        <th>Total investi</th>
+                        <td id="finalTotalInvested">-</td>
+                    </tr>
+                    <tr>
+                        <th>Durée investissement</th>
+                        <td id="finalNumberOfPayments">-</td>
+                    </tr>
+                    <tr>
+                        <th>Évolution instrument financier</th>
+                        <td id="finalStockChangePercentage">-</td>
+                    </tr>
+                </table>
+            </div>
+            <h2>Résultats</h2>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Valeur finale du portefeuille</th>
+                        <td id="finalPortfolioValue"></td>
+                    </tr>
+                    <tr>
+                        <th id="finalGainLossLabel">Gain/Perte</th>
+                        <td id="finalGainLossPercentage">-</td>
+                    </tr>
+                    <tr>
+                        <th>Montant de moins-value potentielle maximale</th>
+                        <td id="finalMaxLossAmount">-</td>
+                    </tr>
+                    <tr>
+                        <th>Montant de plus-value potentielle maximale</th>
+                        <td id="finalMaxGainAmount">-</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- Nouveau bloc de résultats avec écrêtage 5% -->
+        <div class="results" id="resultsWithCapping">
+            <h2>Résultats avec écrêtage des gains</h2>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Valeur portefeuille + Gain sécurisé</th>
+                        <td id="portfolioValueEcreteAvecGain">-</td>
+                    </tr>
+                    <tr>
+                        <th>Valeur finale du portefeuille écrêté</th>
+                        <td id="finalPortfolioValueEcrete">-</td>
+                    </tr>
+                    <tr>
+                        <th>Valeur totale écrêtée</th>
+                        <td id="finalTotalEcrete">-</td>
+                    </tr>
+                     <tr>
+                        <th>Valeur totale des intérêts des gains écrêtés</th>
+                        <td id="finalTotalEcreteInterest">-</td>
+                    </tr>
+                    <tr>
+                        <th>Gain</th>
+                        <td id="finalGainEcrete">-</td>
+                    </tr>
+                    <tr>
+                        <th>Montant de moins-value potentielle maximale</th>
+                        <td id="finalMaxLossAmountEcrete">-</td>
+                    </tr>
+                    <tr>
+                        <th>Montant de plus-value potentielle maximale</th>
+                        <td id="finalMaxGainAmountEcrete">-</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Date</th>
                         <th>Gain sécurisé</th>
                         <th>Intérêt du gain sécurisé</th>
                     </tr>
-                </thead>
-                 <tbody id="securedGainsTableBody">
-                </tbody>
-            </table>
-         </div>
-         <div id="evolutionChartContainer" style="display:none; margin-top: 20px;">
-            <canvas id="evolutionChart"  ></canvas>
+                    <tbody id="securedGainsTableBody">
+                        <!-- Les lignes seront ajoutées ici dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
         </div>
-           <div id="investmentChartContainer" style="display:none; margin-top: 20px;">
-            <canvas id="investmentChart"  ></canvas>
-        </div>
-          <div id="savingsChartContainer" style="display:none; margin-top: 20px;">
-            <canvas id="savingsChart"  ></canvas>
-        </div>
-           <div class="button-container">
-            <button id="download-button" style="display: none;" onclick="downloadExcel()">Télécharger Excel</button>
-             <button id="download-pdf" style="display: none;">Télécharger PDF</button>
-        </div>
+    
+    <button class="download-button"  id="download-button" onclick="downloadExcel()">Données format Excel</button>
+    <button id="download-pdf">Télécharger PDF</button>
+    
+    
+    <!-- Conteneur pour le graphique d'évolution de l'épargne -->
+    <div id="savingsChartContainer">
+        <canvas id="savingsChart"></canvas>
     </div>
-        <script type="module" src="./js/script.js"></script>
+
+
+    <div class="container" style="text-align: justify;">
+        <p>Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d'investissement, afin d'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.</p>
+    </div>
+    <!-- Ajout du commutateur de thème -->
+    <button class="theme-switch" onclick="toggleTheme()">
+        <svg class="theme-icon sun-icon" viewBox="0 0 24 24" style="display: none;" xmlns="http://www.w3.org/2000/svg">
+            <!-- Cercle central pour le soleil -->
+            <circle cx="12" cy="12" r="5" fill="currentColor" />
+            <!-- Rayons du soleil -->
+            <line x1="12" y1="2" x2="12" y2="5" stroke="currentColor" stroke-width="2" />
+            <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="2" />
+            <line x1="2" y1="12" x2="5" y2="12" stroke="currentColor" stroke-width="2" />
+            <line x1="19" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2" />
+            <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" stroke="currentColor" stroke-width="2" />
+            <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" />
+            <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke="currentColor" stroke-width="2" />
+            <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" />
+          </svg>
+        <svg class="theme-icon moon-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path>
+        </svg>
+    </button>
 </body>
 
 </html>
