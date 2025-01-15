@@ -84,11 +84,12 @@ button:hover {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
-   }
-   
-   .download-button:hover {
+    width: 8rem;
+}
+
+.download-button:hover {
     background-color: #0056b3;
-   }
+}
 
 #cappedInvestmentChartContainer {
     margin-top: 20px;
