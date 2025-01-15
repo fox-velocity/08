@@ -129,6 +129,7 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
     fetchData();
 }
+window.selectSymbol = selectSymbol;
 
 // Récupération des données
 async function fetchData() {
