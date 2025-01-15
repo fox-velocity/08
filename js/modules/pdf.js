@@ -73,16 +73,16 @@
             return {
                 stack: [
                    {
-                      image: logoBase64,
-                       width: 50,
-                       alignment: 'center'
-                     },
-                   {
                       text: 'Fox Velocity',
                       alignment: 'center',
                       fontSize: 8,
                       margin: [0, 0, 0, 0]
                    },
+                   {
+                      image: logoBase64,
+                       width: 50,
+                       alignment: 'center'
+                     },
                    {
                          text: `Page ${currentPage.toString()} sur ${pageCount}`,
                          alignment: 'right',
