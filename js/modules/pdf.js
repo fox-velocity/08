@@ -69,7 +69,7 @@
                margin: [0, 0, 0, 20],
             }
         },
-        footer: function(currentPage, pageCount) {
+footer: function(currentPage, pageCount) {
     return {
         table: {
             widths: ['*', 'auto', '*'],
@@ -99,7 +99,6 @@
         layout: 'noBorders'
     };
 }
-        }
     };
 
      // Création du pdf
