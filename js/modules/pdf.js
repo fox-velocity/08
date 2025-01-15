@@ -10,7 +10,7 @@
 
   const docDefinition = {
         pageSize: 'A4',
-        pageMargins: [15, 15, 15, 70],
+        pageMargins: [15, 15, 15, 50],
         content: [
             { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
