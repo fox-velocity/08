@@ -3,8 +3,8 @@ import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
 import { updateStockInfo, updateResultsDisplay, updateSecuredGainsTable, displaySuggestions, showLoadingIndicator, setElementVisibility } from './modules/dom.js';
-//import { generateExcelFile } from './modules/excel.js';
-import { generatePDF } from './modules/pdf.js';
+import { generateExcelFile } from './modules/excel.js';
+import {  generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput } from './modules/utils.js';
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
@@ -49,7 +49,7 @@ window.onload = function () {
         pdfMake = window.pdfMake;
          console.log("pdfMake is ready :", pdfMake)
        };
-   fetch('./logoBase64.js')
+    fetch('./logoBase64.txt')
         .then(response => response.text())
         .then(data => {
             logoBase64 = data;
@@ -129,7 +129,7 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
     fetchData();
 }
-window.selectSymbol = selectSymbol;
+window.selectSymbol = selectSymbol; // Rend selectSymbol accessible globalement
 
 // Récupération des données
 async function fetchData() {
@@ -197,13 +197,18 @@ document.getElementById('initialInvestment').addEventListener('input', function 
 document.getElementById('monthlyInvestment').addEventListener('input', function () {
     formatNumberInput(this);
 });
-// Gestion du download PDF
-document.getElementById('download-pdf').addEventListener('click', async function() {
-   try {
-      await generatePDF(pdfMake, logoBase64)
-     }catch(error){
-      console.error('Erreur lors de la génération du PDF', error)
-  }
-});
+
+// Gestion du téléchargement PDF
+async function generatePDFWrapper() {
+    try {
+        await generatePDF(pdfMake, logoBase64);
+    } catch (error) {
+        console.error('Erreur lors de la génération du PDF', error);
+    }
+}
+document.getElementById('download-pdf').addEventListener('click', generatePDFWrapper);
+
+// Rendre generatePDFWrapper accessible globalement
+window.generatePDFWrapper = generatePDFWrapper;
 // Exporter les fonctions nécessaires pour les tests
 export {toggleSection, selectSymbol, fetchData, downloadExcel, toggleTheme};
