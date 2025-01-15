@@ -37,28 +37,31 @@ window.onload = async function () {
     initializeTheme();
     //pdfMake
     const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
-      document.head.appendChild(script);
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
+    document.head.appendChild(script);
 
     const script2 = document.createElement('script');
-     script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js';
+    script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js';
     document.head.appendChild(script2);
 
-     // Attendre que pdfMake soit chargé
+    // Attendre que pdfMake soit chargé
     await new Promise(resolve => {
-      script2.onload = () => {
+        script2.onload = () => {
             pdfMake = window.pdfMake;
             console.log("pdfMake is ready :", pdfMake)
             resolve();
-          };
+         };
     });
      fetch('./logoBase64.txt')
-         .then(response => response.text())
-        .then(data => {
-           logoBase64 = data;
-          console.log('logoBase64:', logoBase64);
-           })
-       .catch(error => console.error('Error loading logo:', error));
+      .then(response => response.text())
+         .then(data => {
+         logoBase64 = data;
+           console.log('logoBase64:', logoBase64);
+        })
+     .catch(error => console.error('Error loading logo:', error));
+
+     const downloadPdfButton = document.getElementById('download-pdf');
+       downloadPdfButton.addEventListener('click',  generatePDFWrapper);
 };
 
 // Gestion des changements de date
@@ -213,6 +216,7 @@ async function generatePDFWrapper() {
          console.error('Erreur lors de la génération du PDF', error);
      }
 }
+window.generatePDFWrapper = generatePDFWrapper; //Laisse l'exposition globale
 document.getElementById('download-pdf').addEventListener('click', generatePDFWrapper);
 
 // Rendre generatePDFWrapper accessible globalement
