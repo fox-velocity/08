@@ -18,5 +18,22 @@ export function initializeTheme() {
     }
 }
 
-javascript export function toggleTheme() { const body = document.body; const sunIcon = document.querySelector('.sun-icon'); const moonIcon = document.querySelector('.moon-icon'); const currentTheme = body.getAttribute('data-theme'); if (currentTheme === 'light') { body.removeAttribute('data-theme'); localStorage.setItem('theme', 'dark'); sunIcon.style.display = 'none'; moonIcon.style.display = 'block'; } else { body.setAttribute('data-theme', 'light'); localStorage.setItem('theme', 'light'); sunIcon.style.display = 'block'; moonIcon.style.display = 'none'; } }
- window.toggleTheme = toggleTheme;
+export function toggleTheme() {
+    const body = document.body;
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+    const currentTheme = body.getAttribute('data-theme');
+
+    if (currentTheme === 'light') {
+        body.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'dark');
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    } else {
+        body.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+    }
+}
+window.toggleTheme = toggleTheme;
