@@ -80,6 +80,12 @@ export async function generatePDF(pdfMake, logoBase64) {
                       margin: [0, 0, 0, 0]
                    },
                     {
+                        image: logoBase64,
+                        width: 25,
+                        alignment: 'center',
+                        margin: [0, 0, 0, 0]
+                 },
+                    {
                          text: `Page ${currentPage.toString()} sur ${pageCount}`,
                          alignment: 'right',
                          fontSize: 8,
