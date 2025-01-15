@@ -36,3 +36,4 @@ export function toggleTheme() {
         moonIcon.style.display = 'none';
     }
 }
+ window.toggleTheme = toggleTheme;
