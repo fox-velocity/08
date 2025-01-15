@@ -4,7 +4,7 @@ import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from 
 import { calculateInvestmentData } from './modules/data.js';
 import { updateStockInfo, updateResultsDisplay, updateSecuredGainsTable, displaySuggestions, showLoadingIndicator, setElementVisibility } from './modules/dom.js';
 import { generateExcelFile } from './modules/excel.js';
-import {  generatePDF } from './modules/pdf.js';
+//import {  generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput } from './modules/utils.js';
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
