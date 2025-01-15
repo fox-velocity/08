@@ -49,11 +49,11 @@ window.onload = function () {
         pdfMake = window.pdfMake;
          console.log("pdfMake is ready :", pdfMake)
        };
-    fetch('./logoBase64.txt')
+    fetch('./logoBase64.js')
         .then(response => response.text())
         .then(data => {
             logoBase64 = data;
-            console.log('logoBase64:', logoBase64);
+            //console.log('logoBase64:', logoBase64);
         })
         .catch(error => console.error('Error loading logo:', error));
 };
