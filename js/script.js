@@ -62,10 +62,11 @@ window.addEventListener('load', async function() {
 });
 
 window.addEventListener('DOMContentLoaded', async function() {
-    console.log("étape 2: DOMContentLoaded");
     try {
-          document.getElementById('searchInput').addEventListener('input', async function () {
-            console.log("étape 3: écouteur d'évènement sur searchInput");
+         console.log("étape 2: DOMContentLoaded");
+         const searchInput = document.getElementById('searchInput');
+         searchInput.addEventListener('input', async function () {
+             console.log("étape 3: écouteur d'évènement sur searchInput");
             const query = this.value.trim();
              if (!query) {
                 setElementVisibility('suggestions', false);
@@ -100,6 +101,7 @@ window.addEventListener('DOMContentLoaded', async function() {
             console.error("Erreur lors de l'execution du code: ", error);
         }
 });
+
 
 // Gestion des changements de date
 document.getElementById('startDate').addEventListener('change', function () {
@@ -190,8 +192,8 @@ async function fetchData() {
 }
 // Gestion du téléchargement Excel
 function downloadExcel() {
-     if (excelData && excelCappedDatesAndAmounts) {
-        generateExcelFile(excelData, excelCappedDatesAndAmounts, currencySymbol);
+    if (excelData && excelCappedDatesAndAmounts) {
+       // generateExcelFile(excelData, excelCappedDatesAndAmounts, currencySymbol);
     } else {
         alert("Aucune donnée à exporter, veuillez faire une simulation.");
     }
