@@ -89,9 +89,9 @@ footer: function(currentPage, pageCount) {
                     },
                     {
                         text: `Page ${currentPage.toString()} sur ${pageCount}`,
-                        alignment: 'right',
+                        alignment: 'center',
                         fontSize: 8,
-                        margin: [0, 0, 10, 10]
+                         margin: [0, 0, 0, 0]
                     }
                 ]
             ]
