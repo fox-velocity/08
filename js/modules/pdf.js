@@ -76,35 +76,22 @@ footer: function(currentPage, pageCount) {
             body: [
                 [
                     {
-                        text: '', // Colonne vide pour centrer le contenu
-                        border: [false, false, false, false]
+                        text: 'Fox Velocity',
+                        alignment: 'center',
+                        fontSize: 8,
+                        margin: [0, 0, 0, 0]
                     },
                     {
-                        stack: [
-                            {
-                                text: 'Fox Velocity',
-                                alignment: 'center',
-                                fontSize: 8,
-                                margin: [0, 0, 0, 0]
-                            },
-                            {
-                                image: logoBase64,
-                                width: 25,
-                                alignment: 'center',
-                                margin: [0, 0, 0, 0]
-                            },
-                            {
-                                text: `Page ${currentPage.toString()} sur ${pageCount}`,
-                                alignment: 'center',
-                                fontSize: 8,
-                                margin: [0, 0, 10, 0]
-                            }
-                        ],
-                        border: [false, false, false, false]
+                        image: logoBase64,
+                        width: 25,
+                        alignment: 'center',
+                        margin: [0, 0, 0, 0]
                     },
                     {
-                        text: '', // Colonne vide pour centrer le contenu
-                        border: [false, false, false, false]
+                        text: `Page ${currentPage.toString()} sur ${pageCount}`,
+                        alignment: 'right',
+                        fontSize: 8,
+                        margin: [0, 0, 10, 0]
                     }
                 ]
             ]
