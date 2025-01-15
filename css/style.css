@@ -248,6 +248,10 @@ button:hover {
     background-color: #0056b3;
 }
 
+.theme-switch.theme-toggle{
+    display: flex;
+}
+
 .theme-switch {
     position: fixed;
     top: 20px;
@@ -275,12 +279,18 @@ button:hover {
     width: 2rem; /* Largeur du dessin */
     height: 2rem; /* Hauteur du dessin */
 }
+.sun-icon{
+    display:block;
+  }
+ .moon-icon{
+     display:none;
+   }
+
 .toggle-button {
 display: inline-flex;
 align-items: center;
-
-
 }
+
 #investmentChartContainer,
 #evolutionChartContainer,
 #valeursDateMontant,
