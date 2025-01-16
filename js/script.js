@@ -16,16 +16,6 @@ let excelCappedDatesAndAmounts = null;
 let pdfMake = null;
 let logoBase64 = null;
 
-// Fonction pour basculer l'affichage de la section avancée
-function toggleSection() {
-    var section = document.getElementById("advancedSection");
-    if (section.style.display === "none") {
-        section.style.display = "block";
-    } else {
-        section.style.display = "none";
-    }
-}
-
 // Initialisation au chargement de la page
 window.onload = function () {
     const today = new Date();
@@ -187,6 +177,7 @@ function downloadExcel() {
         alert("Aucune donnée à exporter, veuillez faire une simulation.");
     }
 }
+
 // Gestion du changement de thème
 document.querySelector('.theme-toggle').addEventListener('click', toggleTheme);
 
@@ -210,7 +201,14 @@ document.getElementById('download-pdf').addEventListener('click', generatePDFWra
 
 // Rendre generatePDFWrapper accessible globalement
 window.generatePDFWrapper = generatePDFWrapper;
+
+// Gestion du bouton écrétage
+document.querySelector('.toggle-button').addEventListener('click', function() {
+    var section = document.getElementById("advancedSection");
+    section.style.display = section.style.display === "none" ? "block" : "none";
+    fetchData(); // recalcul des données
+});
 // Exporter les fonctions nécessaires pour les tests
-export {toggleSection, selectSymbol, fetchData, downloadExcel, toggleTheme};
+export {selectSymbol, fetchData, downloadExcel, toggleTheme};
 window.fetchData = fetchData;
 window.toggleTheme = toggleTheme; //  ajout pour rendre la fonction accesible globalement
