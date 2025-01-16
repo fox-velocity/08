@@ -76,6 +76,7 @@ button:hover {
     background-color: #0056b3;
 }
 
+.download-pdf,
 .download-button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -87,6 +88,7 @@ button:hover {
     width: 8rem;
 }
 
+.download-pdf,
 .download-button:hover {
     background-color: #0056b3;
 }
