@@ -73,7 +73,8 @@ export const exchangeToCurrency = {
     'BSE': 'INR', // Bombay Stock Exchange
     'NSE': 'INR', // National Stock Exchange of India
     'ASX': 'AUD', // Australian Securities Exchange
-    'TSX': 'CAD', // Toronto Stock Exchange
+     'TOR': 'AUD', // Australian
+     'TSX': 'CAD', // Toronto Stock Exchange
     'BMV': 'MXN', // Bolsa Mexicana de Valores
     'B3': 'BRL', // Brasil, Bolsa, Balcão
     'JSE': 'ZAR', // Johannesburg Stock Exchange
