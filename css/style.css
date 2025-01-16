@@ -236,6 +236,7 @@ button:hover {
     color: red;
 }
 
+.download-pdf,
 .download-button {
     margin-top: 20px;
     padding: 10px 20px;
