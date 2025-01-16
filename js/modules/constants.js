@@ -2,7 +2,7 @@
 
 // Définition des symboles de devises
 export const currencySymbols = {
-     'USD': '$',
+   'USD': '$',
     'CNY': 'CN¥',
     'CAD': 'C$',
     'AUD': 'A$',
@@ -41,6 +41,40 @@ export const currencySymbols = {
     'PLN': 'zł',
     'HUF': 'Ft',
     'RUB': '₽',
+    'MYR': 'RM',
+    'QAR': 'QR',
+    'AED': 'AED',
+    'KZT': '₸',
+    'KES': 'KSh',
+    'PKR': 'PKR',
+    'BHD': 'BD',
+    'OMR': 'OMR',
+    'KWD': 'KD',
+    'MAD': 'MAD',
+    'TND': 'DT',
+    'DZD': 'DA',
+    'BGN': 'лв',
+    'HRK': 'kn',
+    'UAH': '₴',
+    'BYN': 'Br',
+    'GEL': '₾',
+    'AMD': '֏',
+    'AZN': '₼',
+    'UZS': 'soʻm',
+    'KGS': 'с',
+    'TJS': 'ЅМ',
+    'MNT': '₮',
+    'LAK': '₭',
+    'MMK': 'K',
+    'KHR': '៛',
+    'PGK': 'K',
+    'FJD': 'FJ$',
+    'WST': 'WS$',
+    'TOP': 'T$',
+    'VUV': 'VT',
+    'XPF': '₣',
+    'FKP': '£',
+    'SHP': '£',
 };
 
 // Conversion des places boursières en devises
@@ -66,56 +100,104 @@ export const exchangeToCurrency = {
     'DUB': 'EUR',
     'LSE': 'GBP',
     'AIM': 'GBP',
-    'TSE': 'JPY', // Tokyo Stock Exchange
-    'HKEX': 'HKD', // Hong Kong Stock Exchange
-    'SSE': 'CNY', // Shanghai Stock Exchange
-    'SZSE': 'CNY', // Shenzhen Stock Exchange
-    'BSE': 'INR', // Bombay Stock Exchange
-    'NSE': 'INR', // National Stock Exchange of India
-    'ASX': 'AUD', // Australian Securities Exchange
-     'TOR': 'AUD', // Australian
-     'TSX': 'CAD', // Toronto Stock Exchange
-    'BMV': 'MXN', // Bolsa Mexicana de Valores
-    'B3': 'BRL', // Brasil, Bolsa, Balcão
-    'JSE': 'ZAR', // Johannesburg Stock Exchange
-    'SGX': 'SGD', // Singapore Exchange
-    'KRX': 'KRW', // Korea Exchange
-    'TWSE': 'TWD', // Taiwan Stock Exchange
-    'SWX': 'CHF', // SIX Swiss Exchange
-    'NZX': 'NZD', // New Zealand Exchange
-    'OMX': 'EUR', // NASDAQ OMX Nordic Exchange
-    'SASE': 'SAR', // Saudi Stock Exchange
-    'IDX': 'IDR', // Indonesia Stock Exchange
-    'BIST': 'TRY', // Borsa Istanbul
-    'EGX': 'EGP', // Egyptian Exchange
-    'KSE': 'KRW', // Korea Stock Exchange
-    'TPEX': 'TWD', // Taipei Exchange
-    'BME': 'EUR', // Bolsas y Mercados Españoles
-    'EURONEXT': 'EUR', // Euronext
-    'MOEX': 'RUB', // Moscow Exchange
-    'WSE': 'PLN', // Warsaw Stock Exchange
-    'BUX': 'HUF', // Budapest Stock Exchange
-    'PSE': 'PHP', // Philippine Stock Exchange
-    'SET': 'THB', // Stock Exchange of Thailand
-    'HOSE': 'VND', // Ho Chi Minh Stock Exchange
-    'HNX': 'VND', // Hanoi Stock Exchange
-    'CSE': 'LKR', // Colombo Stock Exchange
-    'DSE': 'BDT', // Dhaka Stock Exchange
-    'CSE': 'CAD', // Canadian Securities Exchange
-    'NEO': 'CAD', // NEO Exchange
-    'ATHEX': 'EUR', // Athens Stock Exchange
-    'BCBA': 'ARS', // Buenos Aires Stock Exchange
-    'CSE': 'JMD', // Jamaica Stock Exchange
-    'GSE': 'GHS', // Ghana Stock Exchange
-    'NSE': 'NGN', // Nigerian Stock Exchange
-    'USE': 'UGX', // Uganda Securities Exchange
-    'CMA': 'MUR', // Stock Exchange of Mauritius
-    'CSE': 'MUR', // Stock Exchange of Mauritius
-    'BVB': 'RON', // Bucharest Stock Exchange
-    'BELEX': 'RSD', // Belgrade Stock Exchange
-    'LUSE': 'ALL', // Albania Stock Exchange
-    'CSE': 'CZK', // Prague Stock Exchange
-    'BET': 'RON', // Bucharest Stock Exchange
-    'BCS': 'RON', // Bucharest Stock Exchange
-    'CSE': 'CZK', // Prague Stock Exchang
+    'TSE': 'JPY',
+    'HKEX': 'HKD',
+    'SSE': 'CNY',
+    'SZSE': 'CNY',
+    'BSE': 'INR',
+    'NSE': 'INR',
+    'ASX': 'AUD',
+    'TSX': 'CAD',
+    'BMV': 'MXN',
+    'B3': 'BRL',
+    'JSE': 'ZAR',
+    'SGX': 'SGD',
+    'KRX': 'KRW',
+    'TWSE': 'TWD',
+    'SWX': 'CHF',
+    'NZX': 'NZD',
+    'OMX': 'EUR',
+    'SASE': 'SAR',
+    'IDX': 'IDR',
+    'BIST': 'TRY',
+    'EGX': 'EGP',
+    'KSE': 'KRW',
+    'TPEX': 'TWD',
+    'BME': 'EUR',
+    'EURONEXT': 'EUR',
+    'MOEX': 'RUB',
+    'WSE': 'PLN',
+    'BUX': 'HUF',
+    'PSE': 'PHP',
+    'SET': 'THB',
+    'HOSE': 'VND',
+    'HNX': 'VND',
+    'CSE': 'LKR',
+    'DSE': 'BDT',
+    'NEO': 'CAD',
+    'ATHEX': 'EUR',
+    'BCBA': 'ARS',
+    'JSE': 'JMD',
+    'GSE': 'GHS',
+    'NSE': 'NGN',
+    'USE': 'UGX',
+    'CMA': 'MUR',
+    'BVB': 'RON',
+    'BELEX': 'RSD',
+    'LUSE': 'ALL',
+    'KLSE': 'MYR',
+    'TASI': 'SAR',
+    'KOSDAQ': 'KRW',
+    'QSE': 'QAR',
+    'ADX': 'AED',
+    'DFM': 'AED',
+    'KASE': 'KZT',
+    'NSE': 'KES',
+    'PSX': 'PKR',
+    'BHB': 'BHD',
+    'MSM': 'OMR',
+    'BK': 'KWD',
+    'CASE': 'MAD',
+    'BVMT': 'TND',
+    'ABV': 'DZD',
+    'BSE': 'BGN',
+    'ZSE': 'HRK',
+    'PSE': 'CZK',
+    'BVB': 'RON',
+    'BSE': 'HUF',
+    'WSE': 'PLN',
+    'UKX': 'UAH',
+    'BCSE': 'BYN',
+    'GSE': 'GEL',
+    'AMX': 'AMD',
+    'BSE': 'AZN',
+    'UZSE': 'UZS',
+    'KSE': 'KGS',
+    'DSE': 'TJS',
+    'MSE': 'MNT',
+    'LSX': 'LAK',
+    'YSX': 'MMK',
+    'CSX': 'KHR',
+    'PSE': 'PHP',
+    'IDX': 'IDR',
+    'BURSA': 'MYR',
+    'SGX': 'SGD',
+    'SET': 'THB',
+    'HOSE': 'VND',
+    'KRX': 'KRW',
+    'TWSE': 'TWD',
+    'TSE': 'JPY',
+    'HKEX': 'HKD',
+    'SSE': 'CNY',
+    'SZSE': 'CNY',
+    'ASX': 'AUD',
+    'NZX': 'NZD',
+    'PNGX': 'PGK',
+    'SPSE': 'FJD',
+    'SSX': 'WST',
+    'TSE': 'TOP',
+    'VSE': 'VUV',
+    'NOUMEA': 'XPF',
+    'FKSE': 'FKP',
+    'SHSE': 'SHP',
 };
