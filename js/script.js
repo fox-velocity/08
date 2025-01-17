@@ -48,7 +48,7 @@ window.onload = function () {
         pdfMake = window.pdfMake;
          console.log("pdfMake is ready :", pdfMake)
        };
-    fetch('./logoBase64')
+    fetch('./logoBase64.js')
         .then(response => response.text())
         .then(data => {
             logoBase64 = data;
@@ -202,20 +202,32 @@ document.getElementById('monthlyInvestment').addEventListener('input', function 
 
 // Gestion du téléchargement PDF
 async function generatePDFWrapper() {
+    if(!pdfMake){
+        alert("pdfMake n'est pas disponible, veuillez recharger la page")
+         return;
+     }
     try {
-        await generatePDF(pdfMake, logoBase64);
+         const modifiedDocDefinition = JSON.parse(JSON.stringify(docDefinition));
+         replaceNonBreakingSpaces(modifiedDocDefinition);
+        pdfMake.createPdf(modifiedDocDefinition).download('investissement-chart.pdf');
     } catch (error) {
         console.error('Erreur lors de la génération du PDF', error);
     }
-}
 
-
-document.addEventListener('DOMContentLoaded', function() {
-   const downloadPdfButton = document.getElementById('download-pdf');
-    downloadPdfButton.addEventListener('click', function() {
-        generatePDFWrapper();
-    });
-});
+        function replaceNonBreakingSpaces(obj) {
+          if (typeof obj === 'string') {
+            return obj.replace(/\u202F/g, ' ');
+          } else if (Array.isArray(obj)) {
+             return obj.map(replaceNonBreakingSpaces);
+          } else if (typeof obj === 'object' && obj !== null) {
+            for (let key in obj) {
+              obj[key] = replaceNonBreakingSpaces(obj[key]);
+            }
+          }
+          return obj;
+        }
+    }
+document.getElementById('download-pdf').addEventListener('click', generatePDFWrapper);
 
 // Rendre generatePDFWrapper accessible globalement
 window.generatePDFWrapper = generatePDFWrapper;
@@ -230,7 +242,8 @@ document.querySelector('.toggle-button').addEventListener('click', function() {
 export {selectSymbol, fetchData, downloadExcel, toggleTheme};
 window.fetchData = fetchData;
 window.toggleTheme = toggleTheme; //  ajout pour rendre la fonction accesible globalement
-  async function generatePDF(pdfMake, logoBase64) {
+
+ async function generatePDF(pdfMake, logoBase64) {
       if (!pdfMake) {
           alert('pdfMake n\'est pas disponible');
           console.error("pdfMake n'est pas chargé");
@@ -253,7 +266,6 @@ window.toggleTheme = toggleTheme; //  ajout pour rendre la fonction accesible gl
               { text: 'Résultats', style: 'subtitle', pageBreak: 'before' },
               getResults(),
               { text: 'Résultats avec écrêtage des gains', style: 'subtitle' },
-              getResultsWithCapping(),
               getSecuredGainsTable(),
            
               { text: 'Graphiques évolutions des portefeuilles', style: 'subtitle', pageBreak: 'before' },
@@ -332,10 +344,7 @@ window.toggleTheme = toggleTheme; //  ajout pour rendre la fonction accesible gl
     }
       };
 
-       // Création du pdf
-      pdfMake.createPdf(docDefinition).download('investissement-chart.pdf');
-
-     //fonction attente 1 graphique
+       //fonction attente 1 graphique
         function waitForChart(chartId) {
           return new Promise((resolve) => {
               function checkChartReady() {
