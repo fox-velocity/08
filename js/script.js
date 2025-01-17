@@ -208,7 +208,14 @@ async function generatePDFWrapper() {
         console.error('Erreur lors de la génération du PDF', error);
     }
 }
-document.getElementById('download-pdf').addEventListener('click', generatePDFWrapper);
+
+
+document.addEventListener('DOMContentLoaded', function() {
+   const downloadPdfButton = document.getElementById('download-pdf');
+    downloadPdfButton.addEventListener('click', function() {
+        generatePDFWrapper();
+    });
+});
 
 // Rendre generatePDFWrapper accessible globalement
 window.generatePDFWrapper = generatePDFWrapper;
@@ -223,7 +230,6 @@ document.querySelector('.toggle-button').addEventListener('click', function() {
 export {selectSymbol, fetchData, downloadExcel, toggleTheme};
 window.fetchData = fetchData;
 window.toggleTheme = toggleTheme; //  ajout pour rendre la fonction accesible globalement
- // pdf.js
   async function generatePDF(pdfMake, logoBase64) {
       if (!pdfMake) {
           alert('pdfMake n\'est pas disponible');
@@ -234,103 +240,103 @@ window.toggleTheme = toggleTheme; //  ajout pour rendre la fonction accesible gl
       await waitForChart('investmentChart');
 
       const docDefinition = {
-        pageSize: 'A4',
-        pageMargins: [15, 15, 15, 50],
-        content: [
-            { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
-            { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
-            getStockInfo(),
-            { text: 'Synthèse investissement', style: 'subtitle' },
+          pageSize: 'A4',
+          pageMargins: [15, 15, 15, 50],
+          content: [
+              { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
+              { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
+              getStockInfo(),
+              { text: 'Synthèse investissement', style: 'subtitle' },
         
-            getChartWithBorder('evolutionChart'),
-            getTopResults(),
-            { text: 'Résultats', style: 'subtitle', pageBreak: 'before' },
-            getResults(),
-            { text: 'Résultats avec écrêtage des gains', style: 'subtitle' },
-            getResultsWithCapping(),
-            getSecuredGainsTable(),
+              getChartWithBorder('evolutionChart'),
+              getTopResults(),
+              { text: 'Résultats', style: 'subtitle', pageBreak: 'before' },
+              getResults(),
+              { text: 'Résultats avec écrêtage des gains', style: 'subtitle' },
+              getResultsWithCapping(),
+              getSecuredGainsTable(),
            
-            { text: 'Graphiques évolutions des portefeuilles', style: 'subtitle', pageBreak: 'before' },
-             getChartWithBorder('investmentChart'),
+              { text: 'Graphiques évolutions des portefeuilles', style: 'subtitle', pageBreak: 'before' },
+               getChartWithBorder('investmentChart'),
          
-             getChartWithBorder('savingsChart'),
-            { text: 'Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu\'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d\'investissement, afin d\'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.', style: 'paragraph' },
-        ],
-        styles: {
-            title: {
-                fontSize: 18,
+              getChartWithBorder('savingsChart'),
+              { text: 'Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu\'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d\'investissement, afin d\'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.', style: 'paragraph' },
+          ],
+          styles: {
+              title: {
+                  fontSize: 18,
+                  bold: true,
+                  alignment: 'center',
+                  margin: [0, 0, 0, 15]
+              },
+              subtitle: {
+                  fontSize: 14,
+                  bold: true,
+                  alignment: 'center',
+                  margin: [0, 10, 0, 15]
+              },
+              paragraph: {
+                  fontSize: 8,
+                  alignment: 'justify',
+                  margin: [10, 20, 10, 10]
+              },
+              tableHeader: {
                 bold: true,
-                alignment: 'center',
-                margin: [0, 0, 0, 15]
-            },
-            subtitle: {
-                fontSize: 14,
-                bold: true,
-                alignment: 'center',
-                margin: [0, 10, 0, 15]
-            },
-            paragraph: {
                 fontSize: 8,
-                alignment: 'justify',
-                margin: [10, 20, 10, 10]
-            },
-            tableHeader: {
-              bold: true,
-              fontSize: 8,
-              fillColor: '#dddddd',
-               margin: [0, 5, 0, 5]
-             },
-            tableCell: {
-               fontSize: 8,
-                margin: [0, 5, 0, 5]
-            },
-             positive: {
-              color: 'green'
-             },
-            negative: {
-              color: 'red'
-            },
-             chartContainer: {
-               margin: [0, 0, 0, 20],
-            }
-        },
-footer: function(currentPage, pageCount) {
-    return {
-        table: {
-            widths: ['*', 'auto', '*'],
-            body: [
-                [
-                    {
-                        text: 'Fox Velocity',
-                        alignment: 'center',
-                        fontSize: 8,
-                        margin: [0, 10, 0, 0]
-                    },
-                    {
-                        image: logoBase64,
-                        width: 25,
-                        alignment: 'center',
-                        margin: [0, 0, 0, 0]
-                    },
-                    {
-                        text: `Page ${currentPage.toString()} sur ${pageCount}`,
-                        alignment: 'center',
-                        fontSize: 8,
-                         margin: [0, 10, 0, 0]
-                    }
+                fillColor: '#dddddd',
+                 margin: [0, 5, 0, 5]
+               },
+              tableCell: {
+                 fontSize: 8,
+                  margin: [0, 5, 0, 5]
+              },
+               positive: {
+                color: 'green'
+               },
+              negative: {
+                color: 'red'
+              },
+               chartContainer: {
+                 margin: [0, 0, 0, 20],
+              }
+          },
+    footer: function(currentPage, pageCount) {
+        return {
+            table: {
+                widths: ['*', 'auto', '*'],
+                body: [
+                    [
+                        {
+                            text: 'Fox Velocity',
+                            alignment: 'center',
+                            fontSize: 8,
+                            margin: [0, 10, 0, 0]
+                        },
+                        {
+                            image: logoBase64,
+                            width: 25,
+                            alignment: 'center',
+                            margin: [0, 0, 0, 0]
+                        },
+                        {
+                            text: `Page ${currentPage.toString()} sur ${pageCount}`,
+                            alignment: 'center',
+                            fontSize: 8,
+                             margin: [0, 10, 0, 0]
+                        }
+                    ]
                 ]
-            ]
-        },
-        layout: 'noBorders'
-    };
-}
-    };
+            },
+            layout: 'noBorders'
+        };
+    }
+      };
 
-     // Création du pdf
-    pdfMake.createPdf(docDefinition).download('investissement-chart.pdf');
+       // Création du pdf
+      pdfMake.createPdf(docDefinition).download('investissement-chart.pdf');
 
-   //fonction attente 1 graphique
-     function waitForChart(chartId) {
+     //fonction attente 1 graphique
+        function waitForChart(chartId) {
           return new Promise((resolve) => {
               function checkChartReady() {
                    const isChartReady = document.getElementById(chartId) && document.getElementById(chartId).getContext('2d') && investmentChart;
