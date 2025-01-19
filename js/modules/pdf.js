@@ -280,24 +280,24 @@ export async function generatePDF(pdfMake, logoBase64) {
                 securedGainTableData.push(rowData);
             }
         });
-      return {
-          table: {
-             body: [
-                 [
-                   { text: 'Date', style: 'tableHeader' },
-                    { text: 'Gain sécurisé', style: 'tableHeader' },
-                    { text: 'Intérêt du gain sécurisé', style: 'tableHeader' }
-                   ],
-                   ...securedGainTableData.map(row => [
-                    { text: row[0], style: 'tableCell' },
-                    { text: formatNumber(row[1]), style: getStyleForValue(row[1]) },
-                    { text: formatNumber(row[2]), style: getStyleForValue(row[2]) }
+        return {
+            table: {
+                body: [
+                    [
+                        { text: 'Date', style: 'tableHeader' },
+                        { text: 'Gain sécurisé', style: 'tableHeader' },
+                        { text: 'Intérêt du gain sécurisé', style: 'tableHeader' }
+                    ],
+                    ...securedGainTableData.map(row => [
+                        { text: row[0], style: 'tableCell' },
+                        { text: formatNumber(row[1]), style: getStyleForValue(row[1]) },
+                         { text: formatNumber(row[2]), style: getStyleForValue(row[2]) }
                     ])
                 ],
-               widths: ['auto', 'auto', '*']
-          },
-           margin: [0, 0, 0, 10]
-      };
+                widths: ['auto', 'auto', '*']
+            },
+            margin: [0, 0, 0, 10]
+        };
     }
     function getChartWithBorder(canvasId) {
         const canvas = document.getElementById(canvasId);
@@ -343,28 +343,28 @@ export async function generatePDF(pdfMake, logoBase64) {
             return numericValue >= 0 ? 'positive' : 'negative';
         } else {
            const valueTest = value.replace(/<[^>]*>/g, '')
-            const numericValueTest = parseFloat(valueTest.replace(/[^\d.-]/g, ''));
+           const numericValueTest = parseFloat(valueTest.replace(/[^\d.-]/g, ''));
             return numericValueTest >= 0 ? 'positive' : 'negative';
         }
     }
 
-   function formatNumber(numberString, withCurrency) {
-    // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
+     function formatNumber(numberString, withCurrency) {
+        // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
         let number = numberString.replace(/\s/g, '').replace(',', '.');
-       // Convertir la chaîne de caractères en nombre
+        // Convertir la chaîne de caractères en nombre
         number = parseFloat(number);
         // Vérifier si la valeur est bien un nombre
         if (isNaN(number)) {
             return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
         }
+
           // Récupérer le symbole de devise depuis le DOM
-          const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
-    
-         let formattedNumber = number.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
+        let formattedNumber = number.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         if (withCurrency) {
-            return `${formattedNumber} ${currencySymbol}`;
+         return `${formattedNumber} ${currencySymbol}`;
         } else {
-            return formattedNumber;
+          return formattedNumber;
         }
     }
 }
