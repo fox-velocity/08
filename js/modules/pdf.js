@@ -216,9 +216,9 @@ export async function generatePDF(pdfMake, logoBase64) {
                             text: [
                                 'Gain ou Perte: ',
                                { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
-                                ' (',
+                                'soit : ',
                                 { text: gainLossAmount + ' ' + currencySymbol, style: getStyleForValue(gainLossAmount) },
-                                ')'
+                                
                              ],
                         }
                     ],
