@@ -195,7 +195,9 @@ export async function generatePDF(pdfMake, logoBase64) {
                 return {};
             }
           const portfolioValue = document.getElementById('finalPortfolioValue').textContent;
-          const finalGainLossPercentage = document.getElementById('finalGainLossPercentage').innerHTML;
+         const finalGainLossElement = document.getElementById('finalGainLossPercentage');
+           const finalGainLossPercentage = finalGainLossElement.textContent;
+           const finalGainLossClass = finalGainLossElement.querySelector('span').className;
           const maxLossAmount = document.getElementById('finalMaxLossAmount').textContent;
           const maxGainAmount = document.getElementById('finalMaxGainAmount').textContent;
         return {
@@ -206,7 +208,7 @@ export async function generatePDF(pdfMake, logoBase64) {
                          {
                             text: [
                                  'Gain ou Perte: ',
-                               { text: finalGainLossPercentage, style: getStyleForValue(finalGainLossPercentage) }
+                               { text: finalGainLossPercentage, style: getStyleForValue(finalGainLossClass) }
                              ],
                         }
                       ],
@@ -229,7 +231,9 @@ export async function generatePDF(pdfMake, logoBase64) {
            const finalPortfolioValueEcrete = document.getElementById('finalPortfolioValueEcrete').textContent;
           const finalTotalEcrete = document.getElementById('finalTotalEcrete').textContent;
            const finalTotalEcreteInterest = document.getElementById('finalTotalEcreteInterest').textContent;
-          const finalGainEcrete = document.getElementById('finalGainEcrete').innerHTML;
+         const finalGainEcreteElement = document.getElementById('finalGainEcrete');
+         const finalGainEcrete = finalGainEcreteElement.textContent;
+         const finalGainEcreteClass = finalGainEcreteElement.querySelector('span').className;
            const maxLossAmountEcrete = document.getElementById('finalMaxLossAmountEcrete').textContent;
         const maxGainAmountEcrete = document.getElementById('finalMaxGainAmountEcrete').textContent;
 
@@ -244,7 +248,7 @@ export async function generatePDF(pdfMake, logoBase64) {
                           {
                               text: [
                                   'Gain ou Perte: ',
-                                   { text: finalGainEcrete, style: getStyleForValue(finalGainEcrete) }
+                                   { text: finalGainEcrete, style: getStyleForValue(finalGainEcreteClass) }
                                ],
                            }
                        ],
@@ -336,13 +340,10 @@ export async function generatePDF(pdfMake, logoBase64) {
         };
     }
         function getStyleForValue(value) {
-           const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
-            if (!isNaN(numericValue)) {
-                 return numericValue >= 0 ? 'positive' : 'negative';
-            } else {
-               const valueTest = value.replace(/<[^>]*>/g, '')
-              const numericValueTest = parseFloat(valueTest.replace(/[^\d.-]/g, ''));
-                 return numericValueTest >= 0 ? 'positive' : 'negative';
+           if(value === "positive"){
+                 return 'positive';
+            } else if (value === "negative") {
+                return 'negative';
             }
         }
 }
