@@ -199,7 +199,7 @@ export async function generatePDF(pdfMake, logoBase64) {
         }
         // Formattez les nombres avec des espaces pour les milliers
         const portfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
-        const finalGainLossPercentage = formatPercentage(document.getElementById('finalGainLossPercentage').textContent)
+        const gainLossPercentage = formatPercentage(document.getElementById('gainLossPercentage').textContent)
         const maxLossAmount = formatNumber(document.getElementById('finalMaxLossAmount').textContent);
         const maxGainAmount = formatNumber(document.getElementById('finalMaxGainAmount').textContent);
         const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
@@ -211,7 +211,7 @@ export async function generatePDF(pdfMake, logoBase64) {
                         {
                            text: [
                                 'Gain ou Perte: ',
-                              { text: finalGainLossPercentage, style: getStyleForValue(finalGainLossPercentage) }
+                              { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) }
                            ],
                        }
                    ],
