@@ -199,7 +199,7 @@ export async function generatePDF(pdfMake, logoBase64) {
         }
         // Formattez les nombres avec des espaces pour les milliers
         const portfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
-        const finalGainLossPercentage = formatPercentage(document.getElementById('finalGainLossPercentage').textContent)
+        const finalGainLossPercentage = document.getElementById('finalGainLossPercentage').textContent
         const maxLossAmount = formatNumber(document.getElementById('finalMaxLossAmount').textContent);
         const maxGainAmount = formatNumber(document.getElementById('finalMaxGainAmount').textContent);
         const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
@@ -211,7 +211,7 @@ export async function generatePDF(pdfMake, logoBase64) {
                         {
                            text: [
                                 'Gain ou Perte: ',
-                              { text: finalGainLossPercentage, style: getStyleForValue(finalGainLossPercentage) }
+                              { text: formatPercentage(finalGainLossPercentage), style: getStyleForValue(finalGainLossPercentage) }
                            ],
                        }
                    ],
@@ -236,7 +236,7 @@ export async function generatePDF(pdfMake, logoBase64) {
         const finalPortfolioValueEcrete = formatNumber(document.getElementById('finalPortfolioValueEcrete').textContent.replace(/\s/g, ''));
          const finalTotalEcrete = formatNumber(document.getElementById('finalTotalEcrete').textContent.replace(/\s/g, ''));
          const finalTotalEcreteInterest = formatNumber(document.getElementById('finalTotalEcreteInterest').textContent.replace(/\s/g, ''));
-         const finalGainEcrete = formatPercentage(document.getElementById('finalGainEcrete').textContent);
+         const finalGainEcrete = document.getElementById('finalGainEcrete').textContent;
        const maxLossAmountEcrete = formatNumber(document.getElementById('finalMaxLossAmountEcrete').textContent);
         const maxGainAmountEcrete = formatNumber(document.getElementById('finalMaxGainAmountEcrete').textContent);
          const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
@@ -251,7 +251,7 @@ export async function generatePDF(pdfMake, logoBase64) {
                          {
                             text: [
                                 'Gain ou Perte: ',
-                               { text: finalGainEcrete, style: getStyleForValue(finalGainEcrete) }
+                               { text: formatPercentage(finalGainEcrete), style: getStyleForValue(finalGainEcrete) }
                            ],
                          }
                      ],
@@ -340,18 +340,10 @@ export async function generatePDF(pdfMake, logoBase64) {
           style: 'chartContainer'
         };
     }
-    function getStyleForValue(value, isPercentage) {
+    function getStyleForValue(value) {
       const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
          if (!isNaN(numericValue)) {
               return numericValue >= 0 ? 'positive' : 'negative';
-       } else {
-             const valueTest = value.replace(/<[^>]*>/g, '')
-             const numericValueTest = parseFloat(valueTest.replace(/[^\d.-]/g, ''));
-            if (isPercentage) {
-                 return numericValueTest >= 0 ? 'positive' : 'negative';
-               } else {
-                   return numericValueTest >= 0 ? 'positive' : 'negative';
-                }
        }
     }
    function formatNumber(numberString) {
