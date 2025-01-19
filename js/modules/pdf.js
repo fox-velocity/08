@@ -199,7 +199,11 @@ export async function generatePDF(pdfMake, logoBase64) {
         }
         // Formattez les nombres avec des espaces pour les milliers
         const portfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
-        const finalGainLossPercentage = document.getElementById('finalGainLossPercentage').textContent
+        let finalGainLossPercentage = document.getElementById('finalGainLossPercentage').textContent;
+           // Diviser par 10 si ce n'est pas vide
+        if (finalGainLossPercentage) {
+            finalGainLossPercentage = (parseFloat(finalGainLossPercentage.replace(/\s/g, '').replace(',', '.').replace('%', '')) / 10).toString()
+        }
         const maxLossAmount = formatNumber(document.getElementById('finalMaxLossAmount').textContent);
         const maxGainAmount = formatNumber(document.getElementById('finalMaxGainAmount').textContent);
         const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
@@ -236,7 +240,10 @@ export async function generatePDF(pdfMake, logoBase64) {
         const finalPortfolioValueEcrete = formatNumber(document.getElementById('finalPortfolioValueEcrete').textContent.replace(/\s/g, ''));
          const finalTotalEcrete = formatNumber(document.getElementById('finalTotalEcrete').textContent.replace(/\s/g, ''));
          const finalTotalEcreteInterest = formatNumber(document.getElementById('finalTotalEcreteInterest').textContent.replace(/\s/g, ''));
-         const finalGainEcrete = document.getElementById('finalGainEcrete').textContent;
+         let finalGainEcrete = document.getElementById('finalGainEcrete').textContent;
+        if(finalGainEcrete) {
+            finalGainEcrete = (parseFloat(finalGainEcrete.replace(/\s/g, '').replace(',', '.').replace('%', ''))/10).toString()
+        }
        const maxLossAmountEcrete = formatNumber(document.getElementById('finalMaxLossAmountEcrete').textContent);
         const maxGainAmountEcrete = formatNumber(document.getElementById('finalMaxGainAmountEcrete').textContent);
          const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
