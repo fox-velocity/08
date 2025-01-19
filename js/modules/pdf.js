@@ -197,24 +197,31 @@ export async function generatePDF(pdfMake, logoBase64) {
         if (!results) {
             return {};
         }
-        // Formattez les nombres avec des espaces pour les milliers
-        const portfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
-        const gainLossPercentage = formatPercentage(document.getElementById('gainLossPercentage').textContent)
-        const maxLossAmount = formatNumber(document.getElementById('finalMaxLossAmount').textContent);
-        const maxGainAmount = formatNumber(document.getElementById('finalMaxGainAmount').textContent);
+       const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
+    // Extraire le montant et le pourcentage
+      const gainLossAmountText =  document.querySelector('#finalGainLossPercentage span:first-child').textContent
+    const gainLossPercentageText =  document.querySelector('#finalGainLossPercentage span:last-child').textContent
+    const gainLossPercentage = formatPercentage(gainLossPercentageText);
+    const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
+        const maxLossAmount = document.getElementById('finalMaxLossAmount').textContent;
+        const maxGainAmount = document.getElementById('finalMaxGainAmount').textContent;
         const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
+       
         return {
             table: {
                 body: [
-                    [`Valeur finale du portefeuille: ${portfolioValue} ${currencySymbol}`],
-                     [
+                    [`Valeur finale du portefeuille: ${finalPortfolioValue} ${currencySymbol}`],
+                    [
                         {
-                           text: [
+                            text: [
                                 'Gain ou Perte: ',
-                              { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) }
-                           ],
-                       }
-                   ],
+                               { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
+                                ' (',
+                                { text: gainLossAmount + ' ' + currencySymbol, style: getStyleForValue(gainLossAmount) },
+                                ')'
+                             ],
+                        }
+                    ],
                    [`Montant de moins-value potentielle maximale: ${maxLossAmount} ${currencySymbol}`],
                    [`Montant de plus-value potentielle maximale: ${maxGainAmount} ${currencySymbol}`]
                 ],
@@ -231,14 +238,17 @@ export async function generatePDF(pdfMake, logoBase64) {
        if (!resultsWithCapping) {
             return {};
         }
-         // Formattez les nombres avec des espaces pour les milliers
-        const portfolioValueEcreteAvecGain = formatNumber(document.getElementById('portfolioValueEcreteAvecGain').textContent.replace(/\s/g, ''));
+       const portfolioValueEcreteAvecGain = formatNumber(document.getElementById('portfolioValueEcreteAvecGain').textContent.replace(/\s/g, ''));
         const finalPortfolioValueEcrete = formatNumber(document.getElementById('finalPortfolioValueEcrete').textContent.replace(/\s/g, ''));
-         const finalTotalEcrete = formatNumber(document.getElementById('finalTotalEcrete').textContent.replace(/\s/g, ''));
-         const finalTotalEcreteInterest = formatNumber(document.getElementById('finalTotalEcreteInterest').textContent.replace(/\s/g, ''));
-         const finalGainEcrete = formatPercentage(document.getElementById('finalGainEcrete').textContent);
-       const maxLossAmountEcrete = formatNumber(document.getElementById('finalMaxLossAmountEcrete').textContent);
-        const maxGainAmountEcrete = formatNumber(document.getElementById('finalMaxGainAmountEcrete').textContent);
+       const finalTotalEcrete = formatNumber(document.getElementById('finalTotalEcrete').textContent.replace(/\s/g, ''));
+       const finalTotalEcreteInterest = formatNumber(document.getElementById('finalTotalEcreteInterest').textContent.replace(/\s/g, ''));
+       // Extraire le montant et le pourcentage
+      const finalGainLossAmountEcreteText = document.querySelector('#finalGainEcrete span:first-child').textContent
+      const finalGainLossPercentageEcreteText = document.querySelector('#finalGainEcrete span:last-child').textContent
+      const finalGainLossPercentageEcrete = formatPercentage(finalGainLossPercentageEcreteText);
+      const finalGainLossAmountEcrete = formatNumber(finalGainLossAmountEcreteText.replace(/[^\d.-]/g, ''));
+         const maxLossAmountEcrete = document.getElementById('finalMaxLossAmountEcrete').textContent;
+        const maxGainAmountEcrete = document.getElementById('finalMaxGainAmountEcrete').textContent;
          const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
         return {
             table: {
@@ -251,8 +261,11 @@ export async function generatePDF(pdfMake, logoBase64) {
                          {
                             text: [
                                 'Gain ou Perte: ',
-                               { text: finalGainEcrete, style: getStyleForValue(finalGainEcrete) }
-                           ],
+                               { text: finalGainLossPercentageEcrete, style: getStyleForValue(finalGainLossPercentageEcrete) },
+                                 ' (',
+                              { text: finalGainLossAmountEcrete + ' ' + currencySymbol, style: getStyleForValue(finalGainLossAmountEcrete) },
+                                ')'
+                            ],
                          }
                      ],
                      [`Montant de moins-value potentielle maximale: ${maxLossAmountEcrete} ${currencySymbol}`],
