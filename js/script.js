@@ -15,6 +15,7 @@ let excelData = null;
 let excelCappedDatesAndAmounts = null;
 let pdfMake = null;
 let logoBase64 = null;
+let searchTimeout = null; // Ajouter un timer pour la recherche
 
 // Initialisation au chargement de la page
 window.onload = function () {
@@ -71,36 +72,45 @@ document.getElementById('endDate').addEventListener('change', function () {
 
 
 // Recherche de symboles
-document.getElementById('searchInput').addEventListener('input', async function () {
+document.getElementById('searchInput').addEventListener('input', function () {
     const query = this.value.trim();
-    if (!query) {
-         setElementVisibility('suggestions', false);
+      clearTimeout(searchTimeout); // Annule le timeout précédent s'il existe
+       if (query.length < 3) {
+          setElementVisibility('suggestions', false);
+          setElementVisibility('results', false);
+          setElementVisibility('resultsWithCapping', false);
+          return; // Ne fait rien si moins de 3 caractères
+       }
+       searchTimeout = setTimeout(async () => {
+         if (!query) {
+          setElementVisibility('suggestions', false);
+          setElementVisibility('results', false);
+          setElementVisibility('resultsWithCapping', false);
+             return;
+         }
          setElementVisibility('results', false);
-         setElementVisibility('resultsWithCapping', false);
-        return;
-    }
-     setElementVisibility('results', false);
-     setElementVisibility('resultsWithCapping', false);
-    const suggestionsContainer = document.getElementById('suggestions');
-    suggestionsContainer.innerHTML = "Chargement...";
-    setElementVisibility('suggestions', true);
-    try {
-          const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${query}^`;
-         const yahooData = await fetchYahooData(url);
-          const results = yahooData.quotes;
-           displaySuggestions(results);
-    } catch (error) {
-        console.error("Erreur lors de la recherche : ", error);
-        suggestionsContainer.innerHTML = "Erreur lors de la recherche.";
-    } finally {
-        if (query) {
-            setElementVisibility('evolutionChartContainer', true);
-            setElementVisibility('investmentChartContainer', true);
-            setElementVisibility('results', true);
-            setElementVisibility('resultsWithCapping', true);
-             setElementVisibility('savingsChartContainer', true);
+        setElementVisibility('resultsWithCapping', false);
+          const suggestionsContainer = document.getElementById('suggestions');
+         suggestionsContainer.innerHTML = "Chargement...";
+          setElementVisibility('suggestions', true);
+        try {
+            const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${query}^`;
+            const yahooData = await fetchYahooData(url);
+              const results = yahooData.quotes;
+             displaySuggestions(results);
+       } catch (error) {
+            console.error("Erreur lors de la recherche : ", error);
+            suggestionsContainer.innerHTML = "Erreur lors de la recherche.";
+       } finally {
+            if (query) {
+                setElementVisibility('evolutionChartContainer', true);
+                setElementVisibility('investmentChartContainer', true);
+                setElementVisibility('results', true);
+                setElementVisibility('resultsWithCapping', true);
+                 setElementVisibility('savingsChartContainer', true);
+            }
         }
-    }
+    }, 300); // Délai de 300 ms
 });
 
 // Sélection d'un symbole
