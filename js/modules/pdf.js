@@ -203,9 +203,9 @@ export async function generatePDF(pdfMake, logoBase64) {
     const gainLossPercentageText =  document.querySelector('#finalGainLossPercentage span:last-child').textContent
     const gainLossPercentage = formatPercentage(gainLossPercentageText);
     const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
-        const maxLossAmountText = document.getElementById('finalMaxLossAmount').textContent;
-        const maxGainAmountText = document.getElementById('finalMaxGainAmount').textContent;
-       const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
+        const maxLossAmount = document.getElementById('finalMaxLossAmount').textContent;
+        const maxGainAmount = document.getElementById('finalMaxGainAmount').textContent;
+        const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
        
         return {
             table: {
@@ -221,14 +221,22 @@ export async function generatePDF(pdfMake, logoBase64) {
                              ],
                         }
                     ],
-                   [ { text:  `Montant de moins-value potentielle maximale: `,
-                                 },
-                                { text : maxLossAmountText + ' ' + currencySymbol, style: getStyleForValue(maxLossAmountText)}
-                      ],
-                   [  {text :`Montant de plus-value potentielle maximale: `,
-                                  },
-                       {text : maxGainAmountText + ' ' + currencySymbol, style: getStyleForValue(maxGainAmountText)}
-                    ]
+                   [
+                     {
+                       text: [
+                         'Montant de moins-value potentielle maximale: ',
+                         { text: maxLossAmount + ' ' + currencySymbol, style: getStyleForValue(maxLossAmount) }
+                       ]
+                     }
+                   ],
+                   [
+                     {
+                       text: [
+                         'Montant de plus-value potentielle maximale: ',
+                         { text: maxGainAmount + ' ' + currencySymbol, style: getStyleForValue(maxGainAmount) }
+                       ]
+                     }
+                   ]
                 ],
                  widths: ['*']
             },
@@ -252,8 +260,8 @@ export async function generatePDF(pdfMake, logoBase64) {
       const finalGainLossPercentageEcreteText = document.querySelector('#finalGainEcrete span:last-child').textContent
       const finalGainLossPercentageEcrete = formatPercentage(finalGainLossPercentageEcreteText);
       const finalGainLossAmountEcrete = formatNumber(finalGainLossAmountEcreteText.replace(/[^\d.-]/g, ''));
-         const maxLossAmountEcreteText = document.getElementById('finalMaxLossAmountEcrete').textContent;
-        const maxGainAmountEcreteText = document.getElementById('finalMaxGainAmountEcrete').textContent;
+         const maxLossAmountEcrete = document.getElementById('finalMaxLossAmountEcrete').textContent;
+        const maxGainAmountEcrete = document.getElementById('finalMaxGainAmountEcrete').textContent;
          const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
         return {
             table: {
@@ -273,13 +281,21 @@ export async function generatePDF(pdfMake, logoBase64) {
                             ],
                          }
                      ],
-                     [ {text: `Montant de moins-value potentielle maximale: `,
-                                  },
-                        {text: maxLossAmountEcreteText + ' ' + currencySymbol, style: getStyleForValue(maxLossAmountEcreteText)}
-                    ],
-                     [  {text: `Montant de plus-value potentielle maximale: `,
-                                  },
-                         {text : maxGainAmountEcreteText + ' ' + currencySymbol, style: getStyleForValue(maxGainAmountEcreteText)}
+                   [
+                     {
+                       text: [
+                         'Montant de moins-value potentielle maximale: ',
+                         { text: maxLossAmountEcrete + ' ' + currencySymbol, style: getStyleForValue(maxLossAmountEcrete) }
+                       ]
+                     }
+                   ],
+                   [
+                     {
+                       text: [
+                         'Montant de plus-value potentielle maximale: ',
+                         { text: maxGainAmountEcrete + ' ' + currencySymbol, style: getStyleForValue(maxGainAmountEcrete) }
+                       ]
+                     }
                    ]
                 ],
                 widths: ['*']
