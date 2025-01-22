@@ -426,7 +426,7 @@ export async function generatePDF(pdfMake, logoBase64) {
         }
     }
 
-    function formatNumber(numberString) {
+        function formatNumber(numberString) {
         // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
         let number = numberString.replace(/\s/g, '').replace(',', '.');
         // Convertir la chaîne de caractères en nombre
@@ -435,10 +435,10 @@ export async function generatePDF(pdfMake, logoBase64) {
         if (isNaN(number)) {
             return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
         }
-        const formattedNumber = number.toFixed(2);
-        const parts = formattedNumber.split('.');
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-        return parts.join(',');
+         const formattedNumber = number.toFixed(2);
+          const parts = formattedNumber.split('.');
+         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+         return parts.join(',');
     }
 
     function formatPercentage(numberString) {
@@ -450,7 +450,7 @@ export async function generatePDF(pdfMake, logoBase64) {
         if (isNaN(number)) {
             return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
         }
-        return number.toFixed(2).replace('.', ',') + ' %'
+        return number.toFixed(2).replace('.', ',') + ' %';
     }
 }
 window.generatePDF = generatePDF;
