@@ -222,20 +222,22 @@ export async function generatePDF(pdfMake, logoBase64) {
                         }
                     ],
                    [
-                     {
-                       text: [
-                         'Montant de moins-value potentielle maximale: ',
-                         { text: maxLossAmount + ' ' + currencySymbol, style: getStyleForValue(maxLossAmount) }
-                       ]
-                     }
-                   ],
+                    {
+                        text: [
+                            'Montant de moins-value potentielle maximale: ',
+                            { text:  maxLossAmountText.replace(/[^-\d.,]/g, '')  + ' ' + currencySymbol, style: getStyleForValue(maxLossAmountText) },
+                             maxLossAmountText.replace(/[-.\d\s€]+/, '').trim()
+                        ],
+                    }
+                  ],
                    [
-                     {
-                       text: [
-                         'Montant de plus-value potentielle maximale: ',
-                         { text: maxGainAmount + ' ' + currencySymbol, style: getStyleForValue(maxGainAmount) }
-                       ]
-                     }
+                      {
+                          text: [
+                            'Montant de plus-value potentielle maximale: ',
+                            { text: maxGainAmountText.replace(/[^-\d.,]/g, '') + ' ' + currencySymbol, style: getStyleForValue(maxGainAmountText) },
+                             maxGainAmountText.replace(/[-.\d\s€]+/, '').trim()
+                        ],
+                    }
                    ]
                 ],
                  widths: ['*']
@@ -275,27 +277,28 @@ export async function generatePDF(pdfMake, logoBase64) {
                             text: [
                                 'Gain ou Perte: ',
                                { text: finalGainLossPercentageEcrete, style: getStyleForValue(finalGainLossPercentageEcrete) },
-                                 ' (',
+                                 'soit : ',
                               { text: finalGainLossAmountEcrete + ' ' + currencySymbol, style: getStyleForValue(finalGainLossAmountEcrete) },
-                                ')'
                             ],
                          }
                      ],
                    [
-                     {
-                       text: [
-                         'Montant de moins-value potentielle maximale: ',
-                         { text: maxLossAmountEcrete + ' ' + currencySymbol, style: getStyleForValue(maxLossAmountEcrete) }
-                       ]
-                     }
-                   ],
-                   [
-                     {
-                       text: [
-                         'Montant de plus-value potentielle maximale: ',
-                         { text: maxGainAmountEcrete + ' ' + currencySymbol, style: getStyleForValue(maxGainAmountEcrete) }
-                       ]
-                     }
+                    {
+                        text: [
+                            'Montant de moins-value potentielle maximale: ',
+                            { text: maxLossAmountEcreteText.replace(/[^-\d.,]/g, '') + ' ' + currencySymbol, style: getStyleForValue(maxLossAmountEcreteText) },
+                            maxLossAmountEcreteText.replace(/[-.\d\s€]+/, '').trim()
+                        ],
+                    }
+                ],
+               [
+                    {
+                        text: [
+                             'Montant de plus-value potentielle maximale: ',
+                            { text: maxGainAmountEcreteText.replace(/[^-\d.,]/g, '') + ' ' + currencySymbol, style: getStyleForValue(maxGainAmountEcreteText) },
+                            maxGainAmountEcreteText.replace(/[-.\d\s€]+/, '').trim()
+                        ],
+                    }
                    ]
                 ],
                 widths: ['*']
