@@ -221,8 +221,8 @@ export async function generatePDF(pdfMake, logoBase64) {
                              ],
                         }
                     ],
-                   [`Montant de moins-value potentielle maximale: ${maxLossAmount} ${currencySymbol}`],
-                   [`Montant de plus-value potentielle maximale: ${maxGainAmount} ${currencySymbol}`]
+                   [`Montant de moins-value potentielle maximale: ${maxLossAmount} ${currencySymbol},style: getStyleForValue(gainLossAmount)`],
+                   [`Montant de plus-value potentielle maximale: ${maxGainAmount} ${currencySymbol},style: getStyleForValue(gainLossAmount)`]
                 ],
                  widths: ['*']
             },
