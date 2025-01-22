@@ -203,8 +203,8 @@ export async function generatePDF(pdfMake, logoBase64) {
     const gainLossPercentageText =  document.querySelector('#finalGainLossPercentage span:last-child').textContent
     const gainLossPercentage = formatPercentage(gainLossPercentageText);
     const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
-        const maxLossAmount = document.getElementById('finalMaxLossAmount').textContent;
-        const maxGainAmount = document.getElementById('finalMaxGainAmount').textContent;
+        const maxLossAmountText = document.getElementById('finalMaxLossAmount').textContent;
+        const maxGainAmountText = document.getElementById('finalMaxGainAmount').textContent;
         const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
        
         return {
@@ -226,7 +226,7 @@ export async function generatePDF(pdfMake, logoBase64) {
                         text: [
                             'Montant de moins-value potentielle maximale: ',
                             { text:  maxLossAmountText.replace(/[^-\d.,]/g, '')  + ' ' + currencySymbol, style: getStyleForValue(maxLossAmountText) },
-                             maxLossAmountText.replace(/[-.\d\s€]+/, '').trim()
+                            (maxLossAmountText.replace(/[-.\d\s€]+/, '') || '').trim()
                         ],
                     }
                   ],
@@ -235,7 +235,7 @@ export async function generatePDF(pdfMake, logoBase64) {
                           text: [
                             'Montant de plus-value potentielle maximale: ',
                             { text: maxGainAmountText.replace(/[^-\d.,]/g, '') + ' ' + currencySymbol, style: getStyleForValue(maxGainAmountText) },
-                             maxGainAmountText.replace(/[-.\d\s€]+/, '').trim()
+                            (maxGainAmountText.replace(/[-.\d\s€]+/, '') || '').trim()
                         ],
                     }
                    ]
@@ -262,8 +262,8 @@ export async function generatePDF(pdfMake, logoBase64) {
       const finalGainLossPercentageEcreteText = document.querySelector('#finalGainEcrete span:last-child').textContent
       const finalGainLossPercentageEcrete = formatPercentage(finalGainLossPercentageEcreteText);
       const finalGainLossAmountEcrete = formatNumber(finalGainLossAmountEcreteText.replace(/[^\d.-]/g, ''));
-         const maxLossAmountEcrete = document.getElementById('finalMaxLossAmountEcrete').textContent;
-        const maxGainAmountEcrete = document.getElementById('finalMaxGainAmountEcrete').textContent;
+         const maxLossAmountEcreteText = document.getElementById('finalMaxLossAmountEcrete').textContent;
+        const maxGainAmountEcreteText = document.getElementById('finalMaxGainAmountEcrete').textContent;
          const currencySymbol =  document.getElementById('currencySymbolLabel').textContent;
         return {
             table: {
@@ -287,7 +287,7 @@ export async function generatePDF(pdfMake, logoBase64) {
                         text: [
                             'Montant de moins-value potentielle maximale: ',
                             { text: maxLossAmountEcreteText.replace(/[^-\d.,]/g, '') + ' ' + currencySymbol, style: getStyleForValue(maxLossAmountEcreteText) },
-                            maxLossAmountEcreteText.replace(/[-.\d\s€]+/, '').trim()
+                            (maxLossAmountEcreteText.replace(/[-.\d\s€]+/, '') || '').trim()
                         ],
                     }
                 ],
@@ -296,7 +296,7 @@ export async function generatePDF(pdfMake, logoBase64) {
                         text: [
                              'Montant de plus-value potentielle maximale: ',
                             { text: maxGainAmountEcreteText.replace(/[^-\d.,]/g, '') + ' ' + currencySymbol, style: getStyleForValue(maxGainAmountEcreteText) },
-                            maxGainAmountEcreteText.replace(/[-.\d\s€]+/, '').trim()
+                            (maxGainAmountEcreteText.replace(/[-.\d\s€]+/, '') || '').trim()
                         ],
                     }
                    ]
