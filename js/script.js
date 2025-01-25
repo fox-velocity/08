@@ -8,6 +8,8 @@ import {  generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput } from './modules/utils.js';
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
+import logorenardBase64Gris from './logorenard.base64Gris.base64'; // <-- Import de logorenardBase64Gris
+
 
 let selectedSymbol = "";
 let currencySymbol = "";
@@ -202,7 +204,7 @@ document.getElementById('monthlyInvestment').addEventListener('input', function 
 // Gestion du téléchargement PDF
 async function generatePDFWrapper() {
     try {
-        await generatePDF(pdfMake, logoBase64);
+        await generatePDF(pdfMake, logoBase64, logorenardBase64Gris); // <-- logorenardBase64Gris ajouté ici
     } catch (error) {
         console.error('Erreur lors de la génération du PDF', error);
     }
