@@ -1,5 +1,5 @@
 // pdf.js
-export async function generatePDF(pdfMake, logoBase64, logorenardBase64Gris) {
+export async function generatePDF(pdfMake, logoBase64) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
         console.error("pdfMake n'est pas chargé");
@@ -8,20 +8,9 @@ export async function generatePDF(pdfMake, logoBase64, logorenardBase64Gris) {
 
     await waitForChart('investmentChart');
 
-    const myBackground = function() {
-            return {
-                image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAAAABJRU5ErkJggg==',
-                width: 500,
-                height: 750,
-                alignment: 'center',
-                opacity: 0.2,
-            };
-        };
-
     const docDefinition = {
         pageSize: 'A4',
         pageMargins: [15, 15, 15, 50],
-        background: myBackground,
         content: [
             { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
@@ -108,7 +97,7 @@ export async function generatePDF(pdfMake, logoBase64, logorenardBase64Gris) {
             };
         }
     };
-    
+
     // Création du pdf
     pdfMake.createPdf(docDefinition).download('investissement-chart.pdf');
 
