@@ -204,7 +204,7 @@ document.getElementById('monthlyInvestment').addEventListener('input', function 
 // Gestion du téléchargement PDF
 async function generatePDFWrapper() {
     try {
-        await generatePDF(pdfMake, logoBase64, logorenardBase64Gris); // <-- logorenardBase64Gris ajouté ici
+        await generatePDF(pdfMake, logoBase64); // <-- logorenardBase64Gris ajouté ici
     } catch (error) {
         console.error('Erreur lors de la génération du PDF', error);
     }
