@@ -1,5 +1,5 @@
 // pdf.js
-export async function generatePDF(pdfMake, logoBase64) {
+export async function generatePDF(pdfMake, logoBase64, logorenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
         console.error("pdfMake n'est pas chargé");
@@ -11,6 +11,15 @@ export async function generatePDF(pdfMake, logoBase64) {
     const docDefinition = {
         pageSize: 'A4',
         pageMargins: [15, 15, 15, 50],
+        background: function() {
+            return {
+                image: logorenardBase64Gris,
+                width: 500,
+                height: 750,
+                alignment: 'center',
+                opacity: 0.2,
+            };
+        },
         content: [
             { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
