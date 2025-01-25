@@ -8,7 +8,8 @@ import {  generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput } from './modules/utils.js';
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
-import logorenardBase64Gris from './logorenard.base64Gris.base64'; // <-- Import de logorenardBase64Gris
+import logorenardBase64Gris from './logorenard.base64Gris'; // <-- Import de logorenardBase64Gris
+
 
 
 let selectedSymbol = "";
