@@ -14,11 +14,11 @@ export async function generatePDF(pdfMake, logoBase64, logorenardBase64Gris) {
      background: function() {
         console.log("Background function called"); // Ajout de ce console.log
         return {
-            image: logorenardBase64Gris,
-            width: 500,
-            height: 750,
-            alignment: 'center',
-            opacity: 0.2,
+            image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAAAABJRU5ErkJggg==',
+             width: 500,
+             height: 750,
+             alignment: 'center',
+             opacity: 0.2,
         };
     },
         content: [
