@@ -108,9 +108,7 @@ export async function generatePDF(pdfMake, logoBase64, logorenardBase64Gris) {
             };
         }
     };
-     console.log("docDefinition:", docDefinition)
-     console.log("logorenardBase64Gris:", logorenardBase64Gris)
-
+    
     // Création du pdf
     pdfMake.createPdf(docDefinition).download('investissement-chart.pdf');
 
