@@ -11,7 +11,7 @@ export async function generatePDF(pdfMake, logoBase64, logorenardBase64Gris) {
     const docDefinition = {
         pageSize: 'A4',
         pageMargins: [15, 15, 15, 50],
-        background: function() {
+        background: function() { // <-- Correction ici : La fonction enveloppe l'objet background
             return {
                 image: logorenardBase64Gris,
                 width: 500,
