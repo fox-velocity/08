@@ -462,10 +462,13 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         }
         return number.toFixed(2).replace('.', ',') + ' %';
     }
-       // Fonction pour générer le nom du fichier
+    // Fonction pour générer le nom du fichier
     function generateFileName() {
         const now = new Date();
-        const formattedDate = now.toISOString().replace(/[-:.T]/g, '').slice(0, 14);
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+        const day = String(now.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
         return `${formattedDate}FoxVelocity.pdf`;
     }
 }
