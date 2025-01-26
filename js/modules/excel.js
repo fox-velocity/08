@@ -1,9 +1,16 @@
 // excel.js
 
 function generateFileName() {
-    const now = new Date();
-    const formattedDate = now.toISOString().replace(/[-:.T]/g, '').slice(0, 14);
-    return `${formattedDate}FoxVelocity.xlsx`;
+  const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+         const formattedTime = `${hours}${minutes}${seconds}`;
+        return `${formattedDate}-${formattedTime}-FoxVelocity.xlsx`;
 }
 
 export function generateExcelFile(chartData, cappedDatesAndAmounts, currencySymbol) {
