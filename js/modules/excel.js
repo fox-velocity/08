@@ -9,8 +9,10 @@ function generateFileName() {
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const seconds = String(now.getSeconds()).padStart(2, '0');
         const formattedDate = `${year}-${month}-${day}`;
-         const formattedTime = `${hours}${minutes}${seconds}`;
-        return `${formattedDate}-${formattedTime}-FoxVelocity.xlsx`;
+        const formattedTime = `${hours}${minutes}${seconds}`;
+        const stockSymbolElement = document.getElementById('stockSymbol');
+        const stockSymbol = stockSymbolElement ? stockSymbolElement.textContent : 'Unknown';
+        return `${formattedDate}-${stockSymbol}-${formattedTime}-FoxVelocity.xlsx`;
 }
 
 export function generateExcelFile(chartData, cappedDatesAndAmounts, currencySymbol) {
