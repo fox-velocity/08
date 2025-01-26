@@ -12,7 +12,7 @@ function generateFileName() {
         const formattedTime = `${hours}${minutes}${seconds}`;
         const stockSymbolElement = document.getElementById('stockSymbol');
         const stockSymbol = stockSymbolElement ? stockSymbolElement.textContent : 'Unknown';
-        return `${formattedDate}-${stockSymbol}-${formattedTime}-FoxVelocity.xlsx`;
+        return `${formattedDate}-${formattedTime}-${stockSymbol}-FoxVelocity.xlsx`;
 }
 
 export function generateExcelFile(chartData, cappedDatesAndAmounts, currencySymbol) {
