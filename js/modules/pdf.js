@@ -1,5 +1,5 @@
 // pdf.js
-export async function generatePDF(pdfMake, logoBase64) {
+export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
         console.error("pdfMake n'est pas chargé");
@@ -11,6 +11,16 @@ export async function generatePDF(pdfMake, logoBase64) {
     const docDefinition = {
         pageSize: 'A4',
         pageMargins: [15, 15, 15, 50],
+         background: function(currentPage, pageSize) { // Ajout de la fonction background
+            return {
+                image: logoRenardBase64Gris, // Utilisation du logo en base64
+                width: pageSize.width,    // On ajuste la largeur à la page
+                height: pageSize.height,  // On ajuste la hauteur à la page
+                absolutePosition: { x: 0, y: 0 }, // Placement en haut à gauche
+                opacity: 0.2,   // Ajustez l'opacité selon vos préférences
+                //   fit: [pageSize.width, pageSize.height], // Ajustement de l'image en fonction de la taille de la page
+             };
+        },
         content: [
             { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
