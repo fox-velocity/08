@@ -108,7 +108,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     };
 
     // Création du pdf avec un nom de fichier personnalisé
-    const fileName = generateFileName();
+    const stockData = getStockInfo();
+    const fileName = generateFileName(stockData.stockSymbol);
     pdfMake.createPdf(docDefinition).download(fileName);
 
     //fonction attente 1 graphique
@@ -137,7 +138,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const stockExchange = document.getElementById('stockExchange').textContent;
         const stockType = document.getElementById('stockType').textContent;
         const stockIndustry = document.getElementById('stockIndustry').textContent;
-        return {
+         return {
             table: {
                 body: [
                     [`Nom: ${stockName}`],
@@ -150,7 +151,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 widths: ['*']
             },
             layout: 'noBorders',
-            margin: [0, 0, 0, 10]
+            margin: [0, 0, 0, 10],
+            stockSymbol: stockSymbol // on retourne aussi le stockSymbol
         };
     }
 
@@ -462,14 +464,18 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         }
         return number.toFixed(2).replace('.', ',') + ' %';
     }
-    // Fonction pour générer le nom du fichier
-    function generateFileName() {
+      // Fonction pour générer le nom du fichier
+    function generateFileName(stockSymbol) {
         const now = new Date();
         const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+        const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
-        const formattedDate = `${year} ${month} ${day}`;
-        return `${formattedDate} FoxVelocity.pdf`;
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        const formattedTime = `${hours}${minutes}${seconds}`;
+        return `${formattedDate}-${formattedTime}-${stockSymbol}FoxVelocity.pdf`;
     }
 }
 window.generatePDF = generatePDF;
