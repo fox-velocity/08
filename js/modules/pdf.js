@@ -468,8 +468,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
         const day = String(now.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
-        return `${formattedDate}FoxVelocity.pdf`;
+        const formattedDate = `${year} ${month} ${day}`;
+        return `${formattedDate} FoxVelocity.pdf`;
     }
 }
 window.generatePDF = generatePDF;
