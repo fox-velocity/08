@@ -56,6 +56,19 @@ export function generateExcelFile(chartData, cappedDatesAndAmounts, currencySymb
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Données');
 
-     // Enregistrer le fichier Excel avec un nom dynamique
-    XLSX.writeFile(wb, generateFileName());
+    // Convertir le workbook en un tableau de bytes pour le téléchargement
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+    // Créer un Blob à partir du tableau de bytes
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+
+    // Créer un lien de téléchargement
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = generateFileName(); // Utiliser la fonction generateFileName
+    document.body.appendChild(a); // Ajouter le lien au document
+    a.click(); // Simuler un clic sur le lien pour démarrer le téléchargement
+    document.body.removeChild(a); // Supprimer le lien
+    URL.revokeObjectURL(url); // Libérer l'URL de l'objet blob
 }
