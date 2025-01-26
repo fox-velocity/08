@@ -1,7 +1,5 @@
 // excel.js
 
-import * as XLSX from 'xlsx';
-
 function generateFileName() {
     const now = new Date();
     const formattedDate = now.toISOString().replace(/[-:.T]/g, '').slice(0, 14);
