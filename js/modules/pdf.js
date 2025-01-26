@@ -475,7 +475,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const seconds = String(now.getSeconds()).padStart(2, '0');
         const formattedDate = `${year}-${month}-${day}`;
         const formattedTime = `${hours}${minutes}${seconds}`;
-        return `${formattedDate}-${formattedTime}-${stockSymbol}FoxVelocity.pdf`;
+        return `${formattedDate}-${formattedTime}-${stockSymbol}-FoxVelocity.pdf`;
     }
 }
 window.generatePDF = generatePDF;
