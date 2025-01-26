@@ -11,15 +11,14 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     const docDefinition = {
         pageSize: 'A4',
         pageMargins: [15, 15, 15, 50],
-         background: function(currentPage, pageSize) { // Ajout de la fonction background
+        background: function (currentPage, pageSize) {
             return {
-                image: logoRenardBase64Gris, // Utilisation du logo en base64
-                width: pageSize.width,    // On ajuste la largeur à la page
-                height: pageSize.height,  // On ajuste la hauteur à la page
-                absolutePosition: { x: 0, y: 0 }, // Placement en haut à gauche
-                opacity: 0.2,   // Ajustez l'opacité selon vos préférences
-                //   fit: [pageSize.width, pageSize.height], // Ajustement de l'image en fonction de la taille de la page
-             };
+                image: logoRenardBase64Gris,
+                width: pageSize.width,
+                height: pageSize.height,
+                absolutePosition: { x: 0, y: 0 },
+                opacity: 0.2,
+            };
         },
         content: [
             { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
@@ -108,8 +107,9 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         }
     };
 
-    // Création du pdf
-    pdfMake.createPdf(docDefinition).download('investissement-chart.pdf');
+    // Création du pdf avec un nom de fichier personnalisé
+    const fileName = generateFileName();
+    pdfMake.createPdf(docDefinition).download(fileName);
 
     //fonction attente 1 graphique
     function waitForChart(chartId) {
@@ -212,14 +212,14 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const gainLossPercentageText = document.querySelector('#finalGainLossPercentage span:last-child').textContent;
         const gainLossPercentage = formatPercentage(gainLossPercentageText);
         const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
-        
+
         const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
         const maxLossAmount = maxLossAmountElement.querySelector('span:first-child').textContent;
         const maxLossPercentage = maxLossAmountElement.querySelector('span:last-child').textContent;
 
         const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
         const maxGainAmount = maxGainAmountElement.querySelector('span:first-child').textContent;
-       const maxGainPercentage = maxGainAmountElement.querySelector('span:last-child').textContent;
+        const maxGainPercentage = maxGainAmountElement.querySelector('span:last-child').textContent;
 
         const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
 
@@ -244,22 +244,22 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 { text: maxLossAmount + ' ', style: getStyleForValue(maxLossAmount) },
                                 ' soit : ',
                                 { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
-                                   ' de l\'investissement au : ',
-                                    maxLossAmountElement.textContent.split('au :')[1]
+                                ' de l\'investissement au : ',
+                                maxLossAmountElement.textContent.split('au :')[1]
                             ]
-                         }
-                   ],
-                   [
+                        }
+                    ],
+                    [
                         {
                             text: [
                                 'Montant de plus-value potentielle maximale: ',
-                                 { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
-                                  ' soit : ',
+                                { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
+                                ' soit : ',
                                 { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
                                 ' de l\'investissement au : ',
                                 maxGainAmountElement.textContent.split('au :')[1]
-                           ]
-                         }
+                            ]
+                        }
                     ]
                 ],
                 widths: ['*']
@@ -286,11 +286,11 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
 
         const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
         const maxLossAmountEcrete = maxLossAmountEcreteElement.querySelector('span:first-child').textContent;
-       const maxLossPercentageEcrete = maxLossAmountEcreteElement.querySelector('span:last-child').textContent;
+        const maxLossPercentageEcrete = maxLossAmountEcreteElement.querySelector('span:last-child').textContent;
 
 
         const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
-       const maxGainAmountEcrete = maxGainAmountEcreteElement.querySelector('span:first-child').textContent;
+        const maxGainAmountEcrete = maxGainAmountEcreteElement.querySelector('span:first-child').textContent;
         const maxGainPercentageEcrete = maxGainAmountEcreteElement.querySelector('span:last-child').textContent;
         const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
 
@@ -312,15 +312,15 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         }
                     ],
                     [
-                       {
+                        {
                             text: [
                                 'Montant de moins-value potentielle maximale: ',
                                 { text: maxLossAmountEcrete + ' ', style: getStyleForValue(maxLossAmountEcrete) },
                                 ' soit : ',
-                               { text: maxLossPercentageEcrete, style: getStyleForValue(maxLossPercentageEcrete) },
+                                { text: maxLossPercentageEcrete, style: getStyleForValue(maxLossPercentageEcrete) },
                                 ' de l\'investissement au : ',
-                                  maxLossAmountEcreteElement.textContent.split('au :')[1]
-                                  ]
+                                maxLossAmountEcreteElement.textContent.split('au :')[1]
+                            ]
                         }
                     ],
                     [
@@ -328,10 +328,10 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                             text: [
                                 'Montant de plus-value potentielle maximale: ',
                                 { text: maxGainAmountEcrete + ' ', style: getStyleForValue(maxGainAmountEcrete) },
-                                   ' soit : ',
+                                ' soit : ',
                                 { text: maxGainPercentageEcrete, style: getStyleForValue(maxGainPercentageEcrete) },
                                 ' de l\'investissement au : ',
-                                 maxGainAmountEcreteElement.textContent.split('au :')[1]
+                                maxGainAmountEcreteElement.textContent.split('au :')[1]
                             ]
                         }
                     ]
@@ -436,7 +436,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         }
     }
 
-        function formatNumber(numberString) {
+    function formatNumber(numberString) {
         // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
         let number = numberString.replace(/\s/g, '').replace(',', '.');
         // Convertir la chaîne de caractères en nombre
@@ -445,10 +445,10 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         if (isNaN(number)) {
             return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
         }
-         const formattedNumber = number.toFixed(2);
-          const parts = formattedNumber.split('.');
-         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-         return parts.join(',');
+        const formattedNumber = number.toFixed(2);
+        const parts = formattedNumber.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        return parts.join(',');
     }
 
     function formatPercentage(numberString) {
@@ -461,6 +461,12 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
         }
         return number.toFixed(2).replace('.', ',') + ' %';
+    }
+       // Fonction pour générer le nom du fichier
+    function generateFileName() {
+        const now = new Date();
+        const formattedDate = now.toISOString().replace(/[-:.T]/g, '').slice(0, 14);
+        return `${formattedDate}FoxVelocity.pdf`;
     }
 }
 window.generatePDF = generatePDF;
