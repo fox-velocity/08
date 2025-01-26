@@ -17,6 +17,7 @@ let excelData = null;
 let excelCappedDatesAndAmounts = null;
 let pdfMake = null;
 let logoBase64 = null;
+let logoRenardBase64Gris = null; // Ajout de la variable pour l'image de fond
 let searchTimeout = null; // Ajouter un timer pour la recherche
 
 // Initialisation au chargement de la page
@@ -49,6 +50,14 @@ window.onload = function () {
            
         })
         .catch(error => console.error('Error loading logo:', error));
+
+    // Chargement de l'image de fond
+     fetch('./logorenard.base64Gris.base64') // Chemin vers ton fichier base64
+        .then(response => response.text())
+        .then(data => {
+            logoRenardBase64Gris = data;
+        })
+        .catch(error => console.error('Error loading background image:', error));
 };
 
 // Gestion des changements de date
@@ -204,7 +213,7 @@ document.getElementById('monthlyInvestment').addEventListener('input', function 
 // Gestion du téléchargement PDF
 async function generatePDFWrapper() {
     try {
-        await generatePDF(pdfMake, logoBase64); // <-- logorenardBase64Gris ajouté ici
+        await generatePDF(pdfMake, logoBase64, logoRenardBase64Gris); // <-- Ajout de l'image de fond en paramètre
     } catch (error) {
         console.error('Erreur lors de la génération du PDF', error);
     }
