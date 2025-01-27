@@ -42,19 +42,19 @@ window.onload = function () {
         pdfMake = window.pdfMake;
         console.log("pdfMake is ready :", pdfMake)
     };
-    fetch('./images/logoBase64')
+    fetch('./logoBase64')
         .then(response => response.text())
         .then(data => {
-            logoBase64 = "data:image/png;base64," + data;
+            logoBase64 = data;
 
         })
         .catch(error => console.error('Error loading logo:', error));
 
     // Chargement de l'image de fond
-    fetch('./images/logorenard.base64Gris.base64') // Chemin vers ton fichier base64
+    fetch('./logorenard.base64Gris.base64') // Chemin vers ton fichier base64
         .then(response => response.text())
         .then(data => {
-            logoRenardBase64Gris = "data:image/png;base64," + data;
+            logoRenardBase64Gris =  data;
         })
         .catch(error => console.error('Error loading background image:', error));
 };
