@@ -185,9 +185,8 @@ async function fetchData() {
             setElementVisibility('results', true);
             setElementVisibility('savingsChartContainer', true);
              setElementVisibility('resultsTauxFix', true);
-             setElementVisibility('download-button', document.getElementById('resultsTauxFix').style.display !== 'none');
-            setElementVisibility('download-pdf', document.getElementById('resultsTauxFix').style.display !== 'none');
-           
+        setElementVisibility('BoutonTelechargement', true);
+             
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
