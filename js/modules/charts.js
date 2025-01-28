@@ -138,6 +138,7 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
     const ctxSavings = document.getElementById('savingsChart').getContext('2d');
      let cumulativeSavings = 0;
      let savingsData = [];
+     let totalInvestments = 0; // Ajout pour calculer le total des investissements
 
      for (let i = 0; i < labels.length; i++) {
          if (i === 0) {
@@ -147,13 +148,14 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
              cumulativeSavings = cumulativeSavings * (1 + monthlyInterestRate) + (investments[i]-investments[i-1]);
              savingsData.push(cumulativeSavings - investments[i]);
          }
+        totalInvestments += investments[i]; // Accumuler les investissements
      }
-    const totalInterest = savingsData.reduce((acc, current) => acc + current, 0);
     const finalAmount = cumulativeSavings;
-
-     if (savingsChart) savingsChart.destroy();
+    const totalInterest = finalAmount - totalInvestments; // Calcul de l'intérêt total
+    
+    if (savingsChart) savingsChart.destroy();
      savingsChart = new Chart(ctxSavings, {
-         type: 'bar',
+          type: 'bar',
          data: {
              labels: labels,
              datasets: [{
@@ -221,5 +223,5 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
              }
          }
      });
-      return { totalInterest, finalAmount }; // Retourne les valeurs
+      return { totalInterest, finalAmount };
 }
