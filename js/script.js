@@ -120,6 +120,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
                 setElementVisibility('results', true);
                 setElementVisibility('resultsWithCapping', true);
                  setElementVisibility('savingsChartContainer', true);
+                setElementVisibility('resultsTauxFix', true);
             }
         }
     }, 300); // Délai de 300 ms
