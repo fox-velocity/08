@@ -148,6 +148,9 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
              savingsData.push(cumulativeSavings - investments[i]);
          }
      }
+    const totalInterest = savingsData.reduce((acc, current) => acc + current, 0);
+    const finalAmount = cumulativeSavings;
+
      if (savingsChart) savingsChart.destroy();
      savingsChart = new Chart(ctxSavings, {
          type: 'bar',
@@ -218,4 +221,5 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
              }
          }
      });
+      return { totalInterest, finalAmount }; // Retourne les valeurs
 }
