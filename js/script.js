@@ -193,6 +193,8 @@ async function fetchData() {
             setElementVisibility('investmentChartContainer', true);
             setElementVisibility('results', true);
             setElementVisibility('savingsChartContainer', true);
+            setElementVisibility('resultsTauxFix', true);
+        
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
