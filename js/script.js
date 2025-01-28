@@ -96,27 +96,11 @@ document.getElementById('searchInput').addEventListener('input', function () {
     clearTimeout(searchTimeout); // Annule le timeout précédent s'il existe
     if (query.length < 3) {
         setElementVisibility('suggestions', false);
-       setElementVisibility('results', false);
-            setElementVisibility('resultsWithCapping', false);
-             setElementVisibility('savingsChartContainer', false);
-            setElementVisibility('download-button', false);
-            setElementVisibility('download-pdf', false);
-              setElementVisibility('evolutionChartContainer', false);
-            setElementVisibility('investmentChartContainer', false);
-             setElementVisibility('resultsTauxFix', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
         if (!query) {
             setElementVisibility('suggestions', false);
-             setElementVisibility('results', false);
-            setElementVisibility('resultsWithCapping', false);
-             setElementVisibility('savingsChartContainer', false);
-            setElementVisibility('download-button', false);
-            setElementVisibility('download-pdf', false);
-              setElementVisibility('evolutionChartContainer', false);
-            setElementVisibility('investmentChartContainer', false);
-             setElementVisibility('resultsTauxFix', false);
             return;
         }
         const suggestionsContainer = document.getElementById('suggestions');
