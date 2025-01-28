@@ -6,9 +6,8 @@ import { updateStockInfo, updateResultsDisplay, updateSecuredGainsTable, display
 import { generateExcelFile } from './modules/excel.js';
 import { generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
-import { formatNumberInput } from './modules/utils.js';
+import { formatNumberInput, formatNumber } from './modules/utils.js'; // <-- Importez formatNumber ici
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
-
 
 let selectedSymbol = "";
 let currencySymbol = "";
@@ -165,7 +164,7 @@ async function fetchData() {
     try {
         const url = `https://query1.finance.yahoo.com/v8/finance/chart/${selectedSymbol}?period1=${startDate}&period2=${endDate}&interval=1mo`;
         const yahooData = await fetchYahooData(url);
-        console.log('API Response:', yahooData); // Log the API response for debugging
+          console.log('API Response:', yahooData);
         if (!yahooData.chart || !yahooData.chart.result) {
             alert('Aucune donnée disponible pour cet indice.');
             return;
@@ -178,9 +177,9 @@ async function fetchData() {
         updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
         updateEvolutionChart(chartData.labels, chartData.prices);
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-          const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
-         document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2)) + currencySymbol; // Appliquez formatNumber ici
-          document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2)) + currencySymbol;  // Appliquez formatNumber ici
+        const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+        document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2)) + currencySymbol;
+          document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2)) + currencySymbol;
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
@@ -191,7 +190,6 @@ async function fetchData() {
         showLoadingIndicator(false);
     }
 }
-
 // Gestion du téléchargement Excel
 function downloadExcel() {
     if (excelData && excelCappedDatesAndAmounts) {
