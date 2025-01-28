@@ -89,19 +89,20 @@ document.getElementById('searchInput').addEventListener('input', function () {
         setElementVisibility('suggestions', false);
         setElementVisibility('results', false);
         setElementVisibility('resultsWithCapping', false);
-         setElementVisibility('savingsChartContainer', false);
+          setElementVisibility('savingsChartContainer', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
         if (!query) {
-            setElementVisibility('suggestions', false);
-            setElementVisibility('results', false);
-            setElementVisibility('resultsWithCapping', false);
-             setElementVisibility('savingsChartContainer', false);
+             setElementVisibility('suggestions', false);
+              setElementVisibility('results', false);
+               setElementVisibility('resultsWithCapping', false);
+               setElementVisibility('savingsChartContainer', false);
             return;
         }
-        setElementVisibility('results', false);
-        setElementVisibility('resultsWithCapping', false);
+          setElementVisibility('results', false);
+          setElementVisibility('resultsWithCapping', false);
+           setElementVisibility('savingsChartContainer', false);
         const suggestionsContainer = document.getElementById('suggestions');
         suggestionsContainer.innerHTML = "Chargement...";
         setElementVisibility('suggestions', true);
@@ -113,16 +114,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
         } catch (error) {
             console.error("Erreur lors de la recherche : ", error);
             suggestionsContainer.innerHTML = "Erreur lors de la recherche.";
-        } finally {
-            if (query) {
-                setElementVisibility('evolutionChartContainer', true);
-                setElementVisibility('investmentChartContainer', true);
-                setElementVisibility('results', true);
-                setElementVisibility('resultsWithCapping', true);
-                 setElementVisibility('savingsChartContainer', true);
-                setElementVisibility('resultsTauxFix', true);
-            }
-        }
+        } 
     }, 300); // Délai de 300 ms
 });
 
@@ -183,11 +175,11 @@ async function fetchData() {
         updateEvolutionChart(chartData.labels, chartData.prices);
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
           const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
-           document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-           document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+        document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+        document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
         // Récupérer la valeur depuis le select
-       const interestRateValue = document.getElementById('interestRate').value;
-       // Mettre à jour l'affichage du taux d'intérêt
+        const interestRateValue = document.getElementById('interestRate').value;
+        // Mettre à jour l'affichage du taux d'intérêt
          document.getElementById('annual-interest-rate').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
         // Stocker les données pour le fichier excel
         excelData = chartData;
