@@ -36,6 +36,7 @@ window.onload = function () {
     setElementVisibility('download-pdf', false);
     setElementVisibility('evolutionChartContainer', false);
     setElementVisibility('investmentChartContainer', false);
+     setElementVisibility('resultsTauxFix', false);
     //pdfMake
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
@@ -95,7 +96,14 @@ document.getElementById('searchInput').addEventListener('input', function () {
     clearTimeout(searchTimeout); // Annule le timeout précédent s'il existe
     if (query.length < 3) {
         setElementVisibility('suggestions', false);
-       
+       setElementVisibility('results', false);
+            setElementVisibility('resultsWithCapping', false);
+             setElementVisibility('savingsChartContainer', false);
+            setElementVisibility('download-button', false);
+            setElementVisibility('download-pdf', false);
+              setElementVisibility('evolutionChartContainer', false);
+            setElementVisibility('investmentChartContainer', false);
+             setElementVisibility('resultsTauxFix', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
@@ -108,6 +116,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
             setElementVisibility('download-pdf', false);
               setElementVisibility('evolutionChartContainer', false);
             setElementVisibility('investmentChartContainer', false);
+             setElementVisibility('resultsTauxFix', false);
             return;
         }
         const suggestionsContainer = document.getElementById('suggestions');
@@ -187,14 +196,14 @@ async function fetchData() {
     
            // Afficher les sections de résultat et les boutons de téléchargement ici
             setElementVisibility('resultsWithCapping', true);
-            setElementVisibility('download-button', true);
-            setElementVisibility('download-pdf', true);
             setElementVisibility('evolutionChartContainer', true);
             setElementVisibility('investmentChartContainer', true);
             setElementVisibility('results', true);
             setElementVisibility('savingsChartContainer', true);
-            setElementVisibility('resultsTauxFix', true);
-        
+             setElementVisibility('resultsTauxFix', true);
+             setElementVisibility('download-button', document.getElementById('resultsTauxFix').style.display !== 'none');
+            setElementVisibility('download-pdf', document.getElementById('resultsTauxFix').style.display !== 'none');
+           
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
