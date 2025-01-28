@@ -136,25 +136,26 @@ export function updateInvestmentChart(labels, investments, portfolio, portfolioV
 
 export function updateSavingsChart(labels, investments, portfolio, monthlyInterestRate) {
     const ctxSavings = document.getElementById('savingsChart').getContext('2d');
-    let cumulativeSavings = 0;
-    let savingsData = [];
-    let totalInvestments = 0;
-    let investmentData = [];
-    
+    let cumulativeSavingsFix3 = 0;
+    let savingsDataFix3 = [];
+    let totalInvestmentsFix3 = 0;
+    let investmentDataFix3 = [];
+    let totalInterestFix3 = 0;
+
     for (let i = 0; i < labels.length; i++) {
         if (i === 0) {
-            cumulativeSavings = investments[i];
-            savingsData.push(0);
+            cumulativeSavingsFix3 = investments[i];
+            savingsDataFix3.push(0);
         } else {
-            cumulativeSavings = cumulativeSavings * (1 + monthlyInterestRate) + (investments[i] - investments[i - 1]);
-            savingsData.push(cumulativeSavings - investments[i]);
+            cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (investments[i] - investments[i - 1]);
+            savingsDataFix3.push(cumulativeSavingsFix3 - investments[i]);
         }
-        totalInvestments += investments[i];
-        investmentData.push(investments[i]);
+        totalInvestmentsFix3 += investments[i];
+        investmentDataFix3.push(investments[i]);
     }
-    
-    const finalAmount = cumulativeSavings;
-    const totalInterest = finalAmount - totalInvestments;
+
+    const finalAmountFix3 = cumulativeSavingsFix3;
+    totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
 
     if (savingsChart) savingsChart.destroy();
     savingsChart = new Chart(ctxSavings, {
@@ -163,7 +164,7 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
             labels: labels,
             datasets: [{
                     label: 'Montant investi',
-                    data: investmentData,  // Utiliser investmentData pour les montants investis
+                    data: investmentDataFix3,
                     backgroundColor: 'rgb(0, 255, 0)',
                     borderColor: 'rgb(0, 255, 0)',
                     borderWidth: 1,
@@ -173,7 +174,7 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
                 },
                 {
                     label: 'Gain taux fixe',
-                    data: savingsData,
+                    data: savingsDataFix3,
                     backgroundColor: 'rgb(0, 0, 255)',
                     stack: 'stack1',
                     yAxisID: 'y',
@@ -226,5 +227,5 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
             }
         }
     });
-        return { totalInterest, finalAmount };
+    return { totalInterest: totalInterestFix3, finalAmount: finalAmountFix3 };
 }
