@@ -28,14 +28,14 @@ window.onload = function () {
     document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
     document.getElementById('startDate').value = lastYear.toISOString().split('T')[0];
     initializeTheme();
-      // Masquer initialement les éléments
-        setElementVisibility('results', false);
-        setElementVisibility('resultsWithCapping', false);
-         setElementVisibility('savingsChartContainer', false);
-        setElementVisibility('download-button', false);
-        setElementVisibility('download-pdf', false);
-        setElementVisibility('evolutionChartContainer', false);
-        setElementVisibility('investmentChartContainer', false);
+     // Masquer initialement les éléments
+    setElementVisibility('results', false);
+    setElementVisibility('resultsWithCapping', false);
+    setElementVisibility('savingsChartContainer', false);
+    setElementVisibility('download-button', false);
+    setElementVisibility('download-pdf', false);
+    setElementVisibility('evolutionChartContainer', false);
+    setElementVisibility('investmentChartContainer', false);
     //pdfMake
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
@@ -94,12 +94,26 @@ document.getElementById('searchInput').addEventListener('input', function () {
     const query = this.value.trim();
     clearTimeout(searchTimeout); // Annule le timeout précédent s'il existe
     if (query.length < 3) {
-         setElementVisibility('suggestions', false);
+        setElementVisibility('suggestions', false);
+        setElementVisibility('results', false);
+        setElementVisibility('resultsWithCapping', false);
+        setElementVisibility('savingsChartContainer', false);
+        setElementVisibility('download-button', false);
+        setElementVisibility('download-pdf', false);
+        setElementVisibility('evolutionChartContainer', false);
+        setElementVisibility('investmentChartContainer', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
-         if (!query) {
+        if (!query) {
             setElementVisibility('suggestions', false);
+             setElementVisibility('results', false);
+            setElementVisibility('resultsWithCapping', false);
+             setElementVisibility('savingsChartContainer', false);
+            setElementVisibility('download-button', false);
+            setElementVisibility('download-pdf', false);
+              setElementVisibility('evolutionChartContainer', false);
+             setElementVisibility('investmentChartContainer', false);
             return;
         }
         const suggestionsContainer = document.getElementById('suggestions');
@@ -123,7 +137,7 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     document.getElementById('searchInput').value = symbol;
     setElementVisibility('suggestions', false);
     setElementVisibility('ModeEmploie', false);
-   
+  
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
@@ -184,7 +198,7 @@ async function fetchData() {
             setElementVisibility('evolutionChartContainer', true);
             setElementVisibility('investmentChartContainer', true);
             setElementVisibility('results', true);
-            setElementVisibility('savingsChartContainer', true);
+             setElementVisibility('savingsChartContainer', true);
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
