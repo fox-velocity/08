@@ -173,12 +173,14 @@ async function fetchData() {
         const result = yahooData.chart.result[0];
         const timestamps = result.timestamp;
         const prices = result.indicators.quote[0].close;
-        const { chartData, cappedDatesAndAmountsWithInterest, results } = calculateInvestmentData(timestamps, prices, initialInvestment, monthlyInvestment, cappingPercentage, minCappingAmount, monthlyInterestRate);
+        const { chartData, cappedDatesAndAmountsWithInterest, results } = calculateInvestmentData(timestamps, prices, initialInvestment, monthlyInvestment, cappingPercentage, minCappingAmount, monthlyInterestRate, annualInterestRate);
         updateResultsDisplay(results, currencySymbol);
         updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
         updateEvolutionChart(chartData.labels, chartData.prices);
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-        updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+          const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+        document.getElementById('total-interest').textContent = totalInterest.toFixed(2) + currencySymbol;
+          document.getElementById('final-amount').textContent = finalAmount.toFixed(2) + currencySymbol;
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
@@ -189,6 +191,7 @@ async function fetchData() {
         showLoadingIndicator(false);
     }
 }
+
 // Gestion du téléchargement Excel
 function downloadExcel() {
     if (excelData && excelCappedDatesAndAmounts) {
