@@ -95,11 +95,19 @@ document.getElementById('searchInput').addEventListener('input', function () {
     clearTimeout(searchTimeout); // Annule le timeout précédent s'il existe
     if (query.length < 3) {
         setElementVisibility('suggestions', false);
+       
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
         if (!query) {
             setElementVisibility('suggestions', false);
+             setElementVisibility('results', false);
+            setElementVisibility('resultsWithCapping', false);
+             setElementVisibility('savingsChartContainer', false);
+            setElementVisibility('download-button', false);
+            setElementVisibility('download-pdf', false);
+              setElementVisibility('evolutionChartContainer', false);
+            setElementVisibility('investmentChartContainer', false);
             return;
         }
         const suggestionsContainer = document.getElementById('suggestions');
@@ -109,11 +117,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
             const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${query}^`;
             const yahooData = await fetchYahooData(url);
             const results = yahooData.quotes;
-            if(results && results.length >0){
-                 displaySuggestions(results);
-            }else{
-                setElementVisibility('suggestions', false);
-            }
+            displaySuggestions(results);
         } catch (error) {
             console.error("Erreur lors de la recherche : ", error);
             suggestionsContainer.innerHTML = "Erreur lors de la recherche.";
