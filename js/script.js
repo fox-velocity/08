@@ -6,9 +6,8 @@ import { updateStockInfo, updateResultsDisplay, updateSecuredGainsTable, display
 import { generateExcelFile } from './modules/excel.js';
 import { generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
-import { formatNumberInput } from './modules/utils.js';
+import { formatNumberInput, formatNumber } from './modules/utils.js';
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
-
 
 let selectedSymbol = "";
 let currencySymbol = "";
@@ -89,6 +88,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
         setElementVisibility('suggestions', false);
         setElementVisibility('results', false);
         setElementVisibility('resultsWithCapping', false);
+         setElementVisibility('savingsChartContainer', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
@@ -96,6 +96,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
             setElementVisibility('suggestions', false);
             setElementVisibility('results', false);
             setElementVisibility('resultsWithCapping', false);
+             setElementVisibility('savingsChartContainer', false);
             return;
         }
         setElementVisibility('results', false);
@@ -117,7 +118,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
                 setElementVisibility('investmentChartContainer', true);
                 setElementVisibility('results', true);
                 setElementVisibility('resultsWithCapping', true);
-                setElementVisibility('savingsChartContainer', true);
+                 setElementVisibility('savingsChartContainer', true);
             }
         }
     }, 300); // Délai de 300 ms
@@ -134,6 +135,7 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     setElementVisibility('download-button', true);
     setElementVisibility('results', true);
     setElementVisibility('resultsWithCapping', true);
+     setElementVisibility('savingsChartContainer', true);
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
@@ -178,9 +180,9 @@ async function fetchData() {
         updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
         updateEvolutionChart(chartData.labels, chartData.prices);
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-          const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
-        document.getElementById('total-interest').textContent = totalInterest.toFixed(2) + currencySymbol;
-          document.getElementById('final-amount').textContent = finalAmount.toFixed(2) + currencySymbol;
+         const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+        document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2)) + currencySymbol;
+         document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2)) + currencySymbol;
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
