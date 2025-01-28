@@ -91,22 +91,22 @@ document.getElementById('searchInput').addEventListener('input', function () {
         setElementVisibility('resultsWithCapping', false);
         setElementVisibility('savingsChartContainer', false);
         setElementVisibility('download-button', false);
-         setElementVisibility('download-pdf', false);
+        setElementVisibility('download-pdf', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
         if (!query) {
-             setElementVisibility('suggestions', false);
-              setElementVisibility('results', false);
-               setElementVisibility('resultsWithCapping', false);
-               setElementVisibility('savingsChartContainer', false);
-                setElementVisibility('download-button', false);
-                setElementVisibility('download-pdf', false);
+            setElementVisibility('suggestions', false);
+            setElementVisibility('results', false);
+            setElementVisibility('resultsWithCapping', false);
+            setElementVisibility('savingsChartContainer', false);
+            setElementVisibility('download-button', false);
+             setElementVisibility('download-pdf', false);
             return;
         }
-          setElementVisibility('results', false);
-          setElementVisibility('resultsWithCapping', false);
-           setElementVisibility('savingsChartContainer', false);
+        setElementVisibility('results', false);
+        setElementVisibility('resultsWithCapping', false);
+        setElementVisibility('savingsChartContainer', false);
         const suggestionsContainer = document.getElementById('suggestions');
         suggestionsContainer.innerHTML = "Chargement...";
         setElementVisibility('suggestions', true);
@@ -118,7 +118,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
         } catch (error) {
             console.error("Erreur lors de la recherche : ", error);
             suggestionsContainer.innerHTML = "Erreur lors de la recherche.";
-        } 
+        }
     }, 300); // Délai de 300 ms
 });
 
@@ -130,17 +130,12 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     setElementVisibility('ModeEmploie', false);
     setElementVisibility('evolutionChartContainer', true);
     setElementVisibility('investmentChartContainer', true);
-    setElementVisibility('download-button', true);
     setElementVisibility('results', true);
     setElementVisibility('resultsWithCapping', true);
     setElementVisibility('savingsChartContainer', true);
-     setElementVisibility('resultsTauxFix', true);
-      console.log("before setElementVisibility download-button:", document.getElementById('download-button').style.display);
-        console.log("before setElementVisibility download-pdf:", document.getElementById('download-pdf').style.display);
+      setElementVisibility('resultsTauxFix', true);
     setElementVisibility('download-button', true);
-      setElementVisibility('download-pdf', true);
-      console.log("after setElementVisibility download-button:", document.getElementById('download-button').style.display);
-        console.log("after setElementVisibility download-pdf:", document.getElementById('download-pdf').style.display);
+     setElementVisibility('download-pdf', true);
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
@@ -172,7 +167,7 @@ async function fetchData() {
     try {
         const url = `https://query1.finance.yahoo.com/v8/finance/chart/${selectedSymbol}?period1=${startDate}&period2=${endDate}&interval=1mo`;
         const yahooData = await fetchYahooData(url);
-        console.log('API Response:', yahooData); // Log the API response for debugging
+         console.log('API Response:', yahooData);
         if (!yahooData.chart || !yahooData.chart.result) {
             alert('Aucune donnée disponible pour cet indice.');
             return;
@@ -185,13 +180,13 @@ async function fetchData() {
         updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
         updateEvolutionChart(chartData.labels, chartData.prices);
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-          const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+         const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
         document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
          document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
         // Récupérer la valeur depuis le select
         const interestRateValue = document.getElementById('interestRate').value;
         // Mettre à jour l'affichage du taux d'intérêt
-         document.getElementById('annual-interest-rate').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
+        document.getElementById('annual-interest-rate').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
