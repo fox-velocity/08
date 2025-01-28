@@ -41,6 +41,7 @@ body {
 #investmentChartContainer,
 #savingsChartContainer,
 #resultsTauxFix,
+#BoutonTelechargement,
 .download-button {
     display: none;
 }
