@@ -95,13 +95,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
     clearTimeout(searchTimeout); // Annule le timeout précédent s'il existe
     if (query.length < 3) {
         setElementVisibility('suggestions', false);
-        setElementVisibility('results', false);
-        setElementVisibility('resultsWithCapping', false);
-        setElementVisibility('savingsChartContainer', false);
-        setElementVisibility('download-button', false);
-        setElementVisibility('download-pdf', false);
-        setElementVisibility('evolutionChartContainer', false);
-        setElementVisibility('investmentChartContainer', false);
+       
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
@@ -113,7 +107,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
             setElementVisibility('download-button', false);
             setElementVisibility('download-pdf', false);
               setElementVisibility('evolutionChartContainer', false);
-             setElementVisibility('investmentChartContainer', false);
+            setElementVisibility('investmentChartContainer', false);
             return;
         }
         const suggestionsContainer = document.getElementById('suggestions');
@@ -198,7 +192,7 @@ async function fetchData() {
             setElementVisibility('evolutionChartContainer', true);
             setElementVisibility('investmentChartContainer', true);
             setElementVisibility('results', true);
-             setElementVisibility('savingsChartContainer', true);
+            setElementVisibility('savingsChartContainer', true);
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
