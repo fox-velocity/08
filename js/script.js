@@ -32,11 +32,10 @@ window.onload = function () {
     setElementVisibility('results', false);
     setElementVisibility('resultsWithCapping', false);
     setElementVisibility('savingsChartContainer', false);
-    setElementVisibility('download-button', false);
-    setElementVisibility('download-pdf', false);
     setElementVisibility('evolutionChartContainer', false);
     setElementVisibility('investmentChartContainer', false);
      setElementVisibility('resultsTauxFix', false);
+     setElementVisibility('BoutonTelechargement', false);
     //pdfMake
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
@@ -185,10 +184,8 @@ async function fetchData() {
             setElementVisibility('results', true);
             setElementVisibility('savingsChartContainer', true);
              setElementVisibility('resultsTauxFix', true);
-        setElementVisibility('BoutonTelechargement', true);
-        setElementVisibility('download-button', document.getElementById('resultsTauxFix').style.display !== 'none');
-            setElementVisibility('download-pdf', document.getElementById('resultsTauxFix').style.display !== 'none');
-             
+        setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
+
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
