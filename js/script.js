@@ -89,9 +89,9 @@ document.getElementById('searchInput').addEventListener('input', function () {
         setElementVisibility('suggestions', false);
         setElementVisibility('results', false);
         setElementVisibility('resultsWithCapping', false);
-          setElementVisibility('savingsChartContainer', false);
-          setElementVisibility('download-button', false);
-          setElementVisibility('download-pdf', false);
+        setElementVisibility('savingsChartContainer', false);
+        setElementVisibility('download-button', false);
+         setElementVisibility('download-pdf', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
@@ -134,10 +134,10 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     setElementVisibility('results', true);
     setElementVisibility('resultsWithCapping', true);
     setElementVisibility('savingsChartContainer', true);
-      setElementVisibility('resultsTauxFix', true);
-       console.log("before setElementVisibility download-button:", document.getElementById('download-button').style.display);
+     setElementVisibility('resultsTauxFix', true);
+      console.log("before setElementVisibility download-button:", document.getElementById('download-button').style.display);
         console.log("before setElementVisibility download-pdf:", document.getElementById('download-pdf').style.display);
-     setElementVisibility('download-button', true);
+    setElementVisibility('download-button', true);
       setElementVisibility('download-pdf', true);
       console.log("after setElementVisibility download-button:", document.getElementById('download-button').style.display);
         console.log("after setElementVisibility download-pdf:", document.getElementById('download-pdf').style.display);
@@ -187,7 +187,7 @@ async function fetchData() {
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
           const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
         document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-        document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+         document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
         // Récupérer la valeur depuis le select
         const interestRateValue = document.getElementById('interestRate').value;
         // Mettre à jour l'affichage du taux d'intérêt
