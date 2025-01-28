@@ -228,4 +228,5 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
         }
     });
     return { totalInterest: totalInterestFix3, finalAmount: finalAmountFix3 };
+     console.log(totalInterestFix3,)
 }
