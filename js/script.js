@@ -28,6 +28,14 @@ window.onload = function () {
     document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
     document.getElementById('startDate').value = lastYear.toISOString().split('T')[0];
     initializeTheme();
+     // Masquer initialement les éléments
+    setElementVisibility('results', false);
+    setElementVisibility('resultsWithCapping', false);
+    setElementVisibility('savingsChartContainer', false);
+    setElementVisibility('download-button', false);
+    setElementVisibility('download-pdf', false);
+    setElementVisibility('evolutionChartContainer', false);
+    setElementVisibility('investmentChartContainer', false);
     //pdfMake
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
@@ -101,7 +109,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
             const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${query}^`;
             const yahooData = await fetchYahooData(url);
             const results = yahooData.quotes;
-             if(results && results.length >0){
+            if(results && results.length >0){
                  displaySuggestions(results);
             }else{
                 setElementVisibility('suggestions', false);
@@ -220,7 +228,7 @@ async function generatePDFWrapper() {
         console.error('Erreur lors de la génération du PDF', error);
     }
 }
-document.getElementById('download-pdf').addEventListener('click, generatePDFWrapper);
+document.getElementById('download-pdf').addEventListener('click', generatePDFWrapper);
 
 // Rendre generatePDFWrapper accessible globalement
 window.generatePDFWrapper = generatePDFWrapper;
