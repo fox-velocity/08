@@ -187,7 +187,7 @@ async function fetchData() {
         // Récupérer la valeur depuis le select
        const interestRateValue = document.getElementById('interestRate').value;
        // Mettre à jour l'affichage du taux d'intérêt
-        document.getElementById('annual-interest-rate').textContent = (parseFloat(interestRateValue) * 100).toFixed(2) + '%';
+        document.getElementById('annual-interest-rate').textContent = (parseFloat(interestRateValue) * 100).toFixed(2) replace('.', ',')) +' '+'%';
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
