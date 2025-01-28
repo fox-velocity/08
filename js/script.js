@@ -18,9 +18,6 @@ let pdfMake = null;
 let logoBase64 = null;
 let logoRenardBase64Gris = null; // Ajout de la variable pour l'image de fond
 let searchTimeout = null; // Ajouter un timer pour la recherche
-// Initialisation de la visibilité des boutons
- setElementVisibility('download-button', false);
-  setElementVisibility('download-pdf', false);
 
 // Initialisation au chargement de la page
 window.onload = function () {
@@ -103,8 +100,8 @@ document.getElementById('searchInput').addEventListener('input', function () {
               setElementVisibility('results', false);
                setElementVisibility('resultsWithCapping', false);
                setElementVisibility('savingsChartContainer', false);
-                 setElementVisibility('download-button', false);
-                 setElementVisibility('download-pdf', false);
+                setElementVisibility('download-button', false);
+                setElementVisibility('download-pdf', false);
             return;
         }
           setElementVisibility('results', false);
@@ -137,9 +134,9 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     setElementVisibility('results', true);
     setElementVisibility('resultsWithCapping', true);
     setElementVisibility('savingsChartContainer', true);
-     setElementVisibility('resultsTauxFix', true);
+      setElementVisibility('resultsTauxFix', true);
     setElementVisibility('download-button', true);
-    setElementVisibility('download-pdf', true);
+      setElementVisibility('download-pdf', true);
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
@@ -186,7 +183,7 @@ async function fetchData() {
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
           const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
         document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-        document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+         document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
         // Récupérer la valeur depuis le select
         const interestRateValue = document.getElementById('interestRate').value;
         // Mettre à jour l'affichage du taux d'intérêt
@@ -248,3 +245,8 @@ window.toggleTheme = toggleTheme; //  ajout pour rendre la fonction accesible gl
 // Gestionnaire d'événement pour le bouton de téléchargement Excel
 const downloadButton = document.getElementById('download-button');
 downloadButton.addEventListener('click', downloadExcel);
+// Exécuter la logique de masquage des boutons au chargement du script
+   window.addEventListener('load', () => {
+            setElementVisibility('download-button', false);
+            setElementVisibility('download-pdf', false);
+       });
