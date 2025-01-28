@@ -140,7 +140,7 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
     let savingsData = [];
     let totalInvestments = 0;
     let investmentData = []; // Ajout du tableau pour stocker les montants investis à chaque période
-    let finalInterest = 0;
+    let totalInterest = 0; // On remet totalInterest
 
     for (let i = 0; i < labels.length; i++) {
         if (i === 0) {
@@ -155,7 +155,8 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
     }
 
     const finalAmount = cumulativeSavings;
-    finalInterest = finalAmount - totalInvestments;
+    totalInterest = finalAmount - totalInvestments; // Calcul correct de l'intérêt total
+
     if (savingsChart) savingsChart.destroy();
     savingsChart = new Chart(ctxSavings, {
         type: 'bar',
@@ -227,7 +228,7 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
         }
     });
     return {
-        totalInterest:finalInterest,
+        totalInterest,
         finalAmount
     };
 }
