@@ -142,6 +142,8 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
     let investmentDataFix3 = [];
     let totalInterestFix3 = 0;
 
+    console.log("Début du calcul du placement à taux fixe");
+
     for (let i = 0; i < labels.length; i++) {
         if (i === 0) {
             cumulativeSavingsFix3 = investments[i];
@@ -150,16 +152,26 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
             cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (investments[i] - investments[i - 1]);
             savingsDataFix3.push(cumulativeSavingsFix3 - investments[i]);
         }
-        totalInvestmentsFix3 += investments[i];
+         totalInvestmentsFix3 += investments[i];
         investmentDataFix3.push(investments[i]);
+       
+        console.log(`Mois ${i + 1}:`);
+        console.log(`  Investissement: ${investments[i]}`);
+        console.log(`  cumulativeSavingsFix3: ${cumulativeSavingsFix3}`);
+         console.log(`  savingsDataFix3: ${savingsDataFix3[i]}`);
+         console.log(`  totalInvestmentsFix3: ${totalInvestmentsFix3}`);
     }
 
     const finalAmountFix3 = cumulativeSavingsFix3;
     totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
+     console.log("Fin du calcul du placement à taux fixe");
+    console.log(`  Valeur finale du portefeuille: ${finalAmountFix3}`);
+    console.log(`  Total des intérêts: ${totalInterestFix3}`);
+
 
     if (savingsChart) savingsChart.destroy();
     savingsChart = new Chart(ctxSavings, {
-        type: 'bar',
+         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
@@ -228,5 +240,4 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
         }
     });
     return { totalInterest: totalInterestFix3, finalAmount: finalAmountFix3 };
-     console.log(totalInterestFix3,)
 }
