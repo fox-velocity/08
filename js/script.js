@@ -18,12 +18,7 @@ let pdfMake = null;
 let logoBase64 = null;
 let logoRenardBase64Gris = null; // Ajout de la variable pour l'image de fond
 let searchTimeout = null; // Ajouter un timer pour la recherche
- document.addEventListener('DOMContentLoaded', () => {
-        setElementVisibility('download-button', false);
-        setElementVisibility('download-pdf', false);
-        console.log("DOMContentLoaded: download-button visible : ", document.getElementById('download-button').style.display);
-         console.log("DOMContentLoaded: download-pdf visible : ", document.getElementById('download-pdf').style.display);
-    });
+
 // Initialisation au chargement de la page
 window.onload = function () {
     const today = new Date();
@@ -95,8 +90,8 @@ document.getElementById('searchInput').addEventListener('input', function () {
         setElementVisibility('results', false);
         setElementVisibility('resultsWithCapping', false);
           setElementVisibility('savingsChartContainer', false);
-           setElementVisibility('download-button', false);
-          setElementVisibility('download-pdf', false);
+          setElementVisibility('download-button', false);
+            setElementVisibility('download-pdf', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
@@ -105,8 +100,8 @@ document.getElementById('searchInput').addEventListener('input', function () {
               setElementVisibility('results', false);
                setElementVisibility('resultsWithCapping', false);
                 setElementVisibility('savingsChartContainer', false);
-                  setElementVisibility('download-button', false);
-                   setElementVisibility('download-pdf', false);
+                 setElementVisibility('download-button', false);
+                     setElementVisibility('download-pdf', false);
             return;
         }
           setElementVisibility('results', false);
@@ -138,7 +133,8 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     setElementVisibility('results', true);
     setElementVisibility('resultsWithCapping', true);
       setElementVisibility('savingsChartContainer', true);
-     setElementVisibility('resultsTauxFix', true);
+      setElementVisibility('resultsTauxFix', true);
+   
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
@@ -185,8 +181,8 @@ async function fetchData() {
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
           const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
         document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-        document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-         // Récupérer la valeur depuis le select
+         document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+        // Récupérer la valeur depuis le select
         const interestRateValue = document.getElementById('interestRate').value;
         // Mettre à jour l'affichage du taux d'intérêt
          document.getElementById('annual-interest-rate').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
@@ -198,8 +194,8 @@ async function fetchData() {
         alert('Erreur lors de la récupération des données. Veuillez réessayer.');
     } finally {
         showLoadingIndicator(false);
-          setElementVisibility('download-button', true);
-           setElementVisibility('download-pdf', true);
+           setElementVisibility('download-button', true);
+            setElementVisibility('download-pdf', true);
     }
 }
 
