@@ -138,7 +138,7 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
     const ctxSavings = document.getElementById('savingsChart').getContext('2d');
     let cumulativeSavingsFix3 = 0;
     let savingsDataFix3 = [];
-    let totalInvestmentsFix3 = 0;
+    let totalInvestmentsFix3 = 0; // Initialisé à 0 au début
     let investmentDataFix3 = [];
     let totalInterestFix3 = 0;
 
@@ -152,18 +152,22 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
             cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (investments[i] - investments[i - 1]);
             savingsDataFix3.push(cumulativeSavingsFix3 - investments[i]);
         }
-         totalInvestmentsFix3 += investments[i];
-        investmentDataFix3.push(investments[i]);
-       
+         investmentDataFix3.push(investments[i]);
+      
         console.log(`Mois ${i + 1}:`);
         console.log(`  Investissement: ${investments[i]}`);
         console.log(`  cumulativeSavingsFix3: ${cumulativeSavingsFix3}`);
          console.log(`  savingsDataFix3: ${savingsDataFix3[i]}`);
-         console.log(`  totalInvestmentsFix3: ${totalInvestmentsFix3}`);
-    }
 
+    }
+    
+      for (let i = 0; i < investments.length; i++) {
+          totalInvestmentsFix3 += investments[i]; // Incrémentation à la fin
+      }
+     console.log(`totalInvestmentsFix3: ${totalInvestmentsFix3}`);
     const finalAmountFix3 = cumulativeSavingsFix3;
     totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
+
      console.log("Fin du calcul du placement à taux fixe");
     console.log(`  Valeur finale du portefeuille: ${finalAmountFix3}`);
     console.log(`  Total des intérêts: ${totalInterestFix3}`);
@@ -171,7 +175,7 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
 
     if (savingsChart) savingsChart.destroy();
     savingsChart = new Chart(ctxSavings, {
-         type: 'bar',
+          type: 'bar',
         data: {
             labels: labels,
             datasets: [{
