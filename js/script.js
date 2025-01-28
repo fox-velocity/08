@@ -18,7 +18,12 @@ let pdfMake = null;
 let logoBase64 = null;
 let logoRenardBase64Gris = null; // Ajout de la variable pour l'image de fond
 let searchTimeout = null; // Ajouter un timer pour la recherche
-
+ document.addEventListener('DOMContentLoaded', () => {
+        setElementVisibility('download-button', false);
+        setElementVisibility('download-pdf', false);
+        console.log("DOMContentLoaded: download-button visible : ", document.getElementById('download-button').style.display);
+         console.log("DOMContentLoaded: download-pdf visible : ", document.getElementById('download-pdf').style.display);
+    });
 // Initialisation au chargement de la page
 window.onload = function () {
     const today = new Date();
@@ -57,8 +62,6 @@ window.onload = function () {
             logoRenardBase64Gris =  data;
         })
         .catch(error => console.error('Error loading background image:', error));
-          setElementVisibility('download-button', false);
-        setElementVisibility('download-pdf', false);
 };
 
 // Gestion des changements de date
@@ -91,24 +94,24 @@ document.getElementById('searchInput').addEventListener('input', function () {
         setElementVisibility('suggestions', false);
         setElementVisibility('results', false);
         setElementVisibility('resultsWithCapping', false);
-        setElementVisibility('savingsChartContainer', false);
-          setElementVisibility('download-button', false);
-          setElementVisibility('download-pdf', false);
+          setElementVisibility('savingsChartContainer', false);
+            setElementVisibility('download-button', false);
+            setElementVisibility('download-pdf', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
         if (!query) {
-            setElementVisibility('suggestions', false);
-            setElementVisibility('results', false);
-            setElementVisibility('resultsWithCapping', false);
-            setElementVisibility('savingsChartContainer', false);
-              setElementVisibility('download-button', false);
-             setElementVisibility('download-pdf', false);
+             setElementVisibility('suggestions', false);
+              setElementVisibility('results', false);
+               setElementVisibility('resultsWithCapping', false);
+               setElementVisibility('savingsChartContainer', false);
+                 setElementVisibility('download-button', false);
+                  setElementVisibility('download-pdf', false);
             return;
         }
-        setElementVisibility('results', false);
-        setElementVisibility('resultsWithCapping', false);
-         setElementVisibility('savingsChartContainer', false);
+          setElementVisibility('results', false);
+          setElementVisibility('resultsWithCapping', false);
+           setElementVisibility('savingsChartContainer', false);
         const suggestionsContainer = document.getElementById('suggestions');
         suggestionsContainer.innerHTML = "Chargement...";
         setElementVisibility('suggestions', true);
@@ -132,13 +135,14 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     setElementVisibility('ModeEmploie', false);
     setElementVisibility('evolutionChartContainer', true);
     setElementVisibility('investmentChartContainer', true);
-    setElementVisibility('download-button', true);
     setElementVisibility('results', true);
     setElementVisibility('resultsWithCapping', true);
-    setElementVisibility('savingsChartContainer', true);
-     setElementVisibility('resultsTauxFix', true);
-      setElementVisibility('download-button', true);
+     setElementVisibility('savingsChartContainer', true);
+      setElementVisibility('resultsTauxFix', true);
+    setElementVisibility('download-button', true);
       setElementVisibility('download-pdf', true);
+    console.log("selectSymbol download-button visible : ", document.getElementById('download-button').style.display);
+      console.log("selectSymbol download-pdf visible : ", document.getElementById('download-pdf').style.display);
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
@@ -183,7 +187,7 @@ async function fetchData() {
         updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
         updateEvolutionChart(chartData.labels, chartData.prices);
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-        const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+          const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
         document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
         document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
          // Récupérer la valeur depuis le select
