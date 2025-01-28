@@ -179,8 +179,8 @@ async function fetchData() {
         updateEvolutionChart(chartData.labels, chartData.prices);
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
           const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
-        document.getElementById('total-interest').textContent = totalInterest.toFixed(2) + currencySymbol;
-          document.getElementById('final-amount').textContent = finalAmount.toFixed(2) + currencySymbol;
+         document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2)) + currencySymbol; // Appliquez formatNumber ici
+          document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2)) + currencySymbol;  // Appliquez formatNumber ici
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
