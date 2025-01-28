@@ -180,9 +180,9 @@ async function fetchData() {
         updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
         updateEvolutionChart(chartData.labels, chartData.prices);
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-         const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
-        document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2)) + currencySymbol;
-         document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2)) + currencySymbol;
+          const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+       document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + currencySymbol;
+          document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + currencySymbol;
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
