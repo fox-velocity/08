@@ -129,7 +129,8 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     setElementVisibility('download-button', true);
     setElementVisibility('results', true);
     setElementVisibility('resultsWithCapping', true);
-     setElementVisibility('savingsChartContainer', true);
+    setElementVisibility('savingsChartContainer', true);
+    setElementVisibility('resultsTauxFix', true);
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
