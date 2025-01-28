@@ -9,6 +9,7 @@ import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput, formatNumber } from './modules/utils.js';
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
 
+
 let selectedSymbol = "";
 let currencySymbol = "";
 let excelData = null;
@@ -180,11 +181,13 @@ async function fetchData() {
         updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
         updateEvolutionChart(chartData.labels, chartData.prices);
         updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-          const { totalInterest, finalAmount,interestRate } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
-        document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-        document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-       document.getElementById('interestRate').textContent = formatNumber(interestRate.toFixed(2).replace('.', ',')) + ' ' + '%';
-        
+          const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+           document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+           document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+        // Récupérer la valeur depuis le select
+       const interestRateValue = document.getElementById('interestRate').value;
+       // Mettre à jour l'affichage du taux d'intérêt
+        document.getElementById('annual-interest-rate').textContent = (parseFloat(interestRateValue) * 100).toFixed(2) + '%';
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
