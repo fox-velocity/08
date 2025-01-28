@@ -175,7 +175,7 @@ async function fetchData() {
            // Récupérer la valeur depuis le select
            const interestRateValue = document.getElementById('interestRate').value;
            // Mettre à jour l'affichage du taux d'intérêt
-           document.getElementById('totalInterestFix3').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
+           document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
     
            // Afficher les sections de résultat et les boutons de téléchargement ici
             setElementVisibility('resultsWithCapping', true);
