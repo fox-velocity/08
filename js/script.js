@@ -18,6 +18,9 @@ let pdfMake = null;
 let logoBase64 = null;
 let logoRenardBase64Gris = null; // Ajout de la variable pour l'image de fond
 let searchTimeout = null; // Ajouter un timer pour la recherche
+// Initialisation de la visibilité des boutons
+ setElementVisibility('download-button', false);
+  setElementVisibility('download-pdf', false);
 
 // Initialisation au chargement de la page
 window.onload = function () {
@@ -90,6 +93,8 @@ document.getElementById('searchInput').addEventListener('input', function () {
         setElementVisibility('results', false);
         setElementVisibility('resultsWithCapping', false);
           setElementVisibility('savingsChartContainer', false);
+          setElementVisibility('download-button', false);
+          setElementVisibility('download-pdf', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
@@ -98,6 +103,8 @@ document.getElementById('searchInput').addEventListener('input', function () {
               setElementVisibility('results', false);
                setElementVisibility('resultsWithCapping', false);
                setElementVisibility('savingsChartContainer', false);
+                 setElementVisibility('download-button', false);
+                 setElementVisibility('download-pdf', false);
             return;
         }
           setElementVisibility('results', false);
@@ -130,7 +137,9 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     setElementVisibility('results', true);
     setElementVisibility('resultsWithCapping', true);
     setElementVisibility('savingsChartContainer', true);
-    setElementVisibility('resultsTauxFix', true);
+     setElementVisibility('resultsTauxFix', true);
+    setElementVisibility('download-button', true);
+    setElementVisibility('download-pdf', true);
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
