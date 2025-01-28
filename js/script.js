@@ -28,6 +28,14 @@ window.onload = function () {
     document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
     document.getElementById('startDate').value = lastYear.toISOString().split('T')[0];
     initializeTheme();
+      // Masquer initialement les éléments
+        setElementVisibility('results', false);
+        setElementVisibility('resultsWithCapping', false);
+         setElementVisibility('savingsChartContainer', false);
+        setElementVisibility('download-button', false);
+        setElementVisibility('download-pdf', false);
+        setElementVisibility('evolutionChartContainer', false);
+        setElementVisibility('investmentChartContainer', false);
     //pdfMake
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
@@ -86,11 +94,11 @@ document.getElementById('searchInput').addEventListener('input', function () {
     const query = this.value.trim();
     clearTimeout(searchTimeout); // Annule le timeout précédent s'il existe
     if (query.length < 3) {
-        setElementVisibility('suggestions', false);
+         setElementVisibility('suggestions', false);
         return; // Ne fait rien si moins de 3 caractères
     }
     searchTimeout = setTimeout(async () => {
-        if (!query) {
+         if (!query) {
             setElementVisibility('suggestions', false);
             return;
         }
@@ -115,7 +123,7 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     document.getElementById('searchInput').value = symbol;
     setElementVisibility('suggestions', false);
     setElementVisibility('ModeEmploie', false);
-
+   
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
@@ -169,7 +177,7 @@ async function fetchData() {
            // Mettre à jour l'affichage du taux d'intérêt
            document.getElementById('annual-interest-rate').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
     
-           // Déplacer ces lignes ici
+           // Afficher les sections de résultat et les boutons de téléchargement ici
             setElementVisibility('resultsWithCapping', true);
             setElementVisibility('download-button', true);
             setElementVisibility('download-pdf', true);
@@ -177,8 +185,6 @@ async function fetchData() {
             setElementVisibility('investmentChartContainer', true);
             setElementVisibility('results', true);
             setElementVisibility('savingsChartContainer', true);
-
-
         // Stocker les données pour le fichier excel
         excelData = chartData;
         excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
