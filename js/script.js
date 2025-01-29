@@ -169,14 +169,11 @@ async function fetchData() {
            updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
            updateEvolutionChart(chartData.labels, chartData.prices);
            updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-           const { totalInterest, finalAmount } = updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
-            document.getElementById('total-interest').textContent = formatNumber(totalInterest.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-            document.getElementById('final-amount').textContent = formatNumber(finalAmount.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-           // Récupérer la valeur depuis le select
+           updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+            // Mettre à jour l'affichage du taux d'intérêt
            const interestRateValue = document.getElementById('interestRate').value;
-           // Mettre à jour l'affichage du taux d'intérêt
-           document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
-    
+          document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
+           
            // Afficher les sections de résultat et les boutons de téléchargement ici
             setElementVisibility('resultsWithCapping', true);
             setElementVisibility('evolutionChartContainer', true);
