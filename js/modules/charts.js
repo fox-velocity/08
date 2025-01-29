@@ -223,5 +223,5 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
              }
          }
      });
-    // On ne retourne plus rien
+  return { lastCumulativeSavings, lastInvestment, gainTauxFixe };
 }
