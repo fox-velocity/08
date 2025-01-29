@@ -1,4 +1,4 @@
-// pdf.js
+// pdf.js 23 06
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -63,15 +63,15 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 fillColor: '#dddddd',
                 margin: [0, 5, 0, 5]
             },
-            tableCell: {
-                fontSize: 8,
-                margin: [0, 5, 0, 5]
-             },
-             tableCellRight: {
-                fontSize: 8,
-                margin: [0, 5, 0, 5],
+             tableCell: {
+                 fontSize: 8,
+                 margin: [0, 5, 0, 5]
+              },
+            tableCellRight: {
+                 fontSize: 8,
+                 margin: [0, 5, 0, 5],
                  alignment: 'right'
-           },
+            },
             positive: {
                 color: 'green'
             },
@@ -162,29 +162,28 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             stockSymbol: stockSymbol // on retourne aussi le stockSymbol
         };
     }
-
-   function getTopResults() {
+ function getTopResults() {
         const topResults = document.getElementById('topResults');
         if (!topResults) {
             return {};
         }
         // Formattez les nombres avec des espaces pour les milliers
-        const totalInvested = formatNumber(document.getElementById('finalTotalInvested').textContent.replace(/\s/g, ''));
-        const investmentDuration = document.getElementById('finalNumberOfPayments').textContent;
-        const stockChangePercentage = formatPercentage(document.getElementById('finalStockChangePercentage').textContent)
-        const startDate = document.getElementById('startDate').value;
-        const endDate = document.getElementById('endDate').value;
-        const initialInvestment = formatNumber(document.getElementById('initialInvestment').value);
-        const monthlyInvestment = formatNumber(document.getElementById('monthlyInvestment').value);
-        const interestRate = document.getElementById('interestRate').value;
-        const cappingPercentage = document.getElementById('cappingPercentage').value;
-        const minCappingAmount = document.getElementById('minCappingAmount').value;
-        const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
+        const totalInvested = formatNumber(document.getElementById('finalTotalInvested')?.textContent?.replace(/\s/g, '') || '-');
+        const investmentDuration = document.getElementById('finalNumberOfPayments')?.textContent || '-';
+        const stockChangePercentage = formatPercentage(document.getElementById('finalStockChangePercentage')?.textContent || '-')
+        const startDate = document.getElementById('startDate')?.value || '-';
+        const endDate = document.getElementById('endDate')?.value || '-';
+        const initialInvestment = formatNumber(document.getElementById('initialInvestment')?.value || '-');
+        const monthlyInvestment = formatNumber(document.getElementById('monthlyInvestment')?.value || '-');
+        const interestRate = document.getElementById('interestRate')?.value || '-';
+        const cappingPercentage = document.getElementById('cappingPercentage')?.value || '-';
+        const minCappingAmount = document.getElementById('minCappingAmount')?.value || '-';
+        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
 
         return {
             table: {
                 body: [
-                     [  {text : `Total investi:`, style: 'tableCell'}, {text : `${totalInvested} ${currencySymbol}`, style: 'tableCellRight'} ],
+                    [  {text : `Total investi:`, style: 'tableCell'}, {text : `${totalInvested} ${currencySymbol}`, style: 'tableCellRight'} ],
                     [ {text : `Durée investissement:`, style: 'tableCell'}, {text : `${investmentDuration}`, style: 'tableCellRight'} ],
                     [
                         {
@@ -216,21 +215,22 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         if (!results) {
             return {};
         }
-        const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
-        const gainLossAmountText = document.querySelector('#finalGainLossPercentage span:first-child').textContent;
-        const gainLossPercentageText = document.querySelector('#finalGainLossPercentage span:last-child').textContent;
+         const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue')?.textContent?.replace(/\s/g, '') || '-');
+        const gainLossAmountText = document.querySelector('#finalGainLossPercentage span:first-child')?.textContent || '-';
+        const gainLossPercentageText = document.querySelector('#finalGainLossPercentage span:last-child')?.textContent || '-';
         const gainLossPercentage = formatPercentage(gainLossPercentageText);
         const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
 
+
         const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
-        const maxLossAmount = maxLossAmountElement.querySelector('span:first-child').textContent;
-        const maxLossPercentage = maxLossAmountElement.querySelector('span:last-child').textContent;
+        const maxLossAmount = maxLossAmountElement?.querySelector('span:first-child')?.textContent || '-';
+        const maxLossPercentage = maxLossAmountElement?.querySelector('span:last-child')?.textContent || '-';
 
         const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
-        const maxGainAmount = maxGainAmountElement.querySelector('span:first-child').textContent;
-        const maxGainPercentage = maxGainAmountElement.querySelector('span:last-child').textContent;
+        const maxGainAmount = maxGainAmountElement?.querySelector('span:first-child')?.textContent || '-';
+        const maxGainPercentage = maxGainAmountElement?.querySelector('span:last-child')?.textContent || '-';
 
-        const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
+        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
 
         return {
             table: {
@@ -254,7 +254,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 ' soit : ',
                                 { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
                                 ' de l\'investissement au : ',
-                                maxLossAmountElement.textContent.split('au :')[1]
+                                maxLossAmountElement?.textContent?.split('au :')[1] || '-'
                             ]
                         }
                     ],
@@ -266,7 +266,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 ' soit : ',
                                 { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
                                 ' de l\'investissement au : ',
-                                maxGainAmountElement.textContent.split('au :')[1]
+                                maxGainAmountElement?.textContent?.split('au :')[1] || '-'
                             ]
                         }
                     ]
@@ -283,24 +283,24 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         if (!resultsWithCapping) {
             return {};
         }
-        const portfolioValueEcreteAvecGain = formatNumber(document.getElementById('portfolioValueEcreteAvecGain').textContent.replace(/\s/g, ''));
-        const finalPortfolioValueEcrete = formatNumber(document.getElementById('finalPortfolioValueEcrete').textContent.replace(/\s/g, ''));
-        const finalTotalEcrete = formatNumber(document.getElementById('finalTotalEcrete').textContent.replace(/\s/g, ''));
-        const finalTotalEcreteInterest = formatNumber(document.getElementById('finalTotalEcreteInterest').textContent.replace(/\s/g, ''));
-        const finalGainLossAmountEcreteText = document.querySelector('#finalGainEcrete span:first-child').textContent;
-        const finalGainLossPercentageEcreteText = document.querySelector('#finalGainEcrete span:last-child').textContent;
+        const portfolioValueEcreteAvecGain = formatNumber(document.getElementById('portfolioValueEcreteAvecGain')?.textContent?.replace(/\s/g, '') || '-');
+        const finalPortfolioValueEcrete = formatNumber(document.getElementById('finalPortfolioValueEcrete')?.textContent?.replace(/\s/g, '') || '-');
+        const finalTotalEcrete = formatNumber(document.getElementById('finalTotalEcrete')?.textContent?.replace(/\s/g, '') || '-');
+        const finalTotalEcreteInterest = formatNumber(document.getElementById('finalTotalEcreteInterest')?.textContent?.replace(/\s/g, '') || '-');
+        const finalGainLossAmountEcreteText = document.querySelector('#finalGainEcrete span:first-child')?.textContent || '-';
+        const finalGainLossPercentageEcreteText = document.querySelector('#finalGainEcrete span:last-child')?.textContent || '-';
         const finalGainLossPercentageEcrete = formatPercentage(finalGainLossPercentageEcreteText);
         const finalGainLossAmountEcrete = formatNumber(finalGainLossAmountEcreteText.replace(/[^\d.-]/g, ''));
 
         const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
-        const maxLossAmountEcrete = maxLossAmountEcreteElement.querySelector('span:first-child').textContent;
-        const maxLossPercentageEcrete = maxLossAmountEcreteElement.querySelector('span:last-child').textContent;
+        const maxLossAmountEcrete = maxLossAmountEcreteElement?.querySelector('span:first-child')?.textContent || '-';
+        const maxLossPercentageEcrete = maxLossAmountEcreteElement?.querySelector('span:last-child')?.textContent || '-';
 
 
         const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
-        const maxGainAmountEcrete = maxGainAmountEcreteElement.querySelector('span:first-child').textContent;
-        const maxGainPercentageEcrete = maxGainAmountEcreteElement.querySelector('span:last-child').textContent;
-        const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
+        const maxGainAmountEcrete = maxGainAmountEcreteElement?.querySelector('span:first-child')?.textContent || '-';
+        const maxGainPercentageEcrete = maxGainAmountEcreteElement?.querySelector('span:last-child')?.textContent || '-';
+        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
 
         return {
             table: {
@@ -327,7 +327,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 ' soit : ',
                                 { text: maxLossPercentageEcrete, style: getStyleForValue(maxLossPercentageEcrete) },
                                 ' de l\'investissement au : ',
-                                maxLossAmountEcreteElement.textContent.split('au :')[1]
+                                maxLossAmountEcreteElement?.textContent?.split('au :')[1]
                             ]
                         }
                     ],
@@ -339,19 +339,19 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 ' soit : ',
                                 { text: maxGainPercentageEcrete, style: getStyleForValue(maxGainPercentageEcrete) },
                                 ' de l\'investissement au : ',
-                                maxGainAmountEcreteElement.textContent.split('au :')[1]
+                                maxGainAmountEcreteElement?.textContent?.split('au :')[1]
                             ]
                         }
                     ]
                 ],
-                widths: ['*', 'auto']
+                 widths: ['*', 'auto']
             },
             layout: 'noBorders',
             fontSize: 10,
             margin: [0, 0, 0, 10]
         };
     }
-    function getSecuredGainsTable() {
+   function getSecuredGainsTable() {
         const securedGainsTableBody = document.getElementById('securedGainsTableBody');
         if (!securedGainsTableBody) {
             return {};
@@ -379,8 +379,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     ],
                     ...securedGainTableData.map(row => [
                         { text: row[0], style: 'tableCell' },
-                        { text: formatNumber(row[1]), style: getStyleForValue(row[1]) },
-                        { text: formatNumber(row[2]), style: getStyleForValue(row[2]) }
+                        { text: formatNumber(row[1]) , style: getStyleForValue(row[1]) },
+                        { text: formatNumber(row[2]) , style: getStyleForValue(row[2]) }
                     ])
                 ],
                 widths: ['auto', 'auto', '*']
@@ -390,44 +390,43 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     }
 
     // Fonction pour récupérer les données du tableau résultats épargne placée à taux garanti
-      function getResultsTauxFixe() {
+    function getResultsTauxFixe() {
       const resultsTauxFixe = document.getElementById('resultsTauxFix');
-        if (!resultsTauxFixe) {
-             return {};
-       }
-        const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings')?.textContent?.replace(/\s/g, '') || '-');
+      if (!resultsTauxFixe) {
+           return {};
+         }
+         const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings')?.textContent?.replace(/\s/g, '') || '-');
         const lastInvestmentText = formatNumber(document.getElementById('last-investment')?.textContent?.replace(/\s/g, '') || '-');
-         const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe')?.textContent?.replace(/\s/g, '') || '-');
+        const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe')?.textContent?.replace(/\s/g, '') || '-');
         const totalInterestText = document.getElementById('totalInterest')?.textContent || '-';
-        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
-          return {
-              table: {
-                  body: [
-                      [
-                           {text : 'Valeur finale du portefeuille:', style: 'tableCell'},
-                           {text : `${lastCumulativeSavingsText} ${currencySymbol}`, style: 'tableCellRight'}
-                       ],
-                       [
-                             {text : 'Montant versé:', style: 'tableCell'},
-                           {text : `${lastInvestmentText} ${currencySymbol}`, style: 'tableCellRight'}
-                        ],
-                        [
-                           {text : 'Total des intérêts:', style: 'tableCell'},
-                           {text : `${gainTauxFixeText} ${currencySymbol}`, style: 'tableCellRight'}
-                        ],
-                        [
-                           {text : 'Taux d\'intérêt annuel:', style: 'tableCell'},
-                          {text : totalInterestText, style: 'tableCellRight'}
-                       ],
+          const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
+        return {
+           table: {
+             body: [
+                    [
+                         {text : 'Valeur finale du portefeuille:', style: 'tableCell'},
+                         {text : `${lastCumulativeSavingsText} ${currencySymbol}`, style: 'tableCellRight'}
+                     ],
+                     [
+                           {text : 'Montant versé:', style: 'tableCell'},
+                         {text : `${lastInvestmentText} ${currencySymbol}`, style: 'tableCellRight'}
                       ],
-                    widths: ['*', 'auto']
-                  },
+                      [
+                         {text : 'Total des intérêts:', style: 'tableCell'},
+                         {text : `${gainTauxFixeText} ${currencySymbol}`, style: 'tableCellRight'}
+                      ],
+                      [
+                         {text : 'Taux d\'intérêt annuel:', style: 'tableCell'},
+                        {text : totalInterestText, style: 'tableCellRight'}
+                     ],
+                  ],
+                   widths: ['*', 'auto']
+                },
                  layout: 'noBorders',
-                 fontSize: 10,
+                  fontSize: 10,
                margin: [0, 0, 0, 10]
-            };
-    }
-
+             };
+        }
 
     function getChartWithBorder(canvasId) {
         const canvas = document.getElementById(canvasId);
@@ -468,13 +467,13 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-   function getStyleForValue(value, isPercentage) {
-        const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
+  function getStyleForValue(value, isPercentage) {
+        const numericValue = parseFloat(value?.replace(/[^\d.-]/g, '') || '-');
         if (!isNaN(numericValue)) {
             return numericValue >= 0 ? 'positive' : 'negative';
         } else {
-            const valueTest = value.replace(/<[^>]*>/g, '')
-            const numericValueTest = parseFloat(valueTest.replace(/[^\d.-]/g, ''));
+            const valueTest = value?.replace(/<[^>]*>/g, '') || '-';
+            const numericValueTest = parseFloat(valueTest?.replace(/[^\d.-]/g, '') || '-');
             if (isPercentage) {
                 return numericValueTest >= 0 ? 'positive' : 'negative';
             } else {
@@ -483,12 +482,12 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         }
     }
 
-    function formatNumber(numberString) {
-        // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
-        let number = numberString.replace(/\s/g, '').replace(',', '.');
-        // Convertir la chaîne de caractères en nombre
+     function formatNumber(numberString) {
+    // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
+        let number = numberString?.replace(/\s/g, '')?.replace(',', '.') || '-';
+    // Convertir la chaîne de caractères en nombre
         number = parseFloat(number);
-        // Vérifier si la valeur est bien un nombre
+    // Vérifier si la valeur est bien un nombre
         if (isNaN(number)) {
             return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
         }
@@ -498,17 +497,17 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         return parts.join(',');
     }
 
-    function formatPercentage(numberString) {
-        // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
-        let number = numberString.replace(/\s/g, '').replace(',', '.').replace('%', '');
-        // Convertir la chaîne de caractères en nombre
+     function formatPercentage(numberString) {
+    // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
+        let number = numberString?.replace(/\s/g, '')?.replace(',', '.')?.replace('%', '') || '-';
+    // Convertir la chaîne de caractères en nombre
         number = parseFloat(number);
-        // Vérifier si la valeur est bien un nombre
+    // Vérifier si la valeur est bien un nombre
         if (isNaN(number)) {
             return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
         }
-        return number.toFixed(2).replace('.', ',') + ' %';
-    }
+    return number.toFixed(2).replace('.', ',') + ' %';
+}
       // Fonction pour générer le nom du fichier
     function generateFileName(stockSymbol) {
         const now = new Date();
