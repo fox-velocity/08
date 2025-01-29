@@ -170,9 +170,10 @@ async function fetchData() {
            updateEvolutionChart(chartData.labels, chartData.prices);
            updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
            updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+           
             // Mettre à jour l'affichage du taux d'intérêt
-           //const interestRateValue = document.getElementById('interestRate').value;
-          //document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
+           
+         
            
            // Afficher les sections de résultat et les boutons de téléchargement ici
             setElementVisibility('resultsWithCapping', true);
