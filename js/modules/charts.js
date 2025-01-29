@@ -136,18 +136,25 @@ export function updateInvestmentChart(labels, investments, portfolio, portfolioV
 
 export function updateSavingsChart(labels, investments, portfolio, monthlyInterestRate) {
     const ctxSavings = document.getElementById('savingsChart').getContext('2d');
-     let cumulativeSavings = 0;
-     let savingsData = [];
+    let cumulativeSavings = 0;
+    let savingsData = [];
+    let lastCumulativeSavings = 0; // Pour stocker la cumulativeSavings du dernier mois
 
-     for (let i = 0; i < labels.length; i++) {
-         if (i === 0) {
+
+    for (let i = 0; i < labels.length; i++) {
+        if (i === 0) {
             cumulativeSavings = investments[i];
             savingsData.push(0);
-         }else {
-             cumulativeSavings = cumulativeSavings * (1 + monthlyInterestRate) + (investments[i]-investments[i-1]);
-             savingsData.push(cumulativeSavings - investments[i]);
-         }
-     }
+        } else {
+            cumulativeSavings = cumulativeSavings * (1 + monthlyInterestRate) + (investments[i] - investments[i - 1]);
+            savingsData.push(cumulativeSavings - investments[i]);
+        }
+      
+    }
+    lastCumulativeSavings = cumulativeSavings;
+    const lastInvestment = investments[investments.length - 1]; // Récupérer le dernier investissement
+     const gainTauxFixe = lastCumulativeSavings - lastInvestment; // Calculer le gain
+
      if (savingsChart) savingsChart.destroy();
      savingsChart = new Chart(ctxSavings, {
          type: 'bar',
@@ -216,6 +223,13 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
                      }
                   }
              }
+         }
+     });
+    console.log("cumulativeSavings du dernier mois :", lastCumulativeSavings);
+           console.log("investissement du dernier mois :", lastInvestment);
+           console.log("gain avec le taux fixe :", gainTauxFixe);
+    // return { lastCumulativeSavings, lastInvestment, gainTauxFixe }; // On retourne la nouvelle valeur
+}
          }
      });
 }
