@@ -1,4 +1,4 @@
-// pdf.js 23 45
+// pdf.js 23 51
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -393,42 +393,41 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
        function getResultsTauxFixe() {
         const resultsTauxFixe = document.getElementById('resultsTauxFix');
         if (!resultsTauxFixe) {
-            return {};
-          }
+             return {};
+         }
           const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings')?.textContent?.replace(/\s/g, '') || '-');
-         const lastInvestmentText = formatNumber(document.getElementById('last-investment')?.textContent?.replace(/\s/g, '') || '-');
+          const lastInvestmentText = formatNumber(document.getElementById('last-investment')?.textContent?.replace(/\s/g, '') || '-');
          const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe')?.textContent?.replace(/\s/g, '') || '-');
           const totalInterestText = document.getElementById('totalInterest')?.textContent || '-';
-         const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
+           const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
 
-            return {
-                 table: {
-                  body: [
-                       [
-                           { text: `Valeur finale du portefeuille:`, alignment: 'left' },
-                           { text: `${lastCumulativeSavingsText} ${currencySymbol}`, alignment: 'right' }
-                         ],
-                       [
-                           { text: `Montant versé:`, alignment: 'left' },
-                            { text: `${lastInvestmentText} ${currencySymbol}`, alignment: 'right' }
-                       ],
-                       [
-                          { text: `Total des intérêts:`, alignment: 'left' },
-                           { text: `${gainTauxFixeText} ${currencySymbol}`, alignment: 'right' }
-                       ],
-                       [
-                          { text: `Taux d'intérêt annuel:`, alignment: 'left' },
-                           { text: totalInterestText, alignment: 'right' }
-                       ]
+             return {
+            table: {
+                body: [
+                   [
+                       { text: `Valeur finale du portefeuille:`, alignment: 'left' },
+                      { text: `${lastCumulativeSavingsText} ${currencySymbol}`, alignment: 'right' }
+                  ],
+                    [
+                       { text: `Montant versé:`, alignment: 'left' },
+                        { text: `${lastInvestmentText} ${currencySymbol}`, alignment: 'right' }
                    ],
-                  widths: ['*', 'auto'] // La largeur de la première colonne est fixe, et la deuxième est automatique
-              },
-               layout: 'noBorders',
-               fontSize: 10,
-              margin: [0, 0, 0, 10],
-               style: 'tableContainer50pourcent'
-            };
-        }
+                     [
+                       { text: `Total des intérêts:`, alignment: 'left' },
+                       { text: `${gainTauxFixeText} ${currencySymbol}`, alignment: 'right' }
+                     ],
+                     [
+                         { text: `Taux d'intérêt annuel:`, alignment: 'left' },
+                        { text: totalInterestText, alignment: 'right' }
+                     ]
+                ],
+                widths: ['50%', 'auto']  // On définit explicitement la largeur de la première colonne à 50%
+            },
+              layout: 'noBorders',
+                fontSize: 10,
+           margin: [0, 0, 0, 10]
+        };
+    }
 
     function getChartWithBorder(canvasId) {
         const canvas = document.getElementById(canvasId);
