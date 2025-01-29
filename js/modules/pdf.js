@@ -199,7 +199,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     [`Valeurs limite seuil d'écrêtage: ${minCappingAmount}`],
                     [`Taux d'intérêt annuel: ${interestRate * 100} %`],
                 ],
-                widths: ['*']
+                widths: ['60%', 'auto']  // On définit explicitement la largeur de la première colonne à 50%
             },
             layout: 'noBorders',
             margin: [0, 0, 0, 10],
