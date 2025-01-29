@@ -397,19 +397,31 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
            const totalInterestText = document.getElementById('totalInterest').textContent;
              const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
             return {
-                table: {
-                  body: [
-                    [`Valeur finale du portefeuille: ${lastCumulativeSavingsText} ${currencySymbol}`],
-                     [`Montant versé: ${lastInvestmentText} ${currencySymbol}`],
-                    [`Total des intérêts: ${gainTauxFixeText} ${currencySymbol}`],
-                      [`Taux d'intérêt annuel: ${totalInterestText}`],
-                    ],
-                  widths: ['*']
-                },
-                  layout: 'noBorders',
-                  fontSize: 10,
-                margin: [0, 0, 0, 10]
-            };
+  table: {
+    body: [
+      [
+        { text: `Valeur finale du portefeuille:`, alignment: 'left' },
+        { text: `${lastCumulativeSavingsText} ${currencySymbol}`, alignment: 'right' }
+      ],
+      [
+        { text: `Montant versé:`, alignment: 'left' },
+        { text: `${lastInvestmentText} ${currencySymbol}`, alignment: 'right' }
+      ],
+      [
+        { text: `Total des intérêts:`, alignment: 'left' },
+        { text: `${gainTauxFixeText} ${currencySymbol}`, alignment: 'right' }
+      ],
+      [
+        { text: `Taux d'intérêt annuel:`, alignment: 'left' },
+        { text: totalInterestText, alignment: 'right' }
+      ]
+    ],
+    widths: ['*', 'auto']
+  },
+  layout: 'noBorders',
+  fontSize: 10,
+  margin: [0, 0, 0, 10]
+};
     }
 
     function getChartWithBorder(canvasId) {
