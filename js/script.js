@@ -169,21 +169,21 @@ async function fetchData() {
            updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
            updateEvolutionChart(chartData.labels, chartData.prices);
            updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-          updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
+          await updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
 
-         const lastCumulativeSavings = document.querySelector('#savingsChart')?.lastCumulativeSavings;
-         const lastInvestment = document.querySelector('#savingsChart')?.lastInvestment;
-         const gainTauxFixe = document.querySelector('#savingsChart')?.gainTauxFixe;
+            const lastCumulativeSavings = document.querySelector('#savingsChart')?.lastCumulativeSavings;
+            const lastInvestment = document.querySelector('#savingsChart')?.lastInvestment;
+            const gainTauxFixe = document.querySelector('#savingsChart')?.gainTauxFixe;
      
        // Mettre à jour l'affichage du taux d'intérêt
             const interestRateValue = document.getElementById('interestRate').value;
-            document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
+           document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
 
-      if (lastCumulativeSavings && lastInvestment && gainTauxFixe){
-        document.getElementById('last-cumulative-savings').textContent = formatNumber(lastCumulativeSavings.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-        document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-        document.getElementById('gain-taux-fixe').textContent = formatNumber(gainTauxFixe.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-    }
+    if (lastCumulativeSavings && lastInvestment && gainTauxFixe){
+            document.getElementById('last-cumulative-savings').textContent = formatNumber(lastCumulativeSavings.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+            document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+           document.getElementById('gain-taux-fixe').textContent = formatNumber(gainTauxFixe.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+      }
            // Afficher les sections de résultat et les boutons de téléchargement ici
             setElementVisibility('resultsWithCapping', true);
             setElementVisibility('evolutionChartContainer', true);
@@ -191,7 +191,7 @@ async function fetchData() {
             setElementVisibility('results', true);
             setElementVisibility('savingsChartContainer', true);
              setElementVisibility('resultsTauxFix', true);
-        setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
+            setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
 
         // Stocker les données pour le fichier excel
         excelData = chartData;
