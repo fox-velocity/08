@@ -1,4 +1,4 @@
-// pdf.js 23 32
+// pdf.js 23 45
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -39,7 +39,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             getChartWithBorder('savingsChart'),
             { text: 'Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu\'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d\'investissement, afin d\'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.', style: 'paragraph' },
         ],
-        styles: {
+              styles: {
             title: {
                 fontSize: 18,
                 bold: true,
@@ -64,8 +64,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 margin: [0, 5, 0, 5]
             },
             tableCell: {
-                fontSize: 8,
-                margin: [0, 5, 0, 5]
+                 fontSize: 8,
+                 margin: [0, 5, 0, 5]
             },
             positive: {
                 color: 'green'
@@ -75,7 +75,11 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             },
             chartContainer: {
                 margin: [0, 0, 0, 20],
-            }
+            },
+             tableContainer50pourcent: {
+                  width: '50%',
+                 margin: [0, 0, 0, 10] // On garde la marge de 10 px
+        }
         },
         footer: function (currentPage, pageCount) {
             return {
@@ -386,43 +390,45 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
     // Fonction pour récupérer les données du tableau résultats épargne placée à taux garanti
-      function getResultsTauxFixe() {
-          const resultsTauxFixe = document.getElementById('resultsTauxFix');
-            if (!resultsTauxFixe) {
-               return {};
-         }
-           const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings').textContent.replace(/\s/g, ''));
-           const lastInvestmentText = formatNumber(document.getElementById('last-investment').textContent.replace(/\s/g, ''));
-           const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe').textContent.replace(/\s/g, ''));
-           const totalInterestText = document.getElementById('totalInterest').textContent;
-             const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
+       function getResultsTauxFixe() {
+        const resultsTauxFixe = document.getElementById('resultsTauxFix');
+        if (!resultsTauxFixe) {
+            return {};
+          }
+          const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings')?.textContent?.replace(/\s/g, '') || '-');
+         const lastInvestmentText = formatNumber(document.getElementById('last-investment')?.textContent?.replace(/\s/g, '') || '-');
+         const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe')?.textContent?.replace(/\s/g, '') || '-');
+          const totalInterestText = document.getElementById('totalInterest')?.textContent || '-';
+         const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
+
             return {
-  table: {
-    body: [
-      [
-        { text: `Valeur finale du portefeuille:`, alignment: 'left' },
-        { text: `${lastCumulativeSavingsText} ${currencySymbol}`, alignment: 'right' }
-      ],
-      [
-        { text: `Montant versé:`, alignment: 'left' },
-        { text: `${lastInvestmentText} ${currencySymbol}`, alignment: 'right' }
-      ],
-      [
-        { text: `Total des intérêts:`, alignment: 'left' },
-        { text: `${gainTauxFixeText} ${currencySymbol}`, alignment: 'right' }
-      ],
-      [
-        { text: `Taux d'intérêt annuel:`, alignment: 'left' },
-        { text: totalInterestText, alignment: 'right' }
-      ]
-    ],
-    widths: ['*', 'auto']
-  },
-  layout: 'noBorders',
-  fontSize: 10,
-  margin: [0, 0, 0, 10]
-};
-    }
+                 table: {
+                  body: [
+                       [
+                           { text: `Valeur finale du portefeuille:`, alignment: 'left' },
+                           { text: `${lastCumulativeSavingsText} ${currencySymbol}`, alignment: 'right' }
+                         ],
+                       [
+                           { text: `Montant versé:`, alignment: 'left' },
+                            { text: `${lastInvestmentText} ${currencySymbol}`, alignment: 'right' }
+                       ],
+                       [
+                          { text: `Total des intérêts:`, alignment: 'left' },
+                           { text: `${gainTauxFixeText} ${currencySymbol}`, alignment: 'right' }
+                       ],
+                       [
+                          { text: `Taux d'intérêt annuel:`, alignment: 'left' },
+                           { text: totalInterestText, alignment: 'right' }
+                       ]
+                   ],
+                  widths: ['*', 'auto'] // La largeur de la première colonne est fixe, et la deuxième est automatique
+              },
+               layout: 'noBorders',
+               fontSize: 10,
+              margin: [0, 0, 0, 10],
+               style: 'tableContainer50pourcent'
+            };
+        }
 
     function getChartWithBorder(canvasId) {
         const canvas = document.getElementById(canvasId);
