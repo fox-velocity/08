@@ -1,4 +1,4 @@
-// pdf.js 23 51
+// pdf.js 23 55
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -39,7 +39,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             getChartWithBorder('savingsChart'),
             { text: 'Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu\'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d\'investissement, afin d\'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.', style: 'paragraph' },
         ],
-              styles: {
+                styles: {
             title: {
                 fontSize: 18,
                 bold: true,
@@ -63,7 +63,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 fillColor: '#dddddd',
                 margin: [0, 5, 0, 5]
             },
-            tableCell: {
+             tableCell: {
                  fontSize: 8,
                  margin: [0, 5, 0, 5]
             },
@@ -75,11 +75,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             },
             chartContainer: {
                 margin: [0, 0, 0, 20],
-            },
-             tableContainer50pourcent: {
-                  width: '50%',
-                 margin: [0, 0, 0, 10] // On garde la marge de 10 px
-        }
+            }
         },
         footer: function (currentPage, pageCount) {
             return {
@@ -421,7 +417,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         { text: totalInterestText, alignment: 'right' }
                      ]
                 ],
-                widths: ['50%', 'auto']  // On définit explicitement la largeur de la première colonne à 50%
+                widths: ['30%', 'auto']  // On définit explicitement la largeur de la première colonne à 50%
             },
               layout: 'noBorders',
                 fontSize: 10,
