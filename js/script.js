@@ -171,17 +171,18 @@ async function fetchData() {
            updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
          
          updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
-        // Mettre à jour l'affichage du taux d'intérêt
-            const interestRateValue = document.getElementById('interestRate').value;
+       
+       // Mettre à jour l'affichage du taux d'intérêt
+           const interestRateValue = document.getElementById('interestRate').value;
            document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
-
-         const lastCumulativeSavings = document.querySelector('#savingsChart').lastCumulativeSavings
-         const lastInvestment = document.querySelector('#savingsChart').lastInvestment;
-         const gainTauxFixe = document.querySelector('#savingsChart').gainTauxFixe;
+     
+       const lastCumulativeSavings = document.querySelector('#savingsChart').lastCumulativeSavings
+        const lastInvestment = document.querySelector('#savingsChart').lastInvestment;
+       const gainTauxFixe = document.querySelector('#savingsChart').gainTauxFixe;
     
-    document.getElementById('last-cumulative-savings').textContent = formatNumber(lastCumulativeSavings.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-    document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-    document.getElementById('gain-taux-fixe').textContent = formatNumber(gainTauxFixe.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+        document.getElementById('last-cumulative-savings').textContent = formatNumber(lastCumulativeSavings.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+        document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+       document.getElementById('gain-taux-fixe').textContent = formatNumber(gainTauxFixe.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
         
 
            
