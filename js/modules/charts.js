@@ -1,8 +1,11 @@
 // charts.js
+
 const { Chart } = window;
+
 let evolutionChart = null;
 let investmentChart = null;
 let savingsChart = null;
+
 // Fonction pour mettre à jour le graphique d'évolution
 export function updateEvolutionChart(labels, prices) {
     const ctxEvolution = document.getElementById('evolutionChart').getContext('2d');
@@ -56,6 +59,7 @@ export function updateEvolutionChart(labels, prices) {
        }
    });
 }
+
 // Fonction pour mettre à jour le graphique des montants investis et de l'évolution du portefeuille
 export function updateInvestmentChart(labels, investments, portfolio, portfolioValueEcreteAvecGain) {
      const ctxInvestment = document.getElementById('investmentChart').getContext('2d');
@@ -149,79 +153,81 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
     lastCumulativeSavings = cumulativeSavings;
     const lastInvestment = investments[investments.length - 1]; // Récupérer le dernier investissement
      const gainTauxFixe = lastCumulativeSavings - lastInvestment; // Calculer le gain
-        console.log("cumulativeSavings du dernier mois :", lastCumulativeSavings);
-       console.log("investissement du dernier mois :", lastInvestment);
-       console.log("gain avec le taux fixe :", gainTauxFixe);
 
-     if (savingsChart) savingsChart.destroy();
-     savingsChart = new Chart(ctxSavings, {
-        type: 'bar',
-         data: {
-             labels: labels,
-             datasets: [{
-                     label: 'Montant investi',
-                     data: investments,
-                     backgroundColor: 'rgb(0, 255, 0)',
-                     borderColor: 'rgb(0, 255, 0)',
-                     borderWidth: 1,
-                     stack: 'stack1',
-                     yAxisID: 'y',
-                     order : 2
-                 },
-                 {
-                     label: 'Gain taux fixe',
-                     data: savingsData,
-                     backgroundColor: 'rgb(0, 0, 255)',
-                     stack: 'stack1',
-                     yAxisID: 'y',
-                     order : 3
-                 },
-                  {
+     return new Promise((resolve) => {
+    if (savingsChart) savingsChart.destroy();
+    savingsChart = new Chart(ctxSavings, {
+       type: 'bar',
+       data: {
+           labels: labels,
+           datasets: [{
+                   label: 'Montant investi',
+                   data: investments,
+                   backgroundColor: 'rgb(0, 255, 0)',
+                   borderColor: 'rgb(0, 255, 0)',
+                   borderWidth: 1,
+                   stack: 'stack1',
+                   yAxisID: 'y',
+                   order : 2
+               },
+               {
+                   label: 'Gain taux fixe',
+                   data: savingsData,
+                   backgroundColor: 'rgb(0, 0, 255)',
+                   stack: 'stack1',
+                   yAxisID: 'y',
+                   order : 3
+               },
+                {
                     label: 'Valeur du Portefeuille',
                     data: portfolio,
                     type: 'line',
                     borderColor: 'rgb(255, 135, 0)',
                     tension: 0.1,
-                    yAxisID: 'y',
-                    order : 1
+                     yAxisID: 'y',
+                     order : 1
                   }
-             ]
-         },
-          options: {
-              responsive: true,
-             maintainAspectRatio: false,
-             plugins: {
-                 title: {
-                     display: true,
-                     text: 'Comparatif : Taux fixe VS Épargne sur un véhicule financier',
-                     font: {
-                         size: 25
-                     },
-                     color: 'black' // pour les caractères du titre
-                 },
-                 legend: {
-                     labels: {
-                         color: 'black' // Couleur noire pour les textes des légendes
-                     }
-                 }
-             },
-             scales: {
-                 y: {
-                   type: 'linear',
-                     beginAtZero: true,
-                     stacked: true,
-                     position: 'bottom',
-                     ticks: {
-                          color: 'black'
-                     }
-                 },
-                  x: {
-                      ticks: {
-                         color: 'black'
-                     }
-                  }
-             }
-         }
-     });
-  return { lastCumulativeSavings, lastInvestment, gainTauxFixe };
+           ]
+       },
+        options: {
+            responsive: true,
+           maintainAspectRatio: false,
+           plugins: {
+               title: {
+                   display: true,
+                   text: 'Comparatif : Taux fixe VS Épargne sur un véhicule financier',
+                   font: {
+                       size: 25
+                   },
+                   color: 'black' // pour les caractères du titre
+               },
+               legend: {
+                   labels: {
+                       color: 'black' // Couleur noire pour les textes des légendes
+                   }
+               }
+           },
+           scales: {
+               y: {
+                 type: 'linear',
+                   beginAtZero: true,
+                   stacked: true,
+                   position: 'bottom',
+                   ticks: {
+                        color: 'black'
+                   }
+               },
+                x: {
+                    ticks: {
+                       color: 'black'
+                   }
+                }
+           }
+       }
+   });
+         document.getElementById('savingsChart').lastCumulativeSavings = lastCumulativeSavings;
+        document.getElementById('savingsChart').lastInvestment = lastInvestment;
+       document.getElementById('savingsChart').gainTauxFixe = gainTauxFixe;
+      resolve();
+    });
 }
