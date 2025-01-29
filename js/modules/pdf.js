@@ -1,4 +1,4 @@
-// pdf.js 23 55
+// pdf.js 00 02
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -158,46 +158,69 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-    function getTopResults() {
+     function getTopResults() {
         const topResults = document.getElementById('topResults');
         if (!topResults) {
             return {};
         }
         // Formattez les nombres avec des espaces pour les milliers
-        const totalInvested = formatNumber(document.getElementById('finalTotalInvested').textContent.replace(/\s/g, ''));
-        const investmentDuration = document.getElementById('finalNumberOfPayments').textContent;
-        const stockChangePercentage = formatPercentage(document.getElementById('finalStockChangePercentage').textContent)
-        const startDate = document.getElementById('startDate').value;
-        const endDate = document.getElementById('endDate').value;
-        const initialInvestment = formatNumber(document.getElementById('initialInvestment').value);
-        const monthlyInvestment = formatNumber(document.getElementById('monthlyInvestment').value);
-        const interestRate = document.getElementById('interestRate').value;
-        const cappingPercentage = document.getElementById('cappingPercentage').value;
-        const minCappingAmount = document.getElementById('minCappingAmount').value;
-        const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
+        const totalInvested = formatNumber(document.getElementById('finalTotalInvested')?.textContent?.replace(/\s/g, '') || '-');
+        const investmentDuration = document.getElementById('finalNumberOfPayments')?.textContent || '-';
+        const stockChangePercentage = formatPercentage(document.getElementById('finalStockChangePercentage')?.textContent || '-')
+        const startDate = document.getElementById('startDate')?.value || '-';
+        const endDate = document.getElementById('endDate')?.value || '-';
+        const initialInvestment = formatNumber(document.getElementById('initialInvestment')?.value || '-');
+        const monthlyInvestment = formatNumber(document.getElementById('monthlyInvestment')?.value || '-');
+        const interestRate = document.getElementById('interestRate')?.value || '-';
+        const cappingPercentage = document.getElementById('cappingPercentage')?.value || '-';
+        const minCappingAmount = document.getElementById('minCappingAmount')?.value || '-';
+        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
 
         return {
             table: {
                 body: [
-                    [`Total investi: ${totalInvested} ${currencySymbol}`],
-                    [`Durée investissement: ${investmentDuration}`],
                     [
-                        {
-                            text: [
-                                'Évolution instrument financier: ',
-                                { text: stockChangePercentage, style: getStyleForValue(stockChangePercentage) }
-                            ],
-                        }
+                        { text: `Total investi:`, alignment: 'left' },
+                        { text: `${totalInvested} ${currencySymbol}`, alignment: 'right' }
                     ],
-                    [`Date de début: ${startDate}`],
-                    [`Date de fin: ${endDate}`],
-                    [`Versement initial: ${initialInvestment} ${currencySymbol}`],
-                    [`Montant mensuel investi: ${monthlyInvestment} ${currencySymbol}`],
-                    [""], // Ligne vide ajoutée
-                    [`Réglage des options :`],
-                    [`limite seuil d'écrêtage: ${cappingPercentage * 100} %`],
-                    [`Valeurs limite seuil d'écrêtage: ${minCappingAmount}`],
-                    [`Taux d'intérêt annuel: ${interestRate * 100} %`],
+                    [
+                         { text: `Durée investissement:`, alignment: 'left' },
+                        { text: investmentDuration, alignment: 'right' }
+                    ],
+                    [
+                       { text: 'Évolution instrument financier: ', alignment: 'left'},
+                        { text: stockChangePercentage,  alignment: 'right' }
+                    ],
+                    [
+                         { text: `Date de début:`, alignment: 'left'},
+                        { text: startDate, alignment: 'right' }
+                     ],
+                    [
+                       { text: `Date de fin:`, alignment: 'left'},
+                         { text: endDate, alignment: 'right' }
+                    ],
+                    [
+                        { text: `Versement initial:`, alignment: 'left'},
+                         { text: `${initialInvestment} ${currencySymbol}`, alignment: 'right'}
+                   ],
+                     [
+                       { text: `Montant mensuel investi:`, alignment: 'left'},
+                         { text: `${monthlyInvestment} ${currencySymbol}`, alignment: 'right'}
+                     ],
+                     [""], // Ligne vide ajoutée
+                   [`Réglage des options :`],
+                     [
+                       { text: `limite seuil d'écrêtage:`, alignment: 'left' },
+                        { text: `${cappingPercentage * 100} %`, alignment: 'right' }
+                      ],
+                      [
+                        { text: `Valeurs limite seuil d'écrêtage:`, alignment: 'left'},
+                         { text: minCappingAmount, alignment: 'right' }
+                       ],
+                     [
+                         { text: `Taux d'intérêt annuel:`, alignment: 'left'},
+                        { text: `${interestRate * 100} %`, alignment: 'right' }
+                     ],
                 ],
                 widths: ['60%', 'auto']  // On définit explicitement la largeur de la première colonne à 50%
             },
