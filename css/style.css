@@ -1,3 +1,5 @@
+/* style.css */
+
 :root {
     --background-color: #121212;
     --text-color: #e0e0e0;
@@ -24,7 +26,7 @@ body {
    
 }
 
-/* fond dela division principal */
+/* Fond de la division principale */
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -34,6 +36,7 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
    
 }
+
 /* Ajout pour cacher initialement les blocs résultats */
 .results,
 #resultsWithCapping,
@@ -46,7 +49,10 @@ body {
     display: none;
 }
 
-select, input, button {
+/* Styles généraux des éléments de formulaire */
+select,
+input,
+button {
     padding: 8px;
     margin: 5px;
     border-radius: 0.5rem;
@@ -60,11 +66,16 @@ select, input, button {
     text-align: left;
 }
 
-#initialInvestment, #monthlyInvestment, #cappingPercentage, #minCappingAmount, #interestRate{
+#initialInvestment,
+#monthlyInvestment,
+#cappingPercentage,
+#minCappingAmount,
+#interestRate {
     width: 5rem;
     text-align: right;
-    
 }
+
+/* Styles pour les boutons */
 button {
     background-color: #007bff;
     color: white;
@@ -78,6 +89,7 @@ button:hover {
     background-color: #0056b3;
 }
 
+/* Styles pour les boutons de téléchargement (PDF et Excel) */
 .download-pdf,
 .download-button {
     margin-top: 20px;
@@ -95,6 +107,7 @@ button:hover {
     background-color: #0056b3;
 }
 
+/* Styles pour le conteneur de graphique avec écrêtage (si utilisé) */
 #cappedInvestmentChartContainer {
     margin-top: 20px;
     padding: 10px;
@@ -103,6 +116,7 @@ button:hover {
     background-color: #1e1e1e00;
 }
 
+/* Styles pour l'indicateur de chargement */
 #loadingIndicator {
     text-align: center;
     margin: 20px 0;
@@ -128,6 +142,7 @@ button:hover {
     animation: spin 1s linear infinite;
 }
 
+/* Styles pour les suggestions de recherche */
 #suggestions {
     border: 1px solid #333;
     max-height: 6rem;
@@ -149,14 +164,18 @@ button:hover {
 #suggestions div:hover {
     background-color: #333;
 }
-#startDate, #endDate{
-    width: 7rem;    
+
+#startDate,
+#endDate {
+    width: 7rem;
 }
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
+/* Styles pour les sections de résultats */
 .results {
     margin-top: 20px;
 }
@@ -176,6 +195,7 @@ button:hover {
     padding-top: 10px;
 }
 
+/* Styles pour les informations sur l'instrument financier */
 .stock-info {
     text-align: left;
     margin-top: 2rem;
@@ -183,7 +203,7 @@ button:hover {
     border: 1px solid #333;
     border-radius: 1rem;
     background-color: #00000000;
-    position: relative; /* Ajout position relative */
+    position: relative;
 }
 
 .stock-info h2 {
@@ -195,11 +215,12 @@ button:hover {
     margin: 5px 0;
 }
 
+/* Styles pour les tableaux */
 .table-container {
     margin-top: 20px;
-    border-radius: 0.4rem; /* Arrondi des angles extérieurs */
-    overflow: hidden; /* Gère l'arrondi et évite le débordement */
-    border: 1px solid #333; /* Bordure visible autour du tableau */
+    border-radius: 0.4rem;
+    overflow: hidden;
+    border: 1px solid #333;
 }
 
 .table-container table {
@@ -207,7 +228,8 @@ button:hover {
     border-collapse: collapse;
 }
 
-.table-container th, .table-container td {
+.table-container th,
+.table-container td {
     border: 1px solid #333;
     padding: 8px;
     text-align: left;
@@ -215,44 +237,28 @@ button:hover {
 
 .table-container th {
     background-color: #33333333;
+     font-weight: bold;
 }
 
 .table-container td {
     background-color: #1e1e1e00;
 }
 
-.table-container th:first-child, .table-container td:first-child {
-    width: 30%; /* Ajustez la largeur de la première colonne ici */
+.table-container th:first-child,
+.table-container td:first-child {
+    width: 30%;
 }
 
-.table-container th.center, .table-container td.center {
+.table-container th.center,
+.table-container td.center {
     text-align: center;
 }
-
-
-.positive {
-    color: green;
+/* Aligner les nombres à droite */
+.table-container table td:last-child {
+    text-align: right;
 }
 
-.negative {
-    color: red;
-}
-
-.download-pdf,
-.download-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 8rem;
-}
-
-.download-button:hover {
-    background-color: #0056b3;
-}
+/* Styles pour le theme-toggle */
 
 .theme-switch.theme-toggle{
     display: flex;
@@ -262,9 +268,9 @@ button:hover {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 3rem; /* Largeur du bouton */
-    height: 3rem; /* Hauteur du bouton */
-    padding: 0; /* Suppression du padding */
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
     background-color: var(--button-bg);
     color: var(--button-text);
     border: none;
@@ -273,7 +279,7 @@ button:hover {
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centrage horizontal et vertical du dessin */
+    justify-content: center;
 }
 
 .theme-switch:hover {
@@ -282,8 +288,8 @@ button:hover {
 }
 
 .theme-icon {
-    width: 2rem; /* Largeur du dessin */
-    height: 2rem; /* Hauteur du dessin */
+    width: 2rem;
+    height: 2rem;
 }
 .sun-icon{
     display:block;
@@ -291,12 +297,14 @@ button:hover {
  .moon-icon{
      display:none;
    }
-
-.toggle-button {
-display: inline-flex;
-align-items: center;
+   
+ /* Styles pour le toggle de la section */
+ .toggle-button {
+    display: inline-flex;
+    align-items: center;
 }
 
+/* Styles pour les conteneurs des graphiques et du formulaire */
 #investmentChartContainer,
 #evolutionChartContainer,
 #valeursDateMontant,
@@ -311,12 +319,12 @@ align-items: center;
      box-sizing: border-box;
 }
 
-
+/* Style des canvas des graphiques (pour qu'ils prennent toute la largeur) */
 #evolutionChartContainer canvas,
 #investmentChartContainer canvas,
 #savingsChartContainer canvas
 {
-  width: 100% !important; /* !important pour forcer la prise en compte */
+  width: 100% !important;
   height: auto !important;
   display: block;
   background-color:#dddddd
@@ -346,16 +354,17 @@ align-items: center;
     margin-left: 2rem;
   }
 
-
-  .form-group input, .form-group select {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0.5rem; 
+  .form-group input,
+  .form-group select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.5rem;
   }
+  
   #evolutionChartContainer canvas,
   #investmentChartContainer canvas,
   #savingsChartContainer canvas {
-    width: 100% !important; /* !important pour forcer la prise en compte */
+    width: 100% !important;
     height: 300px !important;
     display: block;
   }
@@ -370,20 +379,18 @@ align-items: center;
        font-size: 1.2rem;  /* Titres h2 */
    }
    
- 
-
-  .table-container th:first-child, .table-container td:first-child {
+    /* Modification de la largeur de la première colonne des tableaux */
+  .table-container th:first-child,
+  .table-container td:first-child {
     width: auto; /* La largeur se définie automatiquement */
   }
     
    .table-container{
       overflow-x: auto; /* Ajout d'un overflow horizontal */
     }
-    
-  .theme-switch {
+   .theme-switch {
         top: 10px;
         right: 10px;
         padding: 5px 10px;
     }
-    
 }
