@@ -390,43 +390,43 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     }
 
     // Fonction pour récupérer les données du tableau résultats épargne placée à taux garanti
-    function getResultsTauxFixe() {
+      function getResultsTauxFixe() {
       const resultsTauxFixe = document.getElementById('resultsTauxFix');
-      if (!resultsTauxFixe) {
-           return {};
-         }
-        const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings').textContent.replace(/\s/g, ''));
-        const lastInvestmentText = formatNumber(document.getElementById('last-investment').textContent.replace(/\s/g, ''));
-        const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe').textContent.replace(/\s/g, ''));
-        const totalInterestText = document.getElementById('totalInterest').textContent;
-          const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
-        return {
-           table: {
-             body: [
-                    [
-                         {text : 'Valeur finale du portefeuille:', style: 'tableCell'},
-                         {text : `${lastCumulativeSavingsText} ${currencySymbol}`, style: 'tableCellRight'}
-                     ],
-                     [
-                           {text : 'Montant versé:', style: 'tableCell'},
-                         {text : `${lastInvestmentText} ${currencySymbol}`, style: 'tableCellRight'}
-                      ],
+        if (!resultsTauxFixe) {
+             return {};
+       }
+        const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings')?.textContent?.replace(/\s/g, '') || '-');
+        const lastInvestmentText = formatNumber(document.getElementById('last-investment')?.textContent?.replace(/\s/g, '') || '-');
+         const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe')?.textContent?.replace(/\s/g, '') || '-');
+        const totalInterestText = document.getElementById('totalInterest')?.textContent || '-';
+        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
+          return {
+              table: {
+                  body: [
                       [
-                         {text : 'Total des intérêts:', style: 'tableCell'},
-                         {text : `${gainTauxFixeText} ${currencySymbol}`, style: 'tableCellRight'}
+                           {text : 'Valeur finale du portefeuille:', style: 'tableCell'},
+                           {text : `${lastCumulativeSavingsText} ${currencySymbol}`, style: 'tableCellRight'}
+                       ],
+                       [
+                             {text : 'Montant versé:', style: 'tableCell'},
+                           {text : `${lastInvestmentText} ${currencySymbol}`, style: 'tableCellRight'}
+                        ],
+                        [
+                           {text : 'Total des intérêts:', style: 'tableCell'},
+                           {text : `${gainTauxFixeText} ${currencySymbol}`, style: 'tableCellRight'}
+                        ],
+                        [
+                           {text : 'Taux d\'intérêt annuel:', style: 'tableCell'},
+                          {text : totalInterestText, style: 'tableCellRight'}
+                       ],
                       ],
-                      [
-                         {text : 'Taux d\'intérêt annuel:', style: 'tableCell'},
-                        {text : totalInterestText, style: 'tableCellRight'}
-                     ],
-                  ],
-                   widths: ['*', 'auto']
-                },
+                    widths: ['*', 'auto']
+                  },
                  layout: 'noBorders',
-                  fontSize: 10,
+                 fontSize: 10,
                margin: [0, 0, 0, 10]
-             };
-        }
+            };
+    }
 
 
     function getChartWithBorder(canvasId) {
