@@ -32,6 +32,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             { text: 'Résultats avec écrêtage des gains', style: 'subtitle' },
             getResultsWithCapping(),
             getSecuredGainsTable(),
+            { text: 'Résultats épargne placée à taux garanti', style: 'subtitle' }, // Ajout du titre
+             getResultsTauxFixe(), // Ajout du contenu
             { text: 'Graphiques évolutions des portefeuilles', style: 'subtitle', pageBreak: 'before' },
             getChartWithBorder('investmentChart'),
             getChartWithBorder('savingsChart'),
@@ -382,6 +384,32 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             },
             margin: [0, 0, 0, 10]
         };
+    }
+    // Fonction pour récupérer les données du tableau résultats épargne placée à taux garanti
+      function getResultsTauxFixe() {
+          const resultsTauxFixe = document.getElementById('resultsTauxFix');
+            if (!resultsTauxFixe) {
+               return {};
+         }
+           const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings').textContent.replace(/\s/g, ''));
+           const lastInvestmentText = formatNumber(document.getElementById('last-investment').textContent.replace(/\s/g, ''));
+           const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe').textContent.replace(/\s/g, ''));
+           const totalInterestText = document.getElementById('totalInterest').textContent;
+             const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
+            return {
+                table: {
+                  body: [
+                    [`Valeur finale du portefeuille: ${lastCumulativeSavingsText} ${currencySymbol}`],
+                     [`Montant versé: ${lastInvestmentText} ${currencySymbol}`],
+                    [`Total des intérêts: ${gainTauxFixeText} ${currencySymbol}`],
+                      [`Taux d'intérêt annuel: ${totalInterestText}`],
+                    ],
+                  widths: ['*']
+                },
+                  layout: 'noBorders',
+                  fontSize: 10,
+                margin: [0, 0, 0, 10]
+            };
     }
 
     function getChartWithBorder(canvasId) {
