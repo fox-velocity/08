@@ -32,8 +32,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             { text: 'Résultats avec écrêtage des gains', style: 'subtitle' },
             getResultsWithCapping(),
             getSecuredGainsTable(),
-            { text: 'Résultats épargne placée à taux garanti', style: 'subtitle' }, // Ajout du titre
-             getResultsTauxFixe(), // Ajout du contenu
+            { text: 'Résultats épargne placée à taux garanti', style: 'subtitle' },
+             getResultsTauxFixe(),
             { text: 'Graphiques évolutions des portefeuilles', style: 'subtitle', pageBreak: 'before' },
             getChartWithBorder('investmentChart'),
             getChartWithBorder('savingsChart'),
@@ -66,7 +66,12 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             tableCell: {
                 fontSize: 8,
                 margin: [0, 5, 0, 5]
-            },
+             },
+             tableCellRight: {
+                fontSize: 8,
+                margin: [0, 5, 0, 5],
+                 alignment: 'right'
+           },
             positive: {
                 color: 'green'
             },
@@ -158,7 +163,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-    function getTopResults() {
+   function getTopResults() {
         const topResults = document.getElementById('topResults');
         if (!topResults) {
             return {};
@@ -179,8 +184,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         return {
             table: {
                 body: [
-                    [`Total investi: ${totalInvested} ${currencySymbol}`],
-                    [`Durée investissement: ${investmentDuration}`],
+                     [  {text : `Total investi:`, style: 'tableCell'}, {text : `${totalInvested} ${currencySymbol}`, style: 'tableCellRight'} ],
+                    [ {text : `Durée investissement:`, style: 'tableCell'}, {text : `${investmentDuration}`, style: 'tableCellRight'} ],
                     [
                         {
                             text: [
@@ -189,17 +194,17 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                             ],
                         }
                     ],
-                    [`Date de début: ${startDate}`],
-                    [`Date de fin: ${endDate}`],
-                    [`Versement initial: ${initialInvestment} ${currencySymbol}`],
-                    [`Montant mensuel investi: ${monthlyInvestment} ${currencySymbol}`],
+                    [ {text : `Date de début:`, style: 'tableCell'}, {text :  startDate, style: 'tableCellRight'} ],
+                    [ {text : `Date de fin:`, style: 'tableCell'}, {text : endDate, style: 'tableCellRight'} ],
+                    [ {text : `Versement initial:`, style: 'tableCell'}, {text : `${initialInvestment} ${currencySymbol}`, style: 'tableCellRight'} ],
+                    [ {text : `Montant mensuel investi:`, style: 'tableCell'}, {text : `${monthlyInvestment} ${currencySymbol}`, style: 'tableCellRight'} ],
                     [""], // Ligne vide ajoutée
                     [`Réglage des options :`],
-                    [`limite seuil d'écrêtage: ${cappingPercentage * 100} %`],
-                    [`Valeurs limite seuil d'écrêtage: ${minCappingAmount}`],
-                    [`Taux d'intérêt annuel: ${interestRate * 100} %`],
+                    [ {text :`limite seuil d'écrêtage:`, style: 'tableCell'}, {text : `${cappingPercentage * 100} %`, style: 'tableCellRight'} ],
+                    [ {text :`Valeurs limite seuil d'écrêtage:`, style: 'tableCell'}, {text : `${minCappingAmount}`, style: 'tableCellRight'} ],
+                    [ {text :`Taux d'intérêt annuel:`, style: 'tableCell'}, {text : `${interestRate * 100} %`, style: 'tableCellRight'} ],
                 ],
-                widths: ['*']
+                widths: ['*', 'auto']
             },
             layout: 'noBorders',
             margin: [0, 0, 0, 10],
@@ -230,7 +235,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         return {
             table: {
                 body: [
-                    [`Valeur finale du portefeuille: ${finalPortfolioValue} ${currencySymbol}`],
+                     [ {text : `Valeur finale du portefeuille:`, style: 'tableCell'}, {text :  `${finalPortfolioValue} ${currencySymbol}`, style: 'tableCellRight'}],
                     [
                         {
                             text: [
@@ -266,15 +271,14 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         }
                     ]
                 ],
-                widths: ['*']
+                widths: ['*', 'auto']
             },
             layout: 'noBorders',
             fontSize: 10,
             margin: [0, 0, 0, 10]
         };
     }
-
-    function getResultsWithCapping() {
+ function getResultsWithCapping() {
         const resultsWithCapping = document.getElementById('resultsWithCapping');
         if (!resultsWithCapping) {
             return {};
@@ -301,10 +305,10 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         return {
             table: {
                 body: [
-                    [`Valeur portefeuille + Gain sécurisé: ${portfolioValueEcreteAvecGain} ${currencySymbol}`],
-                    [`Valeur finale du portefeuille écrêté: ${finalPortfolioValueEcrete} ${currencySymbol}`],
-                    [`Valeur totale écrêtée: ${finalTotalEcrete} ${currencySymbol}`],
-                    [`Valeur totale des intérêts des gains écrêtés: ${finalTotalEcreteInterest} ${currencySymbol}`],
+                    [ {text : `Valeur portefeuille + Gain sécurisé:`, style: 'tableCell'}, {text : `${portfolioValueEcreteAvecGain} ${currencySymbol}`, style: 'tableCellRight'} ],
+                    [ {text : `Valeur finale du portefeuille écrêté:`, style: 'tableCell'}, {text : `${finalPortfolioValueEcrete} ${currencySymbol}`, style: 'tableCellRight'} ],
+                    [ {text : `Valeur totale écrêtée:`, style: 'tableCell'}, {text :  `${finalTotalEcrete} ${currencySymbol}`, style: 'tableCellRight'} ],
+                    [  {text : `Valeur totale des intérêts des gains écrêtés:`, style: 'tableCell'}, {text : `${finalTotalEcreteInterest} ${currencySymbol}`, style: 'tableCellRight'} ],
                     [
                         {
                             text: [
@@ -340,14 +344,13 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         }
                     ]
                 ],
-                widths: ['*']
+                widths: ['*', 'auto']
             },
             layout: 'noBorders',
             fontSize: 10,
             margin: [0, 0, 0, 10]
         };
     }
-
     function getSecuredGainsTable() {
         const securedGainsTableBody = document.getElementById('securedGainsTableBody');
         if (!securedGainsTableBody) {
@@ -385,32 +388,46 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             margin: [0, 0, 0, 10]
         };
     }
+
     // Fonction pour récupérer les données du tableau résultats épargne placée à taux garanti
-      function getResultsTauxFixe() {
-          const resultsTauxFixe = document.getElementById('resultsTauxFix');
-            if (!resultsTauxFixe) {
-               return {};
+    function getResultsTauxFixe() {
+      const resultsTauxFixe = document.getElementById('resultsTauxFix');
+      if (!resultsTauxFixe) {
+           return {};
          }
-           const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings').textContent.replace(/\s/g, ''));
-           const lastInvestmentText = formatNumber(document.getElementById('last-investment').textContent.replace(/\s/g, ''));
-           const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe').textContent.replace(/\s/g, ''));
-           const totalInterestText = document.getElementById('totalInterest').textContent;
-             const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
-            return {
-                table: {
-                  body: [
-                    [`Valeur finale du portefeuille: ${lastCumulativeSavingsText} ${currencySymbol}`],
-                     [`Montant versé: ${lastInvestmentText} ${currencySymbol}`],
-                    [`Total des intérêts: ${gainTauxFixeText} ${currencySymbol}`],
-                      [`Taux d'intérêt annuel: ${totalInterestText}`],
-                    ],
-                  widths: ['*']
+        const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings').textContent.replace(/\s/g, ''));
+        const lastInvestmentText = formatNumber(document.getElementById('last-investment').textContent.replace(/\s/g, ''));
+        const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe').textContent.replace(/\s/g, ''));
+        const totalInterestText = document.getElementById('totalInterest').textContent;
+          const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
+        return {
+           table: {
+             body: [
+                    [
+                         {text : 'Valeur finale du portefeuille:', style: 'tableCell'},
+                         {text : `${lastCumulativeSavingsText} ${currencySymbol}`, style: 'tableCellRight'}
+                     ],
+                     [
+                           {text : 'Montant versé:', style: 'tableCell'},
+                         {text : `${lastInvestmentText} ${currencySymbol}`, style: 'tableCellRight'}
+                      ],
+                      [
+                         {text : 'Total des intérêts:', style: 'tableCell'},
+                         {text : `${gainTauxFixeText} ${currencySymbol}`, style: 'tableCellRight'}
+                      ],
+                      [
+                         {text : 'Taux d\'intérêt annuel:', style: 'tableCell'},
+                        {text : totalInterestText, style: 'tableCellRight'}
+                     ],
+                  ],
+                   widths: ['*', 'auto']
                 },
-                  layout: 'noBorders',
+                 layout: 'noBorders',
                   fontSize: 10,
-                margin: [0, 0, 0, 10]
-            };
-    }
+               margin: [0, 0, 0, 10]
+             };
+        }
+
 
     function getChartWithBorder(canvasId) {
         const canvas = document.getElementById(canvasId);
@@ -451,7 +468,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-    function getStyleForValue(value, isPercentage) {
+   function getStyleForValue(value, isPercentage) {
         const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
         if (!isNaN(numericValue)) {
             return numericValue >= 0 ? 'positive' : 'negative';
