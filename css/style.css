@@ -253,9 +253,21 @@ button:hover {
 .table-container td.center {
     text-align: center;
 }
+
 /* Aligner les nombres à droite */
+.table-container table td.positive,
+.table-container table td.negative,
 .table-container table td:last-child {
     text-align: right;
+}
+
+/* Styles pour les couleurs */
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
 }
 
 /* Styles pour le theme-toggle */
@@ -342,7 +354,6 @@ button:hover {
   .form-group {
     margin-bottom: 1rem;
 }
-
 
   .form-group label {
       display: block;
