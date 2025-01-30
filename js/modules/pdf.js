@@ -1,4 +1,4 @@
-// pdf.js 00 02
+// pdf.js 12 03
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -175,53 +175,34 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const minCappingAmount = document.getElementById('minCappingAmount').value;
         const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
 
-     return {
-  table: {
-    body: [
-      [`Valeur finale du portefeuille: ${finalPortfolioValue} ${currencySymbol}`],
-      [
-        {
-          text: [
-            'Gain ou Perte: ',
-            { text: gainLossAmount + ' ' + currencySymbol + ' ', style: getStyleForValue(gainLossAmount) },
-            ' soit : ',
-            { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
-          ],
-        }
-      ],
-      [
-        {
-          text: [
-            'Montant de moins-value potentielle maximale: ',
-            { text: maxLossAmount + ' ', style: getStyleForValue(maxLossAmount) },
-            ' soit : ',
-            { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
-            ' de l\'investissement au : ',
-            maxLossAmountElement.textContent.split('au :')[1]
-          ]
-        }
-      ],
-      [
-        {
-          text: [
-            'Montant de plus-value potentielle maximale: ',
-            { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
-            ' soit : ',
-            { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
-            ' de l\'investissement au : ',
-            maxGainAmountElement.textContent.split('au :')[1]
-          ]
-        }
-      ]
-    ],
-    widths: ['*']
-  },
-  layout: 'noBorders',
-  fontSize: 10,
-  margin: [0, 0, 0, 10]
-};
-
-
+        return {
+            table: {
+                body: [
+                    [`Total investi: ${totalInvested} ${currencySymbol}`],
+                    [`Durée investissement: ${investmentDuration}`],
+                    [
+                        {
+                            text: [
+                                'Évolution instrument financier: ',
+                                { text: stockChangePercentage, style: getStyleForValue(stockChangePercentage) }
+                            ],
+                        }
+                    ],
+                    [`Date de début: ${startDate}`],
+                    [`Date de fin: ${endDate}`],
+                    [`Versement initial: ${initialInvestment} ${currencySymbol}`],
+                    [`Montant mensuel investi: ${monthlyInvestment} ${currencySymbol}`],
+                    [""], // Ligne vide ajoutée
+                    [`Réglage des options :`],
+                    [`limite seuil d'écrêtage: ${cappingPercentage * 100} %`],
+                    [`Valeurs limite seuil d'écrêtage: ${minCappingAmount}`],
+                    [`Taux d'intérêt annuel: ${interestRate * 100} %`],
+                ],
+                widths: ['*']
+            },
+            layout: 'noBorders',
+            margin: [0, 0, 0, 10],
+        };
     }
     function getResults() {
         const results = document.getElementById('results');
