@@ -219,16 +219,6 @@ async function fetchData() {
     }
 }
 
-        // Stocker les données pour le fichier excel
-        excelData = chartData;
-        excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
-    } catch (error) {
-        console.error('Erreur lors de la récupération des données :', error);
-        alert('Erreur lors de la récupération des données. Veuillez réessayer.');
-    } finally {
-        showLoadingIndicator(false);
-    }
-}
 
 // Gestion du téléchargement Excel
 function downloadExcel() {
