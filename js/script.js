@@ -1,4 +1,4 @@
-// script.js 16 38 30 01 
+// script.js 17 00 30 01 
 import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
@@ -170,26 +170,25 @@ async function fetchData() {
            updateEvolutionChart(chartData.labels, chartData.prices);
            updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
            
-          let cumulativeSavingsFix3 = 0;
-          let savingsDataFix3 = [];
-          let totalInvestmentsFix3 = 0;
-    
-        for (let i = 0; i < chartData.labels.length; i++) {
-          totalInvestmentsFix3 += chartData.investments[i];
-            if (i === 0) {
+           let cumulativeSavingsFix3 = 0;
+           let savingsDataFix3 = [];
+           let totalInvestmentsFix3 = 0;
+          
+           for (let i = 0; i < chartData.labels.length; i++) {
+               totalInvestmentsFix3 += chartData.investments[i];
+             if (i === 0) {
                 cumulativeSavingsFix3 = chartData.investments[i];
                 savingsDataFix3.push(0);
             } else {
-                cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i] - chartData.investments[i - 1]);
+                 cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i] - chartData.investments[i - 1]);
                 savingsDataFix3.push(cumulativeSavingsFix3 - chartData.investments[i]);
             }
-        }
+           }
             const finalAmountFix3 = cumulativeSavingsFix3;
            const totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
-            const lastInvestment = chartData.investments[chartData.investments.length-1]
-            const lastGainTauxFixe = savingsDataFix3[savingsDataFix3.length-1];
+           const lastInvestment = chartData.investments[chartData.investments.length-1]
             
-           updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate,cumulativeSavingsFix3, lastInvestment);
+           updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate,cumulativeSavingsFix3, lastInvestment,savingsDataFix3);
            
            // Mettre à jour l'affichage du taux d'intérêt
            const interestRateValue = document.getElementById('interestRate').value;
@@ -197,17 +196,16 @@ async function fetchData() {
 
           
            document.getElementById('last-cumulative-savings').textContent = formatNumber(cumulativeSavingsFix3.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-            document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-             document.getElementById('gain-taux-fixe').textContent = formatNumber(lastGainTauxFixe.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-
+          document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+           document.getElementById('gain-taux-fixe').textContent = formatNumber(totalInterestFix3.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
            // Afficher les sections de résultat et les boutons de téléchargement ici
             setElementVisibility('resultsWithCapping', true);
             setElementVisibility('evolutionChartContainer', true);
             setElementVisibility('investmentChartContainer', true);
             setElementVisibility('results', true);
-            setElementVisibility('savingsChartContainer', true);
+           setElementVisibility('savingsChartContainer', true);
            setElementVisibility('resultsTauxFix', true);
-            setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
+          setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
 
         // Stocker les données pour le fichier excel
         excelData = chartData;
@@ -219,6 +217,8 @@ async function fetchData() {
         showLoadingIndicator(false);
     }
 }
+
+
 // Gestion du téléchargement Excel
 function downloadExcel() {
     if (excelData && excelCappedDatesAndAmounts) {
