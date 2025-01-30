@@ -1,4 +1,4 @@
-// script.js
+// script.js 15 49 30 01 
 import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
@@ -169,28 +169,41 @@ async function fetchData() {
            updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
            updateEvolutionChart(chartData.labels, chartData.prices);
            updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-          await updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate);
-
-            const lastCumulativeSavings = document.querySelector('#savingsChart')?.lastCumulativeSavings;
-            const lastInvestment = document.querySelector('#savingsChart')?.lastInvestment;
-            const gainTauxFixe = document.querySelector('#savingsChart')?.gainTauxFixe;
-     
-       // Mettre à jour l'affichage du taux d'intérêt
-            const interestRateValue = document.getElementById('interestRate').value;
+           
+           let cumulativeSavingsFix3 = 0;
+           let savingsDataFix3 = [];
+           let totalInvestmentsFix3 = 0;
+          
+           for (let i = 0; i < chartData.labels.length; i++) {
+               if (i === 0) {
+                   cumulativeSavingsFix3 = chartData.investments[i];
+               } else {
+                   cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i] - chartData.investments[i - 1]);
+               }
+                totalInvestmentsFix3 += chartData.investments[i];
+           }
+            const finalAmountFix3 = cumulativeSavingsFix3;
+            const totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
+           const lastInvestment = chartData.investments[chartData.investments.length-1]
+            
+           updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate,cumulativeSavingsFix3, lastInvestment);
+           
+           // Mettre à jour l'affichage du taux d'intérêt
+           const interestRateValue = document.getElementById('interestRate').value;
            document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
 
-    if (lastCumulativeSavings && lastInvestment && gainTauxFixe){
-            document.getElementById('last-cumulative-savings').textContent = formatNumber(lastCumulativeSavings.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-            document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-           document.getElementById('gain-taux-fixe').textContent = formatNumber(gainTauxFixe.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-      }
+          
+            document.getElementById('last-cumulative-savings').textContent = formatNumber(cumulativeSavingsFix3.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+           document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+            document.getElementById('gain-taux-fixe').textContent = formatNumber(totalInterestFix3.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+
            // Afficher les sections de résultat et les boutons de téléchargement ici
             setElementVisibility('resultsWithCapping', true);
             setElementVisibility('evolutionChartContainer', true);
             setElementVisibility('investmentChartContainer', true);
             setElementVisibility('results', true);
             setElementVisibility('savingsChartContainer', true);
-             setElementVisibility('resultsTauxFix', true);
+            setElementVisibility('resultsTauxFix', true);
             setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
 
         // Stocker les données pour le fichier excel
