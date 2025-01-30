@@ -1,4 +1,4 @@
-// script.js 15 49 30 01 
+// script.js 16 07 30 01 
 import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
