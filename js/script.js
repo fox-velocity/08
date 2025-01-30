@@ -1,4 +1,4 @@
-// script.js 16 07 30 01 
+// script.js 16 11 30 01 
 import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
@@ -170,25 +170,23 @@ async function fetchData() {
            updateEvolutionChart(chartData.labels, chartData.prices);
            updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
            
-        let cumulativeSavingsFix3 = 0;
-           let savingsDataFix3 = [];
-           let totalInvestmentsFix3 = 0;
-          
-           for (let i = 0; i < chartData.labels.length; i++) {
-                 totalInvestmentsFix3 += chartData.investments[i];
-               if (i === 0) {
-                   cumulativeSavingsFix3 = chartData.investments[i]; // Le premier mois, on ne fait rien avec le calcul des intérêts.
-                     savingsDataFix3.push(0);
-               } else {
-                   cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i]-chartData.investments[i-1]);
-                   savingsDataFix3.push(cumulativeSavingsFix3 - chartData.investments[i]);
-
-               }
-              
-           }
-            const finalAmountFix3 = cumulativeSavingsFix3;
-            const totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
-           const lastInvestment = chartData.investments[chartData.investments.length-1]
+          let cumulativeSavingsFix3 = 0;
+          let savingsDataFix3 = [];
+          let totalInvestmentsFix3 = 0;
+    
+    for (let i = 0; i < chartData.labels.length; i++) {
+        totalInvestmentsFix3 += chartData.investments[i];
+        if (i === 0) {
+            cumulativeSavingsFix3 = chartData.investments[i];
+            savingsDataFix3.push(0);
+        } else {
+             cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i] - chartData.investments[i - 1]);
+            savingsDataFix3.push(cumulativeSavingsFix3 - chartData.investments[i]);
+        }
+    }
+    const finalAmountFix3 = cumulativeSavingsFix3;
+    const totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
+    const lastInvestment = chartData.investments[chartData.investments.length - 1]
             
            updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate,cumulativeSavingsFix3, lastInvestment);
            
@@ -207,8 +205,8 @@ async function fetchData() {
             setElementVisibility('investmentChartContainer', true);
             setElementVisibility('results', true);
             setElementVisibility('savingsChartContainer', true);
-            setElementVisibility('resultsTauxFix', true);
-            setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
+           setElementVisibility('resultsTauxFix', true);
+        setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
 
         // Stocker les données pour le fichier excel
         excelData = chartData;
