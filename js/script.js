@@ -1,4 +1,4 @@
-// script.js 16 30 30 01 
+// script.js 16 38 30 01 
 import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
@@ -171,22 +171,24 @@ async function fetchData() {
            updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
            
           let cumulativeSavingsFix3 = 0;
-          let totalInvestmentsFix3 = 0;
+         let totalInvestmentsFix3 = 0;
+         let savingsDataFix3 = [];
           
            for (let i = 0; i < chartData.labels.length; i++) {
                if (i === 0) {
                    cumulativeSavingsFix3 = chartData.investments[i];
+                   savingsDataFix3.push(0);
                } else {
                    cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i] - chartData.investments[i - 1]);
+                   savingsDataFix3.push(cumulativeSavingsFix3-chartData.investments[i]);
                }
                 totalInvestmentsFix3 += chartData.investments[i];
            }
-            const finalAmountFix3 = cumulativeSavingsFix3;
-            const totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
-           const lastInvestment = chartData.investments[chartData.investments.length-1]
-           
-         
-            updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate,cumulativeSavingsFix3, lastInvestment);
+           const finalAmountFix3 = cumulativeSavingsFix3;
+           const totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
+          const lastInvestment = chartData.investments[chartData.investments.length-1]
+            
+           updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate,cumulativeSavingsFix3,savingsDataFix3);
            
            // Mettre à jour l'affichage du taux d'intérêt
            const interestRateValue = document.getElementById('interestRate').value;
@@ -195,16 +197,27 @@ async function fetchData() {
           
             document.getElementById('last-cumulative-savings').textContent = formatNumber(cumulativeSavingsFix3.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
            document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-          document.getElementById('gain-taux-fixe').textContent = formatNumber(totalInterestFix3.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-
+            document.getElementById('gain-taux-fixe').textContent = formatNumber(totalInterestFix3.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+           
            // Afficher les sections de résultat et les boutons de téléchargement ici
             setElementVisibility('resultsWithCapping', true);
             setElementVisibility('evolutionChartContainer', true);
             setElementVisibility('investmentChartContainer', true);
-            setElementVisibility('results', true);
-            setElementVisibility('savingsChartContainer', true);
+           setElementVisibility('results', true);
+           setElementVisibility('savingsChartContainer', true);
            setElementVisibility('resultsTauxFix', true);
-           setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
+        setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
+
+        // Stocker les données pour le fichier excel
+        excelData = chartData;
+        excelCappedDatesAndAmounts = cappedDatesAndAmountsWithInterest;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error);
+        alert('Erreur lors de la récupération des données. Veuillez réessayer.');
+    } finally {
+        showLoadingIndicator(false);
+    }
+}
 
         // Stocker les données pour le fichier excel
         excelData = chartData;
