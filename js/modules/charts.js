@@ -208,6 +208,3 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
          }
     });
 }
-         }
-    });
-}
