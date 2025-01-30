@@ -1,4 +1,4 @@
-// charts.js 16 33 30 01
+// charts.js 16 39 30 01
 
 const { Chart } = window;
 
@@ -134,14 +134,15 @@ export function updateInvestmentChart(labels, investments, portfolio, portfolioV
      });
 }
 
-export function updateSavingsChart(labels, investments, portfolio, monthlyInterestRate, lastCumulativeSavings) {
+export function updateSavingsChart(labels, investments, portfolio, monthlyInterestRate, lastCumulativeSavings, savingsDataFix3) {
     const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    
      if (savingsChart) savingsChart.destroy();
     savingsChart = new Chart(ctxSavings, {
         type: 'bar',
-        data: {
-           labels: labels,
-             datasets: [{
+         data: {
+            labels: labels,
+            datasets: [{
                     label: 'Montant investi',
                     data: investments,
                     backgroundColor: 'rgb(0, 255, 0)',
@@ -149,25 +150,25 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
                     borderWidth: 1,
                     stack: 'stack1',
                     yAxisID: 'y',
-                    order: 2
+                     order: 2
                 },
                 {
-                    label: 'Gain taux fixe',
-                    data: investments.map((investment, i) => i === 0 ? 0 : lastCumulativeSavings - investment),
-                    backgroundColor: 'rgb(0, 0, 255)',
-                    stack: 'stack1',
+                     label: 'Gain taux fixe',
+                     data: savingsDataFix3,
+                     backgroundColor: 'rgb(0, 0, 255)',
+                     stack: 'stack1',
                     yAxisID: 'y',
                     order : 3
                 },
-                 {
-                   label: 'Valeur du Portefeuille',
-                   data: portfolio,
-                   type: 'line',
-                   borderColor: 'rgb(255, 135, 0)',
-                   tension: 0.1,
+                {
+                    label: 'Valeur du Portefeuille',
+                    data: portfolio,
+                    type: 'line',
+                    borderColor: 'rgb(255, 135, 0)',
+                    tension: 0.1,
                     yAxisID: 'y',
-                    order: 1
-                 }
+                   order: 1
+                }
             ]
         },
          options: {
@@ -204,6 +205,9 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
                      }
                   }
              }
+         }
+    });
+}
          }
     });
 }
