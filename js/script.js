@@ -170,17 +170,21 @@ async function fetchData() {
            updateEvolutionChart(chartData.labels, chartData.prices);
            updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
            
-           let cumulativeSavingsFix3 = 0;
+        let cumulativeSavingsFix3 = 0;
            let savingsDataFix3 = [];
            let totalInvestmentsFix3 = 0;
           
            for (let i = 0; i < chartData.labels.length; i++) {
+                 totalInvestmentsFix3 += chartData.investments[i];
                if (i === 0) {
-                   cumulativeSavingsFix3 = chartData.investments[i];
+                   cumulativeSavingsFix3 = chartData.investments[i]; // Le premier mois, on ne fait rien avec le calcul des intérêts.
+                     savingsDataFix3.push(0);
                } else {
-                   cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i] - chartData.investments[i - 1]);
+                   cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i]-chartData.investments[i-1]);
+                   savingsDataFix3.push(cumulativeSavingsFix3 - chartData.investments[i]);
+
                }
-                totalInvestmentsFix3 += chartData.investments[i];
+              
            }
             const finalAmountFix3 = cumulativeSavingsFix3;
             const totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
