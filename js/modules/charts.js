@@ -1,4 +1,5 @@
-// charts.js 15 50 30 01
+// charts.js 16 33 30 01
+
 const { Chart } = window;
 
 let evolutionChart = null;
@@ -133,25 +134,14 @@ export function updateInvestmentChart(labels, investments, portfolio, portfolioV
      });
 }
 
-export function updateSavingsChart(labels, investments, portfolio, monthlyInterestRate, lastCumulativeSavings, lastInvestment) {
+export function updateSavingsChart(labels, investments, portfolio, monthlyInterestRate, lastCumulativeSavings) {
     const ctxSavings = document.getElementById('savingsChart').getContext('2d');
-     let savingsData = [];
-
-    for (let i = 0; i < labels.length; i++) {
-        if (i === 0) {
-           savingsData.push(0);
-        }else {
-            savingsData.push(lastCumulativeSavings - investments[i]);
-        }
-    }
-
-
-    if (savingsChart) savingsChart.destroy();
+     if (savingsChart) savingsChart.destroy();
     savingsChart = new Chart(ctxSavings, {
         type: 'bar',
-         data: {
-            labels: labels,
-            datasets: [{
+        data: {
+           labels: labels,
+             datasets: [{
                     label: 'Montant investi',
                     data: investments,
                     backgroundColor: 'rgb(0, 255, 0)',
@@ -159,15 +149,15 @@ export function updateSavingsChart(labels, investments, portfolio, monthlyIntere
                     borderWidth: 1,
                     stack: 'stack1',
                     yAxisID: 'y',
-                     order: 2
+                    order: 2
                 },
                 {
                     label: 'Gain taux fixe',
-                    data: savingsData,
+                    data: investments.map((investment, i) => i === 0 ? 0 : lastCumulativeSavings - investment),
                     backgroundColor: 'rgb(0, 0, 255)',
                     stack: 'stack1',
                     yAxisID: 'y',
-                    order: 3
+                    order : 3
                 },
                  {
                    label: 'Valeur du Portefeuille',
