@@ -175,57 +175,52 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const minCappingAmount = document.getElementById('minCappingAmount').value;
         const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
 
-        return {
+     return {
   table: {
     body: [
+      [`Valeur finale du portefeuille: ${finalPortfolioValue} ${currencySymbol}`],
       [
-        { text: 'Valeur finale du portefeuille:', alignment: 'left' },
-        { text: `${finalPortfolioValue} ${currencySymbol}`, alignment: 'right' }
-      ],
-      [
-        { text: 'Gain ou Perte:', alignment: 'left' },
         {
           text: [
+            'Gain ou Perte: ',
             { text: gainLossAmount + ' ' + currencySymbol + ' ', style: getStyleForValue(gainLossAmount) },
             ' soit : ',
             { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
           ],
-          alignment: 'right'
         }
       ],
       [
-        { text: 'Montant de moins-value potentielle maximale:', alignment: 'left' },
         {
           text: [
+            'Montant de moins-value potentielle maximale: ',
             { text: maxLossAmount + ' ', style: getStyleForValue(maxLossAmount) },
             ' soit : ',
             { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
             ' de l\'investissement au : ',
             maxLossAmountElement.textContent.split('au :')[1]
-          ],
-          alignment: 'right'
+          ]
         }
       ],
       [
-        { text: 'Montant de plus-value potentielle maximale:', alignment: 'left' },
         {
           text: [
+            'Montant de plus-value potentielle maximale: ',
             { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
             ' soit : ',
             { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
             ' de l\'investissement au : ',
             maxGainAmountElement.textContent.split('au :')[1]
-          ],
-          alignment: 'right'
+          ]
         }
       ]
     ],
-    widths: ['*', 'auto']
+    widths: ['*']
   },
   layout: 'noBorders',
   fontSize: 10,
   margin: [0, 0, 0, 10]
 };
+
 
     }
     function getResults() {
