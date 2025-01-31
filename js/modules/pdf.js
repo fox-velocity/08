@@ -379,30 +379,22 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
        console.log("securedGainTableData", securedGainTableData);
       let body = [];
         body.push([
-            { text: 'colonne' ,style: 'tableHeader'},
-            { text: 'Date', style: 'tableHeader'},
+              { text: 'Date', style: 'tableHeader'},
              { text: 'Gain sécurisé', style: 'tableHeader' },
-             { text: 'Intérêt du gain sécurisé', style: 'tableHeader' },
-           {text : " " , style: 'tableHeader'}
+             { text: 'Intérêt du gain sécurisé', style: 'tableHeader' }           
         ]);
      securedGainTableData.forEach(row => {
            body.push([
-                { text: 'colonne' ,style: 'tableCell'},
-               row[0],
+                 row[0],
                  row[1],
                row[2],
-               {text : " " ,style: 'tableCell'}
            ]);
        });
        console.log("body", body);
         return {
-            table: {
-               body: body,
-               widths: ['15%', 'auto', 'auto', '*', '15%']
-            },
-            layout: 'noBorders',
+           layout: 'noBorders',
           fontSize: 12,
-         margin: [0, 0, 0, 10],
+         margin: [20, 0, 0, 10],
      };
     }
 
@@ -446,8 +438,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                   { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' }
                 ])
               ],
-              widths: ['20%', '20%', '30%'],
-              alignment: 'center', // Centre le tableau sur la page
+              widths: ['20%', '20%', '20%'],
+            
             },
             layout: 'noBorders',
             fontSize: 12,
