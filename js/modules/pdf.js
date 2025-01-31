@@ -358,8 +358,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         ]
         };
     }
-////////////////////////////////////////////////////////////////
-   
+
+//table des gains sécurisé   
     function getSecuredGainsTable() {
         const securedGainsTableBody = document.getElementById('securedGainsTableBody');
         if (!securedGainsTableBody) {
@@ -393,62 +393,17 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                   { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' }
                 ])
               ],
-              widths: ['20%', '20%', '30%'],
+              widths: ['20%', '20%', '40%'],
             },
             layout: 'noBorders',
             fontSize: 12,
-            margin: [0, 0, 0, 10],          
+            margin: [0, 0, 0, 50],          
           };
           
     }
     
 
- function getSecuredGainsTable() {
-        const securedGainsTableBody = document.getElementById('securedGainsTableBody');
-        if (!securedGainsTableBody) {
-            return {
-                table: {
-                     body : [],
-                    widths: ['auto', 'auto', '*']
-                 },
-                margin: [0, 0, 0, 10]
-           };
-        }
-        let securedGainTableData = [];
-        const header = ['Date', 'Gain sécurisé', 'Intérêt du gain sécurisé']
-        const rows = securedGainsTableBody.querySelectorAll('tr');
-         rows.forEach(row => {
-           let rowData = [];
-           const cells = row.querySelectorAll('td');
-             cells.forEach(cell => {
-                 rowData.push(cell.textContent);
-             });
-           if (rowData.length > 0) {
-               securedGainTableData.push(rowData);
-           }
-        });
-        return {
-            table: {
-              body: [
-                [
-                  { text: 'Date', style: 'tableHeader', alignment: 'center' },
-                  { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
-                  { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' }
-                ],
-                ...securedGainTableData.map(row => [
-                  { text: row[0], style: 'tableCell', alignment: 'center' },
-                  { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center' },
-                  { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' }
-                ])
-              ],
-              widths: ['20%', '20%', '20%'],
-            
-            },
-            layout: 'noBorders',
-            fontSize: 12,
-            margin: [0, 0, 0, 10],          
-          };
-     }
+
           
     // Fonction pour récupérer les données du tableau résultats épargne placée à taux garanti
        function getResultsTauxFixe() {
