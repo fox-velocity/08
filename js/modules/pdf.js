@@ -358,59 +358,52 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         ]
         };
     }
-
-      function getSecuredGainsTable() {
+////////////////////////////////////////////////////////////////
+     function getSecuredGainsTable() {
         const securedGainsTableBody = document.getElementById('securedGainsTableBody');
-       if (!securedGainsTableBody) {
-            return {
-              table: {
-                    body : [],
-                  widths: ['auto', 'auto', '*']
-                 },
-                 margin: [0, 0, 0, 10]
-            };
-        }
-        let securedGainTableData = [];
-         const header = ['Date', 'Gain sécurisé', 'Intérêt du gain sécurisé'];
-         const rows = securedGainsTableBody.querySelectorAll('tr');
-        rows.forEach(row => {
-            let rowData = [];
-             const cells = row.querySelectorAll('td');
-           cells.forEach(cell => {
-                rowData.push(cell.textContent);
-             });
-           if (rowData.length > 0) {
-                 securedGainTableData.push(rowData);
-           }
-        });
-         console.log("securedGainTableData", securedGainTableData);
-    let body = [];
+         let securedGainTableData = [];
+        const header = ['Date', 'Gain sécurisé', 'Intérêt du gain sécurisé']
+         if(securedGainsTableBody){
+           const rows = securedGainsTableBody.querySelectorAll('tr');
+             rows.forEach(row => {
+                let rowData = [];
+              const cells = row.querySelectorAll('td');
+              cells.forEach(cell => {
+                    rowData.push(cell.textContent);
+               });
+            if (rowData.length > 0) {
+                securedGainTableData.push(rowData);
+               }
+           });
+         }
+       console.log("securedGainTableData", securedGainTableData);
+      let body = [];
         body.push([
             { text: 'colonne' ,style: 'tableHeader'},
-            { text: 'Date', style: 'tableHeader',  },
-            { text: 'Gain sécurisé', style: 'tableHeader' },
+            { text: 'Date', style: 'tableHeader'},
+             { text: 'Gain sécurisé', style: 'tableHeader' },
              { text: 'Intérêt du gain sécurisé', style: 'tableHeader' },
-            {text : " " , style: 'tableHeader'}
+           {text : " " , style: 'tableHeader'}
         ]);
      securedGainTableData.forEach(row => {
            body.push([
-                 { text: 'colonne' ,style: 'tableCell'},
-                  row[0],
-                  row[1],
-                   row[2],
-                   {text : " " ,style: 'tableCell'}
-               ]);
-        });
-        console.log("body", body)
+                { text: 'colonne' ,style: 'tableCell'},
+               row[0],
+                 row[1],
+               row[2],
+               {text : " " ,style: 'tableCell'}
+           ]);
+       });
+       console.log("body", body);
         return {
             table: {
-                body: body,
+               body: body,
                widths: ['15%', 'auto', 'auto', '*', '15%']
             },
             layout: 'noBorders',
-          margin: [0, 0, 0, 10],
-           fontSize: 12,
-        };
+          fontSize: 12,
+         margin: [0, 0, 0, 10],
+     };
     }
 
     
