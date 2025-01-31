@@ -405,24 +405,27 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
            }
         });
         return {
-           table: {
-                body: [
-                    [
-                        { text: 'Date', style: 'tableHeader', alignment: 'center', fontSize: 12 },
-                        { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center', fontSize: 12 },
-                         { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center', fontSize: 12 }
-                     ],
-                   ...securedGainTableData.map(row => [
-                         { text: row[0] || '-', style: 'tableCell', alignment: 'center',fontSize: 12},
-                        { text: row[1] || '-', style: 'tableCell', alignment: 'center',fontSize: 12},
-                       { text: row[2] || '-', style: 'tableCell', alignment: 'right',fontSize: 12}
-                   ])
-               ],
-                 widths: ['15%', 'auto', '15%']
+            table: {
+              body: [
+                [
+                  { text: 'Date', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' }
+                ],
+                ...securedGainTableData.map(row => [
+                  { text: row[0], style: 'tableCell', alignment: 'center' },
+                  { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center' },
+                  { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' }
+                ])
+              ],
+              widths: ['20%', '20%', '30%'],
+              alignment: 'center', // Centre le tableau sur la page
             },
-            margin: [0, 0, 0, 10]
-       };
-    }
+            layout: 'noBorders',
+            fontSize: 12,
+            margin: [0, 0, 0, 10],          
+          };
+     }
           
     // Fonction pour récupérer les données du tableau résultats épargne placée à taux garanti
        function getResultsTauxFixe() {
