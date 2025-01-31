@@ -387,14 +387,14 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
            body.push([
                  row[0],
                  row[1],
-               row[2],
+                 row[2],
            ]);
        });
        console.log("body", body);
         return {
            layout: 'noBorders',
           fontSize: 12,
-         margin: [20, 0, 0, 10],
+         margin: [10, 0, 10, 30],
      };
     }
 
