@@ -14,11 +14,11 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     background: function (currentPage, pageSize) {
         return {
             image: logoRenardBase64Gris,
-            width: pageSize.width * 0.9, // 90% de la largeur de la page
-            height: pageSize.height * 0.9, // 90% de la hauteur de la page
+            width: pageSize.width * 0.9,
+            height: pageSize.height * 0.9, 
             absolutePosition: {
-                x: (pageSize.width - pageSize.width * 0.9) / 2, // Centrer horizontalement
-                y: (pageSize.height - pageSize.height * 0.9) / 2 // Centrer verticalement
+                x: (pageSize.width - pageSize.width * 0.9) / 2,
+                y: (pageSize.height - pageSize.height * 0.9) / 2
             },
             opacity: 0.2,
         };
