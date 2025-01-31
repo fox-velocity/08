@@ -379,29 +379,48 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         });
 
         return {
-            table: {
-              body: [
-                [
-                     '', // Colonne vide
-                  { text: 'Date', style: 'tableHeader', alignment: 'center' },
-                  { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
-                  { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' },
-                   ''
-                ],
-                ...securedGainTableData.map(row => [
-                     '', 
-                  { text: row[0], style: 'tableCell', alignment: 'center' },
-                  { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center' },
-                  { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' },
-                    ''
-                ])
-              ],
-            widths: ['15%', 'auto', 'auto', 'auto', '15%']
-            },
-            layout: 'noBorders',
-            fontSize: 12,
-            margin: [0, 0, 0, 10],          
-          };    
+  content: [
+    {
+      table: {
+        body: [
+          [
+            '', // Colonne vide
+            { text: 'Date', style: 'tableHeader', alignment: 'center' },
+            { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
+            { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' },
+            '' // Colonne vide
+          ],
+          ...securedGainTableData.map(row => [
+            '', // Colonne vide
+            { text: row[0], style: 'tableCell', alignment: 'center' },
+            { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center' },
+            { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' },
+            '' // Colonne vide
+          ])
+        ],
+        widths: ['10%', 'auto', 'auto', 'auto', '10%']
+      },
+      layout: 'noBorders',
+      fontSize: 12,
+      margin: [0, 0, 0, 10],
+      alignment: 'center', // Centre le contenu du tableau
+      width: '80%', // Le tableau occupe 80% de la largeur de la page
+      margin: [10, 0, 0, 0] // Ajoute une marge à gauche pour centrer le tableau
+    }
+  ],
+  styles: {
+    tableHeader: {
+      bold: true,
+      fontSize: 14,
+      color: 'black'
+    },
+    tableCell: {
+      fontSize: 12,
+      color: 'black'
+    }
+  }
+};
+
     }
 
  function getSecuredGainsTable() {
