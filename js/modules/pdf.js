@@ -207,28 +207,30 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     }
     
     ///RESULTATS/////////
-      function getResults() {
+       function getResults() {
           const results = document.getElementById('results');
           if (!results) {
               return {};
           }
           const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
-          const gainLossAmountText = document.querySelector('#finalGainLossPercentage span:first-child').textContent;
-          const gainLossPercentageText = document.querySelector('#finalGainLossPercentage span:last-child').textContent;
-          const gainLossPercentage = formatPercentage(gainLossPercentageText);
-          const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
-        
-          const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
-          const maxLossAmount = maxLossAmountElement ? maxLossAmountElement.querySelector('span:first-child').textContent : '-';
-          const maxLossPercentage = maxLossAmountElement ? maxLossAmountElement.querySelector('span:last-child').textContent : '-';
+        const gainLossElement = document.getElementById('finalGainLossPercentage');
+        const gainLossAmount = gainLossElement ? gainLossElement.querySelector('span:first-child').textContent : '-';
+         const gainLossPercentage = gainLossElement ?  gainLossElement.querySelector('span:last-child').textContent : '-';
+
+         const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
+         const maxLossAmount = maxLossAmountElement ? maxLossAmountElement.querySelector('span:first-child').textContent : '-';
+         const maxLossPercentage = maxLossAmountElement ? maxLossAmountElement.querySelector('span:last-child').textContent : '-';
           const maxLossDate = maxLossAmountElement ? maxLossAmountElement.textContent.split('au :')[1] : '-';
-          const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
-          const maxGainAmount = maxGainAmountElement ? maxGainAmountElement.querySelector('span:first-child').textContent : '-';
+        
+         const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
+         const maxGainAmount = maxGainAmountElement ? maxGainAmountElement.querySelector('span:first-child').textContent : '-';
           const maxGainPercentage = maxGainAmountElement ? maxGainAmountElement.querySelector('span:last-child').textContent : '-';
-          const maxGainDate = maxGainAmountElement ? maxGainAmountElement.textContent.split('au :')[1] : '-';
+         const maxGainDate = maxGainAmountElement ? maxGainAmountElement.textContent.split('au :')[1] : '-';
+
          
           const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
-         return {
+
+          return {
               table: {
                   body: [
                       [`Valeur finale du portefeuille : ${finalPortfolioValue} ${currencySymbol}`],
@@ -236,9 +238,9 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                           {
                               text: [
                                   'Gain ou Perte : ',
-                                  { text: gainLossAmount + ' ' + currencySymbol + ' ', style: getStyleForValue(gainLossAmount) },
+                                    {text: formatNumber(gainLossAmount.replace(/[^\d.-]/g, '')) + ' ' + currencySymbol + ' ',style: getStyleForValue(gainLossAmount)},
                                   ' soit : ',
-                                  { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
+                                  { text: formatPercentage(gainLossPercentage), style: getStyleForValue(gainLossPercentage) },
                               ],
                           }
                       ],
@@ -246,22 +248,22 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                           {
                               text: [
                                   'Moins-value potentielle maximale : ',
-                                  { text: maxLossAmount + ' ', style: getStyleForValue(maxLossAmount) },
+                                    {text: maxLossAmount + ' ', style: getStyleForValue(maxLossAmount)},
                                   ' soit : ',
-                                  { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
+                                 { text:  maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
                                   ' de l\'investissement au : ',
                                    maxLossDate
                               ]
                           }
                       ],
                       [
-                          {
+                         {
                               text: [
                                   'Plus-value potentielle maximale : ',
-                                  { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
+                                 {text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount)},
                                   ' soit : ',
                                   { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
-                                   ' de l\'investissement au : ',
+                                  ' de l\'investissement au : ',
                                    maxGainDate
                               ]
                           }
