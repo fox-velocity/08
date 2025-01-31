@@ -63,7 +63,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 margin: [15, 5, 0, 5]
             },
              tableCell: {
-                 margin: [0, 5, 20, 5]
+                 margin: [0, 5, 5, 5]
             },
             positive: {
                 color: 'green'
@@ -227,6 +227,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             table: {
                 body: [
                     [`Valeur finale du portefeuille : ${finalPortfolioValue} ${currencySymbol}`],
+                    [""], // Ligne vide ajoutée
                     [
                         {
                             text: [
@@ -262,6 +263,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         }
                     ]
                 ],
+                [""], // Ligne vide ajoutée
                 widths: ['*']
             },
             layout: 'noBorders',
