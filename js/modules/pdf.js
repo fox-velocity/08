@@ -207,7 +207,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         if (!results) {
             return {};
         }
-        const finalPortfoFlioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
+        const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
         const gainLossAmountText = document.querySelector('#finalGainLossPercentage span:first-child').textContent;
         const gainLossPercentageText = document.querySelector('#finalGainLossPercentage span:last-child').textContent;
         const gainLossPercentage = formatPercentage(gainLossPercentageText);
