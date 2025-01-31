@@ -263,12 +263,11 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         }
                     ]
                 ],
-                [""], // Ligne vide ajoutée
-                widths: ['*']
+               widths: ['*']
             },
             layout: 'noBorders',
             fontSize: 12,
-            margin: [0, 0, 0, 10]
+            margin: [0, 0, 10, 10]
         };
     }
 
