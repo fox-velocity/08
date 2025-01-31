@@ -273,407 +273,45 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
            margin: [0, 0, 0, 10]
         };
     }
- function getResultsWithCapping() {
-        const resultsWithCapping = document.getElementById('resultsWithCapping');
-         if (!resultsWithCapping) {
-            return {};
-       }
-        const portfolioValueEcreteAvecGainElement = document.getElementById('portfolioValueEcreteAvecGain');
-         const finalPortfolioValueEcreteElement = document.getElementById('finalPortfolioValueEcrete');
-        const finalTotalEcreteElement = document.getElementById('finalTotalEcrete');
-     const finalTotalEcreteInterestElement = document.getElementById('finalTotalEcreteInterest');
-        const finalGainLossAmountEcreteTextElement = document.querySelector('#finalGainEcrete span:first-child');
-       const finalGainLossPercentageEcreteTextElement = document.querySelector('#finalGainEcrete span:last-child');
-         const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
-       const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
-        const currencySymbolElement = document.getElementById('currencySymbolLabel');
-      
-        const portfolioValueEcreteAvecGain = portfolioValueEcreteAvecGainElement ? portfolioValueEcreteAvecGainElement.textContent?.replace(/\s/g, '') : '-';
-        const finalPortfolioValueEcrete = finalPortfolioValueEcreteElement ? finalPortfolioValueEcreteElement.textContent?.replace(/\s/g, '') : '-';
-      const finalTotalEcrete = finalTotalEcreteElement ? finalTotalEcreteElement.textContent?.replace(/\s/g, '') : '-';
-         const finalTotalEcreteInterest = finalTotalEcreteInterestElement ? finalTotalEcreteInterestElement.textContent?.replace(/\s/g, '') : '-';
-       const finalGainLossAmountEcrete = finalGainLossAmountEcreteTextElement ? finalGainLossAmountEcreteTextElement.textContent : '-';
-     const finalGainLossPercentageEcrete = finalGainLossPercentageEcreteTextElement ? finalGainLossPercentageEcreteTextElement.textContent : '-';
 
-      const maxLossAmountEcrete = maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-        const maxLossPercentageEcrete = maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-       const maxGainAmountEcrete = maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-        const maxGainPercentageEcrete = maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-        const currencySymbol = currencySymbolElement ? currencySymbolElement.textContent : '';
-
-          return {
-           stack: [
-              {text: `Valeur portefeuille + Gain sécurisé: ${portfolioValueEcreteAvecGain} ${currencySymbol}`},
-               {text: `Valeur finale du portefeuille écrêté: ${finalPortfolioValueEcrete} ${currencySymbol}`},
-               {text:  `Valeur totale écrêtée: ${finalTotalEcrete} ${currencySymbol}`},
-               {text :`Valeur totale des intérêts des gains écrêtés: ${finalTotalEcreteInterest} ${currencySymbol}`},
-                [
-                   'Gain ou Perte: ',
-                      finalGainLossAmountEcrete + ' soit : ' + finalGainLossPercentageEcrete,
-                ],
-                [
-                    'Montant de moins-value potentielle maximale: ',
-                     maxLossAmountEcrete +  ' soit : ' + maxLossPercentageEcrete  + ' de l\'investissement au : ' + (maxLossAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                ],
-                 [
-                       'Montant de plus-value potentielle maximale: ',
-                    maxGainAmountEcrete+ ' soit : ' + maxGainPercentageEcrete + ' de l\'investissement au : ' + (maxGainAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                    ]
-                ],
-            layout: 'noBorders',
-           fontSize: 12,
-           margin: [0, 0, 0, 10]
-     };
- }
     
-     function getResultsWithCapping() {
-        const resultsWithCapping = document.getElementById('resultsWithCapping');
-       if (!resultsWithCapping) {
-          return {};
-       }
-       const portfolioValueEcreteAvecGainElement = document.getElementById('portfolioValueEcreteAvecGain');
-       const finalPortfolioValueEcreteElement = document.getElementById('finalPortfolioValueEcrete');
-        const finalTotalEcreteElement = document.getElementById('finalTotalEcrete');
-       const finalTotalEcreteInterestElement = document.getElementById('finalTotalEcreteInterest');
-       const finalGainLossAmountEcreteTextElement = document.querySelector('#finalGainEcrete span:first-child');
-       const finalGainLossPercentageEcreteTextElement = document.querySelector('#finalGainEcrete span:last-child');
-       const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
-        const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
-        const currencySymbolElement = document.getElementById('currencySymbolLabel');
-
-        const portfolioValueEcreteAvecGain =  portfolioValueEcreteAvecGainElement ? portfolioValueEcreteAvecGainElement.textContent?.replace(/\s/g, '') : '-';
-         const finalPortfolioValueEcrete = finalPortfolioValueEcreteElement ? finalPortfolioValueEcreteElement.textContent?.replace(/\s/g, '') : '-';
-        const finalTotalEcrete =  finalTotalEcreteElement ? finalTotalEcreteElement.textContent?.replace(/\s/g, '') : '-';
-        const finalTotalEcreteInterest = finalTotalEcreteInterestElement ? finalTotalEcreteInterestElement.textContent?.replace(/\s/g, '') : '-';
-       const finalGainLossAmountEcreteText = finalGainLossAmountEcreteTextElement ? finalGainLossAmountEcreteTextElement.textContent : '-';
-        const finalGainLossPercentageEcreteText = finalGainLossPercentageEcreteTextElement ? finalGainLossPercentageEcreteTextElement.textContent : '-';
-
-      const maxLossAmountEcrete = maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-        const maxLossPercentageEcrete = maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-         const maxGainAmountEcrete = maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-        const maxGainPercentageEcrete = maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-        const currencySymbol = currencySymbolElement ? currencySymbolElement.textContent : '';
-
-       return {
-           stack: [
-                `Valeur portefeuille + Gain sécurisé: ${portfolioValueEcreteAvecGain} ${currencySymbol}`,
-                  `Valeur finale du portefeuille écrêté: ${finalPortfolioValueEcrete} ${currencySymbol}`,
-                 `Valeur totale écrêtée: ${finalTotalEcrete} ${currencySymbol}`,
-                  `Valeur totale des intérêts des gains écrêtés: ${finalTotalEcreteInterest} ${currencySymbol}`,
-                   [
-                      'Gain ou Perte: ',
-                       finalGainLossAmountEcrete + ' soit : ' + finalGainLossPercentageEcreteText
-                  ],
-                 [
-                       'Montant de moins-value potentielle maximale: ',
-                      maxLossAmountEcrete  + ' soit : ' + maxLossPercentageEcrete  + ' de l\'investissement au : ' + (maxLossAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                     ],
-                   [
-                        'Montant de plus-value potentielle maximale: ',
-                         maxGainAmountEcrete+  ' soit : ' + maxGainPercentageEcrete + ' de l\'investissement au : ' + (maxGainAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                    ]
-              ],
-             layout: 'noBorders',
-            fontSize: 12,
-             margin: [0, 0, 0, 10]
-        };
-   }
-    
-     function getResultsWithCapping() {
-        const resultsWithCapping = document.getElementById('resultsWithCapping');
-       if (!resultsWithCapping) {
-          return {};
-       }
-       const portfolioValueEcreteAvecGainElement = document.getElementById('portfolioValueEcreteAvecGain');
-       const finalPortfolioValueEcreteElement = document.getElementById('finalPortfolioValueEcrete');
-        const finalTotalEcreteElement = document.getElementById('finalTotalEcrete');
-       const finalTotalEcreteInterestElement = document.getElementById('finalTotalEcreteInterest');
-       const finalGainLossAmountEcreteTextElement = document.querySelector('#finalGainEcrete span:first-child');
-       const finalGainLossPercentageEcreteTextElement = document.querySelector('#finalGainEcrete span:last-child');
-       const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
-        const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
-        const currencySymbolElement = document.getElementById('currencySymbolLabel');
-
-        const portfolioValueEcreteAvecGain =  portfolioValueEcreteAvecGainElement ? portfolioValueEcreteAvecGainElement.textContent?.replace(/\s/g, '') : '-';
-         const finalPortfolioValueEcrete = finalPortfolioValueEcreteElement ? finalPortfolioValueEcreteElement.textContent?.replace(/\s/g, '') : '-';
-        const finalTotalEcrete =  finalTotalEcreteElement ? finalTotalEcreteElement.textContent?.replace(/\s/g, '') : '-';
-        const finalTotalEcreteInterest = finalTotalEcreteInterestElement ? finalTotalEcreteInterestElement.textContent?.replace(/\s/g, '') : '-';
-       const finalGainLossAmountEcreteText = finalGainLossAmountEcreteTextElement ? finalGainLossAmountEcreteTextElement.textContent : '-';
-        const finalGainLossPercentageEcreteText = finalGainLossPercentageEcreteTextElement ? finalGainLossPercentageEcreteTextElement.textContent : '-';
-
-      const maxLossAmountEcrete = maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-        const maxLossPercentageEcrete = maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-         const maxGainAmountEcrete = maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-        const maxGainPercentageEcrete = maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-        const currencySymbol = currencySymbolElement ? currencySymbolElement.textContent : '';
-
-       return {
-           stack: [
-                `Valeur portefeuille + Gain sécurisé: ${portfolioValueEcreteAvecGain} ${currencySymbol}`,
-                  `Valeur finale du portefeuille écrêté: ${finalPortfolioValueEcrete} ${currencySymbol}`,
-                 `Valeur totale écrêtée: ${finalTotalEcrete} ${currencySymbol}`,
-                  `Valeur totale des intérêts des gains écrêtés: ${finalTotalEcreteInterest} ${currencySymbol}`,
-                   [
-                      'Gain ou Perte: ',
-                       finalGainLossAmountEcrete + ' soit : ' + finalGainLossPercentageEcreteText
-                  ],
-                 [
-                       'Montant de moins-value potentielle maximale: ',
-                      maxLossAmountEcrete  + ' soit : ' + maxLossPercentageEcrete  + ' de l\'investissement au : ' + (maxLossAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                     ],
-                   [
-                        'Montant de plus-value potentielle maximale: ',
-                         maxGainAmountEcrete+  ' soit : ' + maxGainPercentageEcrete + ' de l\'investissement au : ' + (maxGainAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                    ]
-              ],
-             layout: 'noBorders',
-            fontSize: 12,
-             margin: [0, 0, 0, 10]
-        };
-   }
-
  function getResultsWithCapping() {
-        const resultsWithCapping = document.getElementById('resultsWithCapping');
-         if (!resultsWithCapping) {
-            return {};
-       }
-        const portfolioValueEcreteAvecGainElement = document.getElementById('portfolioValueEcreteAvecGain');
-         const finalPortfolioValueEcreteElement = document.getElementById('finalPortfolioValueEcrete');
-        const finalTotalEcreteElement = document.getElementById('finalTotalEcrete');
-     const finalTotalEcreteInterestElement = document.getElementById('finalTotalEcreteInterest');
-        const finalGainLossAmountEcreteTextElement = document.querySelector('#finalGainEcrete span:first-child');
-       const finalGainLossPercentageEcreteTextElement = document.querySelector('#finalGainEcrete span:last-child');
-         const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
-       const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
-        const currencySymbolElement = document.getElementById('currencySymbolLabel');
-      
-        const portfolioValueEcreteAvecGain = portfolioValueEcreteAvecGainElement ? portfolioValueEcreteAvecGainElement.textContent?.replace(/\s/g, '') : '-';
-        const finalPortfolioValueEcrete = finalPortfolioValueEcreteElement ? finalPortfolioValueEcreteElement.textContent?.replace(/\s/g, '') : '-';
-      const finalTotalEcrete = finalTotalEcreteElement ? finalTotalEcreteElement.textContent?.replace(/\s/g, '') : '-';
-         const finalTotalEcreteInterest = finalTotalEcreteInterestElement ? finalTotalEcreteInterestElement.textContent?.replace(/\s/g, '') : '-';
-       const finalGainLossAmountEcrete = finalGainLossAmountEcreteTextElement ? finalGainLossAmountEcreteTextElement.textContent : '-';
-     const finalGainLossPercentageEcrete = finalGainLossPercentageEcreteTextElement ? finalGainLossPercentageEcreteTextElement.textContent : '-';
-
-      const maxLossAmountEcrete = maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-        const maxLossPercentageEcrete = maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-       const maxGainAmountEcrete = maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-        const maxGainPercentageEcrete = maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-        const currencySymbol = currencySymbolElement ? currencySymbolElement.textContent : '';
-
-          return {
-           stack: [
-              {text: `Valeur portefeuille + Gain sécurisé: ${portfolioValueEcreteAvecGain} ${currencySymbol}`},
-               {text: `Valeur finale du portefeuille écrêté: ${finalPortfolioValueEcrete} ${currencySymbol}`},
-               {text:  `Valeur totale écrêtée: ${finalTotalEcrete} ${currencySymbol}`},
-               {text :`Valeur totale des intérêts des gains écrêtés: ${finalTotalEcreteInterest} ${currencySymbol}`},
-                [
-                   'Gain ou Perte: ',
-                      finalGainLossAmountEcrete + ' soit : ' + finalGainLossPercentageEcrete,
-                ],
-                [
-                    'Montant de moins-value potentielle maximale: ',
-                     maxLossAmountEcrete +  ' soit : ' + maxLossPercentageEcrete  + ' de l\'investissement au : ' + (maxLossAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                ],
-                 [
-                       'Montant de plus-value potentielle maximale: ',
-                    maxGainAmountEcrete+ ' soit : ' + maxGainPercentageEcrete + ' de l\'investissement au : ' + (maxGainAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                    ]
-                ],
-            layout: 'noBorders',
-           fontSize: 12,
-           margin: [0, 0, 0, 10]
-     };
- }
-
-function getResultsWithCapping() {
         const resultsWithCapping = document.getElementById('resultsWithCapping');
         if (!resultsWithCapping) {
             return {};
-       }
-      const portfolioValueEcreteAvecGainElement = document.getElementById('portfolioValueEcreteAvecGain');
-    const finalPortfolioValueEcreteElement = document.getElementById('finalPortfolioValueEcrete');
-       const finalTotalEcreteElement = document.getElementById('finalTotalEcrete');
+        }
+    const portfolioValueEcreteAvecGainElement = document.getElementById('portfolioValueEcreteAvecGain');
+        const finalPortfolioValueEcreteElement = document.getElementById('finalPortfolioValueEcrete');
+        const finalTotalEcreteElement = document.getElementById('finalTotalEcrete');
         const finalTotalEcreteInterestElement = document.getElementById('finalTotalEcreteInterest');
-        const finalGainLossAmountEcreteTextElement = document.querySelector('#finalGainEcrete span:first-child');
-      const finalGainLossPercentageEcreteTextElement = document.querySelector('#finalGainEcrete span:last-child');
-        const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
-      const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
-        const currencySymbolElement = document.getElementById('currencySymbolLabel');
-    
-        const portfolioValueEcreteAvecGain = portfolioValueEcreteAvecGainElement ? portfolioValueEcreteAvecGainElement.textContent?.replace(/\s/g, '') : '-';
-     const finalPortfolioValueEcrete = finalPortfolioValueEcreteElement ? finalPortfolioValueEcreteElement.textContent?.replace(/\s/g, '') : '-';
-     const finalTotalEcrete = finalTotalEcreteElement ? finalTotalEcreteElement.textContent?.replace(/\s/g, '') : '-';
-        const finalTotalEcreteInterest =  finalTotalEcreteInterestElement ?  finalTotalEcreteInterestElement.textContent?.replace(/\s/g, '') : '-';
-     const finalGainLossAmountEcreteText = finalGainLossAmountEcreteTextElement ? finalGainLossAmountEcreteTextElement.textContent : '-';
-      const finalGainLossPercentageEcreteText = finalGainLossPercentageEcreteTextElement ? finalGainLossPercentageEcreteTextElement.textContent : '-';
-      const finalGainLossAmountEcrete = finalGainLossAmountEcreteText?.replace(/[^\d.-]/g, '') || '-';
-        const finalGainLossPercentageEcrete = finalGainLossPercentageEcreteText;
-       const maxLossAmountEcrete =  maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-      const maxLossPercentageEcrete =  maxLossAmountEcreteElement ? maxLossAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-        const maxGainAmountEcrete = maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:first-child')?.textContent : '-';
-        const maxGainPercentageEcrete =  maxGainAmountEcreteElement ? maxGainAmountEcreteElement.querySelector('span:last-child')?.textContent : '-';
-     const currencySymbol = currencySymbolElement ? currencySymbolElement.textContent : '';
-
-
-       return {
-           stack: [
-             `Valeur portefeuille + Gain sécurisé: ${portfolioValueEcreteAvecGain} ${currencySymbol}`,
-            `Valeur finale du portefeuille écrêté: ${finalPortfolioValueEcrete} ${currencySymbol}`,
-              `Valeur totale écrêtée: ${finalTotalEcrete} ${currencySymbol}`,
-               `Valeur totale des intérêts des gains écrêtés: ${finalTotalEcreteInterest} ${currencySymbol}`,
-                [
-                   'Gain ou Perte: ',
-                     finalGainLossAmountEcrete +  ' soit : ' + finalGainLossPercentageEcrete,
-                   ],
-                 [
-                      'Montant de moins-value potentielle maximale: ',
-                    maxLossAmountEcrete +  ' soit : ' + maxLossPercentageEcrete + ' de l\'investissement au : ' + (maxLossAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                 ],
-                  [
-                        'Montant de plus-value potentielle maximale: ',
-                    maxGainAmountEcrete + ' soit : ' + maxGainPercentageEcrete + ' de l\'investissement au : ' + (maxGainAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                     ]
-               ],
-            layout: 'noBorders',
-            fontSize: 10,
-            margin: [0, 0, 0, 10]
-        };
-   }
-
-  function getResultsWithCapping() {
-      const resultsWithCapping = document.getElementById('resultsWithCapping');
-        if (!resultsWithCapping) {
-            return {};
-       }
-        const portfolioValueEcreteAvecGain = document.getElementById('portfolioValueEcreteAvecGain')?.textContent?.replace(/\s/g, '') || '-';
-       const finalPortfolioValueEcrete = document.getElementById('finalPortfolioValueEcrete')?.textContent?.replace(/\s/g, '') || '-';
-        const finalTotalEcrete = document.getElementById('finalTotalEcrete')?.textContent?.replace(/\s/g, '') || '-';
-        const finalTotalEcreteInterest = document.getElementById('finalTotalEcreteInterest')?.textContent?.replace(/\s/g, '') || '-';
-     const finalGainLossAmountEcreteText = document.querySelector('#finalGainEcrete span:first-child')?.textContent || '-';
-    const finalGainLossPercentageEcreteText = document.querySelector('#finalGainEcrete span:last-child')?.textContent || '-';
-      const finalGainLossPercentageEcrete =  finalGainLossPercentageEcreteText;
-        const finalGainLossAmountEcrete =  finalGainLossAmountEcreteText?.replace(/[^\d.-]/g, '') || '-';
-
-        const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
-       const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
-        const maxLossAmountEcrete = maxLossAmountEcreteElement?.querySelector('span:first-child')?.textContent || '-';
-       const maxLossPercentageEcrete =  maxLossAmountEcreteElement?.querySelector('span:last-child')?.textContent || '-';
-        const maxGainAmountEcrete = maxGainAmountEcreteElement?.querySelector('span:first-child')?.textContent || '-';
-        const maxGainPercentageEcrete = maxGainAmountEcreteElement?.querySelector('span:last-child')?.textContent || '-';
-         const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
-    
-
-         return {
-                stack: [
-                   {text: `Valeur portefeuille + Gain sécurisé: ${portfolioValueEcreteAvecGain} ${currencySymbol}`},
-                    {text: `Valeur finale du portefeuille écrêté: ${finalPortfolioValueEcrete} ${currencySymbol}`},
-                     {text: `Valeur totale écrêtée: ${finalTotalEcrete} ${currencySymbol}`},
-                      {text: `Valeur totale des intérêts des gains écrêtés: ${finalTotalEcreteInterest} ${currencySymbol}`},
-                      [
-                         'Gain ou Perte: ',
-                          finalGainLossAmountEcrete+   ' soit : ' + finalGainLossPercentageEcrete
-                    ],
-                    [
-                       'Montant de moins-value potentielle maximale: ',
-                      maxLossAmountEcrete +  ' soit : ' + maxLossPercentageEcrete  + ' de l\'investissement au : ' + (maxLossAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                    ],
-                    [
-                       'Montant de plus-value potentielle maximale: ',
-                        maxGainAmountEcrete + ' soit : ' + maxGainPercentageEcrete  + ' de l\'investissement au : ' + (maxGainAmountEcreteElement?.textContent?.split('au :')[1] || '-')
-                     ]
-                ],
-           layout: 'noBorders',
-           fontSize: 12,
-          margin: [0, 0, 0, 10]
-        };
-  }
-
-     function getResultsWithCapping() {
-        const resultsWithCapping = document.getElementById('resultsWithCapping');
-        if (!resultsWithCapping) {
-            return {};
-        }
+        const finalGainEcreteElement = document.getElementById('finalGainEcrete');
+        const finalMaxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
+         const finalMaxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
        
-        const portfolioValueEcreteAvecGain = document.getElementById('portfolioValueEcreteAvecGain')?.textContent?.replace(/\s/g, '') || '-';
-        const finalPortfolioValueEcrete = document.getElementById('finalPortfolioValueEcrete')?.textContent?.replace(/\s/g, '') || '-';
-        const finalTotalEcrete = document.getElementById('finalTotalEcrete')?.textContent?.replace(/\s/g, '') || '-';
-        const finalTotalEcreteInterest = document.getElementById('finalTotalEcreteInterest')?.textContent?.replace(/\s/g, '') || '-';
-        const finalGainLossAmountEcreteText = document.querySelector('#finalGainEcrete span:first-child')?.textContent || '-';
-        const finalGainLossPercentageEcreteText = document.querySelector('#finalGainEcrete span:last-child')?.textContent || '-';
-        const finalGainLossPercentageEcrete = formatPercentage(finalGainLossPercentageEcreteText);
-        const finalGainLossAmountEcrete = formatNumber(finalGainLossAmountEcreteText.replace(/[^\d.-]/g, ''));
-        const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
-        const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
-        const maxLossAmountEcrete = maxLossAmountEcreteElement?.querySelector('span:first-child')?.textContent || '-';
-        const maxLossPercentageEcrete = maxLossAmountEcreteElement?.querySelector('span:last-child')?.textContent || '-';
-        const maxGainAmountEcrete =  maxGainAmountEcreteElement?.querySelector('span:first-child')?.textContent || '-';
-        const maxGainPercentageEcrete =  maxGainAmountEcreteElement?.querySelector('span:last-child')?.textContent || '-';
-        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
-         return {
-           layout: 'noBorders',
-           margin: [0, 0, 0, 10],
-           fontSize: 12,
-           stack: [
-              {
-               table: {
-                body: 
-                    [
-                        [ {text : `Valeur portefeuille + Gain sécurisé :`, style: 'tableCell'}, {text : `${portfolioValueEcreteAvecGain} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
-                        [ {text : `Valeur finale du portefeuille écrêté :`, style: 'tableCell'}, {text : `${finalPortfolioValueEcrete} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
-                        [ {text :  `Valeur totale écrêtée :`, style: 'tableCell'}, {text :  `${finalTotalEcrete} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
-                        [ {text :`Valeur totale des intérêts des gains écrêtés :`, style: 'tableCell'}, {text :  `${finalTotalEcreteInterest} ${currencySymbol}`, style: 'tableCell', alignment: 'right'}],
-                    ],
-                widths: ['*', 'auto']
-                },
-                layout: 'noBorders',
-                fontSize: 12,
-                margin: [0, 0, 0, 10]
-              },
-              {
-                 table: {
-                     body: [
-                       [
-                        {
-                            text: [
-                                'Gain ou Perte: ',
-                                 { text: finalGainLossPercentageEcrete, style: getStyleForValue(finalGainLossPercentageEcrete) },
-                                  ' soit : ',
-                                 { text: finalGainLossAmountEcrete + ' ' + currencySymbol, style: getStyleForValue(finalGainLossAmountEcrete) },
-                             ],
-                           }
-                         ],
-                        [
-                            {
-                              text: [
-                                'Moins-value potentielle maximale: ',
-                                { text: maxLossAmountEcrete + ' ', style: getStyleForValue(maxLossAmountEcrete) },
-                                 ' soit : ',
-                                 { text: maxLossPercentageEcrete, style: getStyleForValue(maxLossPercentageEcrete) },
-                                ' de l\'investissement au : ',
-                                 maxLossAmountEcreteElement?.textContent?.split('au :')[1] || '-'
-                             ]
-                           }
-                         ],
-                      [
-                            {
-                              text: [
-                                'Plus-value potentielle maximale: ',
-                                 { text: maxGainAmountEcrete + ' ', style: getStyleForValue(maxGainAmountEcrete) },
-                                  ' soit : ',
-                                 { text: maxGainPercentageEcrete, style: getStyleForValue(maxGainPercentageEcrete) },
-                                ' de l\'investissement au : ',
-                                maxGainAmountEcreteElement?.textContent?.split('au :')[1] || '-'
-                           ]
-                         }
-                    ]
-                ],
-               widths: ['*']
-            },
-           layout: 'noBorders',
-             fontSize: 12,
-             margin: [0, 0, 0, 10]
-        }
-        ]
+     const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
+
+    return {
+        stack: [
+         portfolioValueEcreteAvecGainElement ?  `Valeur portefeuille + Gain sécurisé: ${portfolioValueEcreteAvecGainElement.textContent} ${currencySymbol}` : '',
+         finalPortfolioValueEcreteElement ?  `Valeur finale du portefeuille écrêté: ${finalPortfolioValueEcreteElement.textContent} ${currencySymbol}`: '',
+        finalTotalEcreteElement ?   `Valeur totale écrêtée: ${finalTotalEcreteElement.textContent} ${currencySymbol}` : '',
+         finalTotalEcreteInterestElement ? `Valeur totale des intérêts des gains écrêtés: ${finalTotalEcreteInterestElement.textContent} ${currencySymbol}` : '',
+           finalGainEcreteElement ? [
+              'Gain ou Perte: ',
+              finalGainEcreteElement.textContent,
+             ] : '',
+            finalMaxLossAmountEcreteElement ? [
+              'Montant de moins-value potentielle maximale: ',
+              finalMaxLossAmountEcreteElement.textContent,
+             ] : '',
+          finalMaxGainAmountEcreteElement ?  [
+                'Montant de plus-value potentielle maximale: ',
+               finalMaxGainAmountEcreteElement.textContent
+            ]: ''
+            ],
+             layout: 'noBorders',
+            fontSize: 12,
+           margin: [0, 0, 0, 10]
         };
     }
 
