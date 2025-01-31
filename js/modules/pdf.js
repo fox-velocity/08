@@ -213,78 +213,96 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             return {};
         }
        const finalPortfolioValueElement = document.getElementById('finalPortfolioValue');
-        const gainLossPercentageElement = document.getElementById('finalGainLossPercentage');
-         const gainLossAmountTextElement = document.querySelector('#finalGainLossPercentage span:first-child');
-        const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
-        const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
+         const gainLossPercentageElement = document.getElementById('finalGainLossPercentage');
+        const gainLossAmountTextElement = document.querySelector('#finalGainLossPercentage span:first-child');
+      const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
+       const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
          const currencySymbolElement = document.getElementById('currencySymbolLabel');
 
-       const finalPortfolioValue = formatNumber(finalPortfolioValueElement ? finalPortfolioValueElement.textContent?.replace(/\s/g, '') : '-');
-       const gainLossAmountText = gainLossAmountTextElement ? gainLossAmountTextElement.textContent : '-';
-       const gainLossPercentageText = gainLossPercentageElement ? gainLossPercentageElement.querySelector('span:last-child')?.textContent : '-';
-        const gainLossAmount =  gainLossAmountText?.replace(/[^\d.-]/g, '') || '-';
+      const finalPortfolioValue = finalPortfolioValueElement ? finalPortfolioValueElement.textContent?.replace(/\s/g, '') : '-';
+        const gainLossAmountText = gainLossAmountTextElement ? gainLossAmountTextElement.textContent : '-';
+        const gainLossPercentageText = gainLossPercentageElement ? gainLossPercentageElement.querySelector('span:last-child')?.textContent : '-';
+        const gainLossAmount = gainLossAmountText?.replace(/[^\d.-]/g, '') || '-';
       const gainLossPercentage =  gainLossPercentageText;
-        
+
        const maxLossAmount = maxLossAmountElement ? maxLossAmountElement.querySelector('span:first-child')?.textContent : '-';
-        const maxLossPercentage = maxLossAmountElement ? maxLossAmountElement.querySelector('span:last-child')?.textContent : '-';
-         const maxGainAmount = maxGainAmountElement ? maxGainAmountElement.querySelector('span:first-child')?.textContent : '-';
-         const maxGainPercentage = maxGainAmountElement ? maxGainAmountElement.querySelector('span:last-child')?.textContent : '-';
-    
-        console.log("maxLossAmountElement",maxLossAmountElement ? maxLossAmountElement.textContent : '-' )
-        console.log("maxGainAmountElement",maxGainAmountElement ? maxGainAmountElement.textContent : '-')
-     
-        const styledLoss = getStyleForValue(maxLossAmount)
-        const styledGain = getStyleForValue(maxGainAmount)
-        console.log("styledLoss", styledLoss)
-      console.log("styledGain", styledGain)
+      const maxLossPercentage = maxLossAmountElement ? maxLossAmountElement.querySelector('span:last-child')?.textContent : '-';
+        const maxGainAmount = maxGainAmountElement ? maxGainAmountElement.querySelector('span:first-child')?.textContent : '-';
+      const maxGainPercentage = maxGainAmountElement ? maxGainAmountElement.querySelector('span:last-child')?.textContent : '-';
         const currencySymbol = currencySymbolElement ? currencySymbolElement.textContent : '';
 
-          return {
+        return {
             table: {
-               body: [
-                   [`Valeur finale du portefeuille:`,   `${finalPortfolioValue} ${currencySymbol}`],
+                body: [
+                   [`Valeur finale du portefeuille:`,  `${finalPortfolioValue} ${currencySymbol}`],
                     [
-                        {
-                            text: [
-                                'Gain ou Perte: ',
-                                { text: gainLossAmount + ' ' + currencySymbol + ' ', style: getStyleForValue(gainLossAmount) },
-                                ' soit : ',
-                                { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
-                            ],
-                       }
+                         'Gain ou Perte: ',
+                       gainLossAmount +  ' soit :  ' + gainLossPercentage,
                     ],
                      [
-                         {
-                            text: [
-                                'Montant de moins-value potentielle maximale: ',
-                                 { text: maxLossAmount + ' ', style: styledLoss },
-                                 ' soit : ',
-                                 { text: maxLossPercentage, style: styledLoss },
-                                 ' de l\'investissement au : ',
-                                maxLossAmountElement?.textContent?.split('au :')[1] || '-'
-                           ]
-                         }
-                    ],
+                        'Montant de moins-value potentielle maximale: ',
+                       maxLossAmount+ ' soit : ' + maxLossPercentage + ' de l\'investissement au : ' + (maxLossAmountElement?.textContent?.split('au :')[1] || '-')
+                     ],
                    [
-                        {
-                           text: [
-                               'Montant de plus-value potentielle maximale: ',
-                               { text: maxGainAmount + ' ', style: styledGain },
-                              ' soit : ',
-                               { text: maxGainPercentage, style: styledGain },
-                                ' de l\'investissement au : ',
-                               maxGainAmountElement?.textContent?.split('au :')[1] || '-'
-                           ]
-                         }
+                        'Montant de plus-value potentielle maximale: ',
+                         maxGainAmount + ' soit : ' + maxGainPercentage + ' de l\'investissement au : ' + (maxGainAmountElement?.textContent?.split('au :')[1] || '-')
                     ]
                 ],
                  widths: ['*', 'auto']
-            },
-             layout: 'noBorders',
-              fontSize: 12,
+             },
+            layout: 'noBorders',
+            fontSize: 10,
             margin: [0, 0, 0, 10]
        };
-   }
+    }
+
+  function getResultsWithCapping() {
+      const resultsWithCapping = document.getElementById('resultsWithCapping');
+        if (!resultsWithCapping) {
+            return {};
+       }
+        const portfolioValueEcreteAvecGain = document.getElementById('portfolioValueEcreteAvecGain')?.textContent?.replace(/\s/g, '') || '-';
+       const finalPortfolioValueEcrete = document.getElementById('finalPortfolioValueEcrete')?.textContent?.replace(/\s/g, '') || '-';
+        const finalTotalEcrete = document.getElementById('finalTotalEcrete')?.textContent?.replace(/\s/g, '') || '-';
+        const finalTotalEcreteInterest = document.getElementById('finalTotalEcreteInterest')?.textContent?.replace(/\s/g, '') || '-';
+     const finalGainLossAmountEcreteText = document.querySelector('#finalGainEcrete span:first-child')?.textContent || '-';
+    const finalGainLossPercentageEcreteText = document.querySelector('#finalGainEcrete span:last-child')?.textContent || '-';
+      const finalGainLossPercentageEcrete =  finalGainLossPercentageEcreteText;
+        const finalGainLossAmountEcrete =  finalGainLossAmountEcreteText?.replace(/[^\d.-]/g, '') || '-';
+
+        const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
+       const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
+        const maxLossAmountEcrete = maxLossAmountEcreteElement?.querySelector('span:first-child')?.textContent || '-';
+       const maxLossPercentageEcrete =  maxLossAmountEcreteElement?.querySelector('span:last-child')?.textContent || '-';
+        const maxGainAmountEcrete = maxGainAmountEcreteElement?.querySelector('span:first-child')?.textContent || '-';
+        const maxGainPercentageEcrete = maxGainAmountEcreteElement?.querySelector('span:last-child')?.textContent || '-';
+         const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
+    
+
+         return {
+                stack: [
+                   {text: `Valeur portefeuille + Gain sécurisé: ${portfolioValueEcreteAvecGain} ${currencySymbol}`},
+                    {text: `Valeur finale du portefeuille écrêté: ${finalPortfolioValueEcrete} ${currencySymbol}`},
+                     {text: `Valeur totale écrêtée: ${finalTotalEcrete} ${currencySymbol}`},
+                      {text: `Valeur totale des intérêts des gains écrêtés: ${finalTotalEcreteInterest} ${currencySymbol}`},
+                      [
+                         'Gain ou Perte: ',
+                          finalGainLossAmountEcrete+   ' soit : ' + finalGainLossPercentageEcrete
+                    ],
+                    [
+                       'Montant de moins-value potentielle maximale: ',
+                      maxLossAmountEcrete +  ' soit : ' + maxLossPercentageEcrete  + ' de l\'investissement au : ' + (maxLossAmountEcreteElement?.textContent?.split('au :')[1] || '-')
+                    ],
+                    [
+                       'Montant de plus-value potentielle maximale: ',
+                        maxGainAmountEcrete + ' soit : ' + maxGainPercentageEcrete  + ' de l\'investissement au : ' + (maxGainAmountEcreteElement?.textContent?.split('au :')[1] || '-')
+                     ]
+                ],
+           layout: 'noBorders',
+           fontSize: 12,
+          margin: [0, 0, 0, 10]
+        };
+  }
 
      function getResultsWithCapping() {
         const resultsWithCapping = document.getElementById('resultsWithCapping');
