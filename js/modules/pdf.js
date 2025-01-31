@@ -55,7 +55,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 font: 'Roboto'
             },
             paragraph: {
-                fontSize: 12,
+                fontSize: 10,
                 alignment: 'justify',
                 margin: [10, 20, 10, 10],
                 font: 'Roboto'
@@ -107,7 +107,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                             {
                                 text: `Page ${currentPage.toString()} sur ${pageCount}`,
                                 alignment: 'center',
-                                fontSize: 12,
+                                fontSize: 10,
                                 margin: [0, 10, 0, 0],
                                 font: 'Roboto'
                             }
