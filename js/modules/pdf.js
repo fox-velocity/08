@@ -359,50 +359,42 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-    function getSecuredGainsTable() {
+        function getSecuredGainsTable() {
         const securedGainsTableBody = document.getElementById('securedGainsTableBody');
         if (!securedGainsTableBody) {
-            return {
-               table: {
-                    body : [],
-                  widths: ['auto', 'auto', '*']
-                 },
-                 margin: [0, 0, 0, 10]
-            };
-       }
-      let securedGainTableData = [];
-       const header = ['Date', 'Gain sécurisé', 'Intérêt du gain sécurisé']
-       const rows = securedGainsTableBody.querySelectorAll('tr');
-         rows.forEach(row => {
+            return {};
+        }
+        let securedGainTableData = [];
+        const header = ['Date', 'Gain sécurisé', 'Intérêt du gain sécurisé']
+        const rows = securedGainsTableBody.querySelectorAll('tr');
+        rows.forEach(row => {
             let rowData = [];
-             const cells = row.querySelectorAll('td');
-             cells.forEach(cell => {
-                 rowData.push(cell.textContent);
-           });
-           if (rowData.length > 0) {
-              securedGainTableData.push(rowData);
+            const cells = row.querySelectorAll('td');
+            cells.forEach(cell => {
+                rowData.push(cell.textContent);
+            });
+            if (rowData.length > 0) {
+                securedGainTableData.push(rowData);
             }
         });
-       return {
-            stack: [
-                {
-                   table: {
-                      body: [
-                        header,
-                        ...securedGainTableData.map(row => [
-                           row[0] || '-',
-                            row[1] || '-',
-                             row[2] || '-'
-                        ])
-                    ],
-                     widths: ['auto', 'auto', '*']
-                  },
-                    layout: 'noBorders',
-                }
-             ],
-          margin: [0, 0, 0, 10],
-          fontSize: 12,
-         alignment: 'center'
+        return {
+            table: {
+                body: [
+                    header,
+                    ...securedGainTableData.map(row => [
+                        row[0] || '-',
+                        row[1] || '-',
+                        row[2] || '-'
+                    ])
+                ],
+                widths: ['auto', 'auto', '*'],
+                
+            },
+               layout: 'noBorders',
+            fontSize: 12,
+            margin: [0, 0, 0, 10],
+             alignment: 'center',
+
         };
     }
 
