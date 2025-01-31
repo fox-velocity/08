@@ -622,7 +622,6 @@ function getResultsWithCapping() {
                         [ {text : `Valeur finale du portefeuille écrêté :`, style: 'tableCell'}, {text : `${finalPortfolioValueEcrete} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
                         [ {text :  `Valeur totale écrêtée :`, style: 'tableCell'}, {text :  `${finalTotalEcrete} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
                         [ {text :`Valeur totale des intérêts des gains écrêtés :`, style: 'tableCell'}, {text :  `${finalTotalEcreteInterest} ${currencySymbol}`, style: 'tableCell', alignment: 'right'}],
-                        [ {text :`Valeur totale des intérêts des Forme2        :`, style: 'tableCell'}, {text :  `${finalTotalEcreteInterest}`, style: 'tableCell', alignment: 'right'}],
                     ],
                 widths: ['*', 'auto']
                 },
