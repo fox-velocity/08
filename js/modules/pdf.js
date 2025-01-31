@@ -14,8 +14,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         background: function (currentPage, pageSize) {
             return {
                 image: logoRenardBase64Gris,
-                width: pageSize.90%,
-                height: pageSize.90%,
+                width: pageSize * 0.9,
+                height: pageSize * 0.9, 
                 absolutePosition: { x: 0, y: 0 },
                 opacity: 0.2,
             };
@@ -50,7 +50,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 fontSize: 14,
                 bold: true,
                 alignment: 'center',
-                margin: [0, 10, 0, 15]
+                margin: [0, 10, 10, 15]
             },
             paragraph: {
                 fontSize: 8,
@@ -60,7 +60,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             tableHeader: {
                 bold: true,
                 fillColor: '#dddddd',
-                margin: [10, 5, 0, 5]
+                margin: [15, 5, 0, 5]
             },
              tableCell: {
                  margin: [0, 5, 0, 5]
