@@ -9,18 +9,20 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     await waitForChart('investmentChart');
 
     const docDefinition = {
-        pageSize: 'A4',
-        pageMargins: [15, 15, 15, 50],
-        background: function (currentPage, pageSize) {
-            return {
-                image: logoRenardBase64Gris,
-                padding: [10, 10, 10, 10],
-                width: pageSize.width,
-                height: pageSize.height,
-                absolutePosition: { x: 0, y: 0 },
-                opacity: 0.2,
-            };
-        },
+    pageSize: 'A4',
+    pageMargins: [15, 15, 15, 50],
+    background: function (currentPage, pageSize) {
+        return {
+            image: logoRenardBase64Gris,
+            width: pageSize.width * 0.9, // 90% de la largeur de la page
+            height: pageSize.height * 0.9, // 90% de la hauteur de la page
+            absolutePosition: {
+                x: (pageSize.width - pageSize.width * 0.9) / 2, // Centrer horizontalement
+                y: (pageSize.height - pageSize.height * 0.9) / 2 // Centrer verticalement
+            },
+            opacity: 0.2,
+        };
+    },
         content: [
             { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
