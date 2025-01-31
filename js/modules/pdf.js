@@ -405,17 +405,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
       margin: [0, 0, 0, 10],
     }
   ],
-  styles: {
-    tableHeader: {
-      bold: true,
-      fontSize: 14,
-      color: 'black'
-    },
-    tableCell: {
-      fontSize: 12,
-      color: 'black'
-    }
-  }
+
 };
 
     }
