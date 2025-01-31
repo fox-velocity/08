@@ -395,9 +395,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
               ],
               widths: ['20%', '20%', '40%'],
             },
-            layout: 'noBorders',
-            fontSize: 12,
-            margin: [0, 0, 0, 50],          
+            layout: 'noBorders',          
           };
           
     }
@@ -421,23 +419,23 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             table: {
                 body: [
                    [
-                       { text: `Valeur finale du portefeuille:`, alignment: 'left' },
+                       { text: `Valeur finale du portefeuille :`, alignment: 'left' },
                       { text: `${lastCumulativeSavingsText} ${currencySymbol}`, alignment: 'right' }
                   ],
                     [
-                       { text: `Montant versé:`, alignment: 'left' },
+                       { text: `Montant versé :`, alignment: 'left' },
                         { text: `${lastInvestmentText} ${currencySymbol}`, alignment: 'right' }
                    ],
                      [
-                       { text: `Total des intérêts:`, alignment: 'left' },
+                       { text: `Total des intérêts :`, alignment: 'left' },
                        { text: `${gainTauxFixeText} ${currencySymbol}`, alignment: 'right' }
                      ],
                      [
-                         { text: `Taux d'intérêt annuel:`, alignment: 'left' },
+                         { text: `Taux d'intérêt annuel :`, alignment: 'left' },
                         { text: totalInterestText, alignment: 'right' }
                      ]
                 ],
-                widths: ['30%', 'auto']  // On définit explicitement la largeur de la première colonne à 50%
+                widths: ['30%', 'auto']  // On définit explicitement la largeur de la première colonne à 30%
             },
               layout: 'noBorders',
                 fontSize: 12,
