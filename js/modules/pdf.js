@@ -384,18 +384,18 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
       table: {
         body: [
           [
-            '', // Colonne vide
+            { text: '', width: '10%' }, // Colonne vide
             { text: 'Date', style: 'tableHeader', alignment: 'center' },
             { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
             { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' },
-            '' // Colonne vide
+            { text: '', width: '10%' } // Colonne vide
           ],
           ...securedGainTableData.map(row => [
-            '', // Colonne vide
+            { text: '', width: '10%' }, // Colonne vide
             { text: row[0], style: 'tableCell', alignment: 'center' },
             { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center' },
             { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' },
-            '' // Colonne vide
+            { text: '', width: '10%' } // Colonne vide
           ])
         ],
         widths: ['10%', 'auto', 'auto', 'auto', '10%']
