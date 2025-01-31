@@ -380,7 +380,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             }
         });
 
-        return {
+return {
             table: {
               body: [
                 [
@@ -394,13 +394,12 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                   { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' }
                 ])
               ],
-              widths: ['auto', 'auto', '*']
+              widths: ['20%', '20%', '30%'],
+              alignment: 'center', // Centre le tableau sur la page
             },
             layout: 'noBorders',
-            fontSize: 10,
-            margin: [0, 0, 0, 10],
-            alignment: 'center', // Centre le tableau sur la page
-            width: '80%' // Le tableau occupe 80% de la largeur de la page
+            fontSize: 12,
+            margin: [0, 0, 0, 10],          
           };
           
     }
