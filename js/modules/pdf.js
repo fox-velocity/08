@@ -1,4 +1,4 @@
- // pdf.js 23 12 31 01
+// pdf.js 23 12 31 01
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -31,9 +31,9 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             getChartWithBorder('evolutionChart'),
             getTopResults(),
             { text: 'Résultats', style: 'subtitle', pageBreak: 'before' },
-            getResults(),
-            { text: 'Résultats avec écrêtage des gains', style: 'subtitle' },
-            getResultsWithCapping(),
+         //  getResults(),
+         // { text: 'Résultats avec écrêtage des gains', style: 'subtitle' },
+         //   getResultsWithCapping(),
             getSecuredGainsTable(),
             { text: 'Résultats épargne placée à taux garanti', style: 'subtitle' }, // Ajout du titre
              getResultsTauxFixe(), // Ajout du contenu
@@ -205,7 +205,9 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             margin: [0, 0, 0, 10],
         };
     }
-  //table des gains sécurisé   
+    
+
+//table des gains sécurisé   
     function getSecuredGainsTable() {
         const securedGainsTableBody = document.getElementById('securedGainsTableBody');
         if (!securedGainsTableBody) {
