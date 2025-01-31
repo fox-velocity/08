@@ -384,11 +384,11 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
       table: {
         body: [
           [
-            { text: '' }, // Colonne vide vvvvvvvvvv
+            { text: '' }, // Colonne vide
             { text: 'Date', style: 'tableHeader', alignment: 'center' },
             { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
             { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' },
-            { text: 'albator', width: '10%' } // Colonne vide
+            { text: '' } // Colonne vide
           ],
           ...securedGainTableData.map(row => [
             { text: '' }, // Colonne vide
@@ -398,12 +398,11 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             { text: ''} // Colonne vide
           ])
         ],
-        widths: ['10%', 'auto', 'auto', 'auto', '10%']
+        widths: ['15%', 'auto', 'auto', 'auto', '15%']
       },
       layout: 'noBorders',
       fontSize: 12,
       margin: [0, 0, 0, 10],
-      margin: [10, 0, 0, 0] // Ajoute une marge à gauche pour centrer le tableau
     }
   ],
   styles: {
