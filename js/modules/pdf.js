@@ -14,8 +14,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         background: function (currentPage, pageSize) {
             return {
                 image: logoRenardBase64Gris,
-                width: pageSize.width - 40,
-                height: pageSize.height - 40,
+                width: pageSize.90%,
+                height: pageSize.90%,
                 absolutePosition: { x: 0, y: 0 },
                 opacity: 0.2,
             };
