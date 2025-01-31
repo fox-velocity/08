@@ -1,4 +1,4 @@
-// pdf.js 23 12 31 01
+// pdf.js 23 25 31 01
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -217,14 +217,16 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const gainLossPercentageText = document.querySelector('#finalGainLossPercentage span:last-child').textContent;
         const gainLossPercentage = formatPercentage(gainLossPercentageText);
         const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
+
+       
         const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
-        const maxLossAmount = maxLossAmountElement.querySelector('span:first-child').textContent;
-        const maxLossPercentage = maxLossAmountElement.querySelector('span:last-child').textContent;
+        const maxLossAmount = maxLossAmountElement ? maxLossAmountElement.querySelector('span:first-child').textContent : '-';
+        const maxLossPercentage = maxLossAmountElement ? maxLossAmountElement.querySelector('span:last-child').textContent : '-';
 
         const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
-        const maxGainAmount = maxGainAmountElement.querySelector('span:first-child').textContent;
-        const maxGainPercentage = maxGainAmountElement.querySelector('span:last-child').textContent;
-
+        const maxGainAmount = maxGainAmountElement ? maxGainAmountElement.querySelector('span:first-child').textContent : '-';
+        const maxGainPercentage = maxGainAmountElement ? maxGainAmountElement.querySelector('span:last-child').textContent : '-';
+       
         const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
 
         return {
@@ -249,7 +251,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 ' soit : ',
                                 { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
                                 ' de l\'investissement au : ',
-                                maxLossAmountElement.textContent.split('au :')[1]
+                                maxLossAmountElement ? maxLossAmountElement.textContent.split('au :')[1] : '-'
                             ]
                         }
                     ],
@@ -261,7 +263,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 ' soit : ',
                                 { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
                                 ' de l\'investissement au : ',
-                                maxGainAmountElement.textContent.split('au :')[1]
+                                maxGainAmountElement ? maxGainAmountElement.textContent.split('au :')[1] : '-'
                             ]
                         }
                     ]
