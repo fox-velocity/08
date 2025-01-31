@@ -207,52 +207,64 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     }
     
     ////////////
-    function getResults() {
+        function getResults() {
         const results = document.getElementById('results');
         if (!results) {
             return {};
         }
-        const finalPortfolioValueElement = document.getElementById('finalPortfolioValue');
+      const finalPortfolioValueElement = document.getElementById('finalPortfolioValue');
         const gainLossPercentageElement = document.getElementById('finalGainLossPercentage');
-         const gainLossAmountTextElement = document.querySelector('#finalGainLossPercentage span:first-child');
+      const gainLossAmountTextElement = document.querySelector('#finalGainLossPercentage span:first-child');
         const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
-      const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
-        const currencySymbolElement = document.getElementById('currencySymbolLabel');
+        const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
+      const currencySymbolElement = document.getElementById('currencySymbolLabel');
 
-        const finalPortfolioValue =  finalPortfolioValueElement ? finalPortfolioValueElement.textContent?.replace(/\s/g, '') : '-';
-        const gainLossAmountText = gainLossAmountTextElement ? gainLossAmountTextElement.textContent : '-';
-        const gainLossPercentageText = gainLossPercentageElement ? gainLossPercentageElement.querySelector('span:last-child')?.textContent : '-';
+        const finalPortfolioValue = finalPortfolioValueElement ? finalPortfolioValueElement.textContent?.replace(/\s/g, '') : '-';
+         const gainLossAmountText = gainLossAmountTextElement ? gainLossAmountTextElement.textContent : '-';
+      const gainLossPercentageText = gainLossPercentageElement ? gainLossPercentageElement.querySelector('span:last-child')?.textContent : '-';
+       const gainLossAmount =  gainLossAmountText?.replace(/[^\d.-]/g, '') || '-';
+       const gainLossPercentage =  gainLossPercentageText;
 
-       const maxLossAmount = maxLossAmountElement ? maxLossAmountElement.textContent : '-';
+        const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
+         const maxLossAmount = maxLossAmountElement ? maxLossAmountElement.querySelector('span:first-child')?.textContent : '-';
          const maxLossPercentage = maxLossAmountElement ? maxLossAmountElement.querySelector('span:last-child')?.textContent : '-';
-         const maxGainAmount = maxGainAmountElement ? maxGainAmountElement.textContent : '-';
-      const maxGainPercentage = maxGainAmountElement ? maxGainAmountElement.querySelector('span:last-child')?.textContent : '-';
-       const currencySymbol = currencySymbolElement ? currencySymbolElement.textContent : '';
+      const maxGainAmount = maxGainAmountElement ? maxGainAmountElement.querySelector('span:first-child')?.textContent : '-';
+        const maxGainPercentage = maxGainAmountElement ? maxGainAmountElement.querySelector('span:last-child')?.textContent : '-';
+     const currencySymbol = currencySymbolElement ? currencySymbolElement.textContent : '';
 
-       return {
-            table: {
+
+        console.log("finalPortfolioValueElement:", finalPortfolioValueElement ? finalPortfolioValueElement.textContent : 'N/A');
+      console.log("gainLossAmountTextElement:", gainLossAmountTextElement ? gainLossAmountTextElement.textContent : 'N/A');
+      console.log("gainLossPercentageTextElement:", gainLossPercentageTextElement ? gainLossPercentageTextElement.textContent: 'N/A');
+        console.log("maxLossAmountElement:", maxLossAmountElement ? maxLossAmountElement.textContent : 'N/A');
+        console.log("maxGainAmountElement:", maxGainAmountElement ? maxGainAmountElement.textContent : 'N/A');
+
+        return {
+           table: {
                 body: [
-                  [`Valeur finale du portefeuille:`,  `${finalPortfolioValue} ${currencySymbol}`],
+                    [`Valeur finale du portefeuille:`,  `${finalPortfolioValue} ${currencySymbol}`],
                     [
-                         'Gain ou Perte: ',
-                         gainLossAmountText + ' soit : ' + gainLossPercentageText,
-                     ],
-                    [
-                        'Montant de moins-value potentielle maximale: ',
-                        maxLossAmount 
+                        'Gain ou Perte: ',
+                       gainLossAmount +  ' soit :  ' + gainLossPercentage,
                     ],
                     [
-                        'Montant de plus-value potentielle maximale: ',
-                       maxGainAmount +  ' de l\'investissement au : ' +  (maxGainAmountElement?.textContent?.split('au :')[1] || '-')
+                        'Montant de moins-value potentielle maximale: ',
+                        maxLossAmount+ ' soit : ' + maxLossPercentage + ' de l\'investissement au : ' + (maxLossAmountElement?.textContent?.split('au :')[1] || '-')
+                   ],
+                     [
+                       'Montant de plus-value potentielle maximale: ',
+                        maxGainAmount +  ' soit : ' + maxGainPercentage + ' de l\'investissement au : ' + (maxGainAmountElement?.textContent?.split('au :')[1] || '-')
                       ]
-               ],
-                widths: ['*', 'auto']
-           },
+                ],
+                 widths: ['*', 'auto']
+            },
             layout: 'noBorders',
-           fontSize: 12,
+            fontSize: 10,
              margin: [0, 0, 0, 10]
        };
-   }
+    }
+
+    ////
      function getResultsWithCapping() {
         const resultsWithCapping = document.getElementById('resultsWithCapping');
        if (!resultsWithCapping) {
