@@ -228,6 +228,13 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
 
         const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
 
+
+        console.log("finalPortfolioValueElement:", finalPortfolioValueElement ? finalPortfolioValueElement.textContent : 'N/A');
+      console.log("gainLossAmountTextElement:", gainLossAmountTextElement ? gainLossAmountTextElement.textContent : 'N/A');
+      console.log("gainLossPercentageTextElement:", gainLossPercentageTextElement ? gainLossPercentageTextElement.textContent: 'N/A');
+        console.log("maxLossAmountElement:", maxLossAmountElement ? maxLossAmountElement.textContent : 'N/A');
+        console.log("maxGainAmountElement:", maxGainAmountElement ? maxGainAmountElement.textContent : 'N/A');
+        
         return {
             table: {
                 body: [
