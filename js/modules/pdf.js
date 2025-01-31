@@ -232,7 +232,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     [
                         {
                             text: [
-                                'Gain ou Perte: ',
+                                'Gain ou Perte : ',
                                 { text: gainLossAmount + ' ' + currencySymbol + ' ', style: getStyleForValue(gainLossAmount) },
                                 ' soit : ',
                                 { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
@@ -254,7 +254,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     [
                         {
                             text: [
-                                'Plus-value potentielle maximale: ',
+                                'Plus-value potentielle maximale : ',
                                 { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
                                 ' soit : ',
                                 { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
@@ -267,7 +267,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 widths: ['*']
             },
             layout: 'noBorders',
-            fontSize: 10,
+            fontSize: 12,
             margin: [0, 0, 0, 10]
         };
     }
@@ -300,10 +300,10 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
               {
                table: {
                 body: [
-                    [ {text : `Valeur portefeuille + Gain sécurisé:`, style: 'tableCell'}, {text : `${portfolioValueEcreteAvecGain} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
-                   [ {text : `Valeur finale du portefeuille écrêté:`, style: 'tableCell'}, {text : `${finalPortfolioValueEcrete} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
+                    [ {text : `Valeur portefeuille + Gain sécurisé :`, style: 'tableCell'}, {text : `${portfolioValueEcreteAvecGain} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
+                   [ {text : `Valeur finale du portefeuille écrêté :`, style: 'tableCell'}, {text : `${finalPortfolioValueEcrete} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
                   [ {text :  `Valeur totale écrêtée:`, style: 'tableCell'}, {text :  `${finalTotalEcrete} ${currencySymbol}`, style: 'tableCell', alignment: 'right'} ],
-                    [ {text :`Valeur totale des intérêts des gains écrêtés:`, style: 'tableCell'}, {text :  `${finalTotalEcreteInterest} ${currencySymbol}`, style: 'tableCell', alignment: 'right'}]
+                    [ {text :`Valeur totale des intérêts des gains écrêtés :`, style: 'tableCell'}, {text :  `${finalTotalEcreteInterest} ${currencySymbol}`, style: 'tableCell', alignment: 'right'}]
                 ],
                 widths: ['*', 'auto']
                 },
