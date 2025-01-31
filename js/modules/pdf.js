@@ -406,7 +406,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-    }
+    
 
  function getSecuredGainsTable() {
         const securedGainsTableBody = document.getElementById('securedGainsTableBody');
