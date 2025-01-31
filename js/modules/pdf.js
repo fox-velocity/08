@@ -1,4 +1,4 @@
-// pdf.js 23 25 31 01
+ // pdf.js 23 12 31 01
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -207,75 +207,73 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     }
     
     ///RESULTATS/////////
-        function getResults() {
-        const results = document.getElementById('results');
-        if (!results) {
-            return {};
-        }
-        const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
-        const gainLossAmountText = document.querySelector('#finalGainLossPercentage span:first-child').textContent;
-        const gainLossPercentageText = document.querySelector('#finalGainLossPercentage span:last-child').textContent;
-        const gainLossPercentage = formatPercentage(gainLossPercentageText);
-        const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
-
-       
-        const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
-        const maxLossAmount = maxLossAmountElement ? maxLossAmountElement.querySelector('span:first-child').textContent : '-';
-        const maxLossPercentage = maxLossAmountElement ? maxLossAmountElement.querySelector('span:last-child').textContent : '-';
-
-        const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
-        const maxGainAmount = maxGainAmountElement ? maxGainAmountElement.querySelector('span:first-child').textContent : '-';
-        const maxGainPercentage = maxGainAmountElement ? maxGainAmountElement.querySelector('span:last-child').textContent : '-';
-       
-        const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
-
-        return {
-            table: {
-                body: [
-                    [`Valeur finale du portefeuille : ${finalPortfolioValue} ${currencySymbol}`],
-                    [
-                        {
-                            text: [
-                                'Gain ou Perte : ',
-                                { text: gainLossAmount + ' ' + currencySymbol + ' ', style: getStyleForValue(gainLossAmount) },
-                                ' soit : ',
-                                { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
-                            ],
-                        }
-                    ],
-                    [
-                        {
-                            text: [
-                                'Moins-value potentielle maximale : ',
-                                { text: maxLossAmount + ' ', style: getStyleForValue(maxLossAmount) },
-                                ' soit : ',
-                                { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
-                                ' de l\'investissement au : ',
-                                maxLossAmountElement ? maxLossAmountElement.textContent.split('au :')[1] : '-'
-                            ]
-                        }
-                    ],
-                    [
-                        {
-                            text: [
-                                'Plus-value potentielle maximale : ',
-                                { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
-                                ' soit : ',
-                                { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
-                                ' de l\'investissement au : ',
-                                maxGainAmountElement ? maxGainAmountElement.textContent.split('au :')[1] : '-'
-                            ]
-                        }
-                    ]
-                ],
-                widths: ['*']
-            },
-             layout: 'noBorders',
-           fontSize: 12,
-           margin: [0, 0, 0, 10]
-        };
-    }
-
+      function getResults() {
+          const results = document.getElementById('results');
+          if (!results) {
+              return {};
+          }
+          const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
+          const gainLossAmountText = document.querySelector('#finalGainLossPercentage span:first-child').textContent;
+          const gainLossPercentageText = document.querySelector('#finalGainLossPercentage span:last-child').textContent;
+          const gainLossPercentage = formatPercentage(gainLossPercentageText);
+          const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
+        
+          const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
+          const maxLossAmount = maxLossAmountElement ? maxLossAmountElement.querySelector('span:first-child').textContent : '-';
+          const maxLossPercentage = maxLossAmountElement ? maxLossAmountElement.querySelector('span:last-child').textContent : '-';
+          const maxLossDate = maxLossAmountElement ? maxLossAmountElement.textContent.split('au :')[1] : '-';
+          const maxGainAmountElement = document.getElementById('finalMaxGainAmount');
+          const maxGainAmount = maxGainAmountElement ? maxGainAmountElement.querySelector('span:first-child').textContent : '-';
+          const maxGainPercentage = maxGainAmountElement ? maxGainAmountElement.querySelector('span:last-child').textContent : '-';
+          const maxGainDate = maxGainAmountElement ? maxGainAmountElement.textContent.split('au :')[1] : '-';
+         
+          const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
+         return {
+              table: {
+                  body: [
+                      [`Valeur finale du portefeuille : ${finalPortfolioValue} ${currencySymbol}`],
+                      [
+                          {
+                              text: [
+                                  'Gain ou Perte : ',
+                                  { text: gainLossAmount + ' ' + currencySymbol + ' ', style: getStyleForValue(gainLossAmount) },
+                                  ' soit : ',
+                                  { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
+                              ],
+                          }
+                      ],
+                      [
+                          {
+                              text: [
+                                  'Moins-value potentielle maximale : ',
+                                  { text: maxLossAmount + ' ', style: getStyleForValue(maxLossAmount) },
+                                  ' soit : ',
+                                  { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
+                                  ' de l\'investissement au : ',
+                                   maxLossDate
+                              ]
+                          }
+                      ],
+                      [
+                          {
+                              text: [
+                                  'Plus-value potentielle maximale : ',
+                                  { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
+                                  ' soit : ',
+                                  { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
+                                   ' de l\'investissement au : ',
+                                   maxGainDate
+                              ]
+                          }
+                      ]
+                  ],
+                  widths: ['*']
+              },
+              layout: 'noBorders',
+              fontSize: 12,
+              margin: [0, 0, 0, 10]
+          };
+      }
 
      function getResultsWithCapping() {
         const resultsWithCapping = document.getElementById('resultsWithCapping');
