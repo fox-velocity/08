@@ -1,4 +1,4 @@
-// pdf.js 12 03
+// pdf.js 10 15 31 01
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -32,49 +32,57 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             { text: 'Résultats avec écrêtage des gains', style: 'subtitle' },
             getResultsWithCapping(),
             getSecuredGainsTable(),
-            { text: 'Résultats épargne placée à taux garanti', style: 'subtitle' }, // Ajout du titre
-             getResultsTauxFixe(), // Ajout du contenu
+            { text: 'Résultats épargne placée à taux garanti', style: 'subtitle' },
+            getResultsTauxFixe(),
             { text: 'Graphiques évolutions des portefeuilles', style: 'subtitle', pageBreak: 'before' },
             getChartWithBorder('investmentChart'),
             getChartWithBorder('savingsChart'),
             { text: 'Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu\'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d\'investissement, afin d\'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.', style: 'paragraph' },
         ],
-                styles: {
+        styles: {
             title: {
                 fontSize: 18,
                 bold: true,
                 alignment: 'center',
-                margin: [0, 0, 0, 15]
+                margin: [0, 0, 0, 15],
+                font: 'Roboto'
             },
             subtitle: {
                 fontSize: 14,
                 bold: true,
                 alignment: 'center',
-                margin: [0, 10, 0, 15]
+                margin: [0, 10, 0, 15],
+                font: 'Roboto'
             },
             paragraph: {
-                fontSize: 8,
+                fontSize: 12,
                 alignment: 'justify',
-                margin: [10, 20, 10, 10]
+                margin: [10, 20, 10, 10],
+                font: 'Roboto'
             },
             tableHeader: {
                 bold: true,
-                fontSize: 8,
+                fontSize: 12,
                 fillColor: '#dddddd',
-                margin: [0, 5, 0, 5]
+                margin: [0, 5, 0, 5],
+                font: 'Roboto'
             },
-             tableCell: {
-                 fontSize: 8,
-                 margin: [0, 5, 0, 5]
+            tableCell: {
+                fontSize: 12,
+                margin: [0, 5, 0, 5],
+                font: 'Roboto'
             },
             positive: {
-                color: 'green'
+                color: 'green',
+                font: 'Roboto'
             },
             negative: {
-                color: 'red'
+                color: 'red',
+                font: 'Roboto'
             },
             chartContainer: {
                 margin: [0, 0, 0, 20],
+                font: 'Roboto'
             }
         },
         footer: function (currentPage, pageCount) {
@@ -86,8 +94,9 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                             {
                                 text: 'Fox Velocity',
                                 alignment: 'center',
-                                fontSize: 8,
-                                margin: [0, 10, 0, 0]
+                                fontSize: 12,
+                                margin: [0, 10, 0, 0],
+                                font: 'Roboto'
                             },
                             {
                                 image: logoBase64,
@@ -98,8 +107,9 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                             {
                                 text: `Page ${currentPage.toString()} sur ${pageCount}`,
                                 alignment: 'center',
-                                fontSize: 8,
-                                margin: [0, 10, 0, 0]
+                                fontSize: 12,
+                                margin: [0, 10, 0, 0],
+                                font: 'Roboto'
                             }
                         ]
                     ]
@@ -109,18 +119,16 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         }
     };
 
-    // Création du pdf avec un nom de fichier personnalisé
     const stockData = getStockInfo();
     const fileName = generateFileName(stockData.stockSymbol);
     pdfMake.createPdf(docDefinition).download(fileName);
 
-    //fonction attente 1 graphique
     function waitForChart(chartId) {
         return new Promise((resolve) => {
             function checkChartReady() {
                 const isChartReady = document.getElementById(chartId) && document.getElementById(chartId).getContext('2d') && investmentChart;
                 if (isChartReady) {
-                    setTimeout(resolve, 100)
+                    setTimeout(resolve, 100);
                 } else {
                     setTimeout(checkChartReady, 100);
                 }
@@ -140,7 +148,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const stockExchange = document.getElementById('stockExchange').textContent;
         const stockType = document.getElementById('stockType').textContent;
         const stockIndustry = document.getElementById('stockIndustry').textContent;
-         return {
+        return {
             table: {
                 body: [
                     [`Nom: ${stockName}`],
@@ -154,18 +162,18 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             },
             layout: 'noBorders',
             margin: [0, 0, 0, 10],
-            stockSymbol: stockSymbol // on retourne aussi le stockSymbol
+            stockSymbol: stockSymbol
         };
     }
- function getTopResults() {
+
+    function getTopResults() {
         const topResults = document.getElementById('topResults');
         if (!topResults) {
             return {};
         }
-        // Formattez les nombres avec des espaces pour les milliers
         const totalInvested = formatNumber(document.getElementById('finalTotalInvested').textContent.replace(/\s/g, ''));
         const investmentDuration = document.getElementById('finalNumberOfPayments').textContent;
-        const stockChangePercentage = formatPercentage(document.getElementById('finalStockChangePercentage').textContent)
+        const stockChangePercentage = formatPercentage(document.getElementById('finalStockChangePercentage').textContent);
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
         const initialInvestment = formatNumber(document.getElementById('initialInvestment').value);
@@ -192,7 +200,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     [`Date de fin: ${endDate}`],
                     [`Versement initial: ${initialInvestment} ${currencySymbol}`],
                     [`Montant mensuel investi: ${monthlyInvestment} ${currencySymbol}`],
-                    [""], // Ligne vide ajoutée
+                    [""],
                     [`Réglage des options :`],
                     [`limite seuil d'écrêtage: ${cappingPercentage * 100} %`],
                     [`Valeurs limite seuil d'écrêtage: ${minCappingAmount}`],
@@ -204,6 +212,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             margin: [0, 0, 0, 10],
         };
     }
+
     function getResults() {
         const results = document.getElementById('results');
         if (!results) {
@@ -267,7 +276,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 widths: ['*']
             },
             layout: 'noBorders',
-            fontSize: 10,
+            fontSize: 12,
             margin: [0, 0, 0, 10]
         };
     }
@@ -289,7 +298,6 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const maxLossAmountEcreteElement = document.getElementById('finalMaxLossAmountEcrete');
         const maxLossAmountEcrete = maxLossAmountEcreteElement.querySelector('span:first-child').textContent;
         const maxLossPercentageEcrete = maxLossAmountEcreteElement.querySelector('span:last-child').textContent;
-
 
         const maxGainAmountEcreteElement = document.getElementById('finalMaxGainAmountEcrete');
         const maxGainAmountEcrete = maxGainAmountEcreteElement.querySelector('span:first-child').textContent;
@@ -341,7 +349,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 widths: ['*']
             },
             layout: 'noBorders',
-            fontSize: 10,
+            fontSize: 12,
             margin: [0, 0, 0, 10]
         };
     }
@@ -383,43 +391,43 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             margin: [0, 0, 0, 10]
         };
     }
-    // Fonction pour récupérer les données du tableau résultats épargne placée à taux garanti
-       function getResultsTauxFixe() {
+
+    function getResultsTauxFixe() {
         const resultsTauxFixe = document.getElementById('resultsTauxFix');
         if (!resultsTauxFixe) {
-             return {};
-         }
-          const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings')?.textContent?.replace(/\s/g, '') || '-');
-          const lastInvestmentText = formatNumber(document.getElementById('last-investment')?.textContent?.replace(/\s/g, '') || '-');
-         const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe')?.textContent?.replace(/\s/g, '') || '-');
-          const totalInterestText = document.getElementById('totalInterest')?.textContent || '-';
-           const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
+            return {};
+        }
+        const lastCumulativeSavingsText = formatNumber(document.getElementById('last-cumulative-savings')?.textContent?.replace(/\s/g, '') || '-');
+        const lastInvestmentText = formatNumber(document.getElementById('last-investment')?.textContent?.replace(/\s/g, '') || '-');
+        const gainTauxFixeText = formatNumber(document.getElementById('gain-taux-fixe')?.textContent?.replace(/\s/g, '') || '-');
+        const totalInterestText = document.getElementById('totalInterest')?.textContent || '-';
+        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent || '';
 
-             return {
+        return {
             table: {
                 body: [
-                   [
-                       { text: `Valeur finale du portefeuille:`, alignment: 'left' },
-                      { text: `${lastCumulativeSavingsText} ${currencySymbol}`, alignment: 'right' }
-                  ],
                     [
-                       { text: `Montant versé:`, alignment: 'left' },
+                        { text: `Valeur finale du portefeuille:`, alignment: 'left' },
+                        { text: `${lastCumulativeSavingsText} ${currencySymbol}`, alignment: 'right' }
+                    ],
+                    [
+                        { text: `Montant versé:`, alignment: 'left' },
                         { text: `${lastInvestmentText} ${currencySymbol}`, alignment: 'right' }
-                   ],
-                     [
-                       { text: `Total des intérêts:`, alignment: 'left' },
-                       { text: `${gainTauxFixeText} ${currencySymbol}`, alignment: 'right' }
-                     ],
-                     [
-                         { text: `Taux d'intérêt annuel:`, alignment: 'left' },
+                    ],
+                    [
+                        { text: `Total des intérêts:`, alignment: 'left' },
+                        { text: `${gainTauxFixeText} ${currencySymbol}`, alignment: 'right' }
+                    ],
+                    [
+                        { text: `Taux d'intérêt annuel:`, alignment: 'left' },
                         { text: totalInterestText, alignment: 'right' }
-                     ]
+                    ]
                 ],
-                widths: ['30%', 'auto']  // On définit explicitement la largeur de la première colonne à 50%
+                widths: ['30%', 'auto']
             },
-              layout: 'noBorders',
-                fontSize: 10,
-           margin: [0, 0, 0, 10]
+            layout: 'noBorders',
+            fontSize: 12,
+            margin: [0, 0, 0, 10]
         };
     }
 
@@ -428,7 +436,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         if (!canvas) {
             return {};
         }
-        const remToPx = 16; // Conversion simple rem to px
+        const remToPx = 16;
         return {
             table: {
                 body: [[
@@ -478,13 +486,10 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     }
 
     function formatNumber(numberString) {
-        // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
         let number = numberString.replace(/\s/g, '').replace(',', '.');
-        // Convertir la chaîne de caractères en nombre
         number = parseFloat(number);
-        // Vérifier si la valeur est bien un nombre
         if (isNaN(number)) {
-            return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
+            return numberString;
         }
         const formattedNumber = number.toFixed(2);
         const parts = formattedNumber.split('.');
@@ -493,17 +498,14 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     }
 
     function formatPercentage(numberString) {
-        // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
         let number = numberString.replace(/\s/g, '').replace(',', '.').replace('%', '');
-        // Convertir la chaîne de caractères en nombre
         number = parseFloat(number);
-        // Vérifier si la valeur est bien un nombre
         if (isNaN(number)) {
-            return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
+            return numberString;
         }
         return number.toFixed(2).replace('.', ',') + ' %';
     }
-      // Fonction pour générer le nom du fichier
+
     function generateFileName(stockSymbol) {
         const now = new Date();
         const year = now.getFullYear();
