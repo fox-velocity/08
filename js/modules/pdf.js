@@ -242,7 +242,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     [
                         {
                             text: [
-                                'Montant de moins-value potentielle maximale: ',
+                                'Moins-value potentielle maximale: ',
                                 { text: maxLossAmount + ' ', style: getStyleForValue(maxLossAmount) },
                                 ' soit : ',
                                 { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
@@ -254,7 +254,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     [
                         {
                             text: [
-                                'Montant de plus-value potentielle maximale: ',
+                                'Plus-value potentielle maximale: ',
                                 { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
                                 ' soit : ',
                                 { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
@@ -327,7 +327,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         [
                             {
                               text: [
-                                'Montant de moins-value potentielle maximale: ',
+                                'Moins-value potentielle maximale: ',
                                 { text: maxLossAmountEcrete + ' ', style: getStyleForValue(maxLossAmountEcrete) },
                                  ' soit : ',
                                  { text: maxLossPercentageEcrete, style: getStyleForValue(maxLossPercentageEcrete) },
@@ -339,7 +339,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                       [
                             {
                               text: [
-                                'Montant de plus-value potentielle maximale: ',
+                                'Plus-value potentielle maximale: ',
                                  { text: maxGainAmountEcrete + ' ', style: getStyleForValue(maxGainAmountEcrete) },
                                   ' soit : ',
                                  { text: maxGainPercentageEcrete, style: getStyleForValue(maxGainPercentageEcrete) },
@@ -349,7 +349,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                          }
                     ]
                 ],
-                widths: ['*']
+              widths: ['30%', 'auto'] 
             },
            layout: 'noBorders',
              fontSize: 10,
