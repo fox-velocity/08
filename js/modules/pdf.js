@@ -424,7 +424,6 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
        };
     }
           
-    }
     // Fonction pour récupérer les données du tableau résultats épargne placée à taux garanti
        function getResultsTauxFixe() {
         const resultsTauxFixe = document.getElementById('resultsTauxFix');
