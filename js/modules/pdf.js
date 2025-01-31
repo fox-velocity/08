@@ -359,44 +359,56 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-        function getSecuredGainsTable() {
-        const securedGainsTableBody = document.getElementById('securedGainsTableBody');
+      function getSecuredGainsTable() {
+    const securedGainsTableBody = document.getElementById('securedGainsTableBody');
         if (!securedGainsTableBody) {
-            return {};
-        }
+             return {
+              table: {
+                   body : [],
+                  widths: ['auto', 'auto', 'auto', 'auto', 'auto']
+              },
+                margin: [0, 0, 0, 10]
+            };
+       }
         let securedGainTableData = [];
         const header = ['Date', 'Gain sécurisé', 'Intérêt du gain sécurisé']
         const rows = securedGainsTableBody.querySelectorAll('tr');
-        rows.forEach(row => {
-            let rowData = [];
-            const cells = row.querySelectorAll('td');
+       rows.forEach(row => {
+           let rowData = [];
+             const cells = row.querySelectorAll('td');
             cells.forEach(cell => {
-                rowData.push(cell.textContent);
+                 rowData.push(cell.textContent);
             });
-            if (rowData.length > 0) {
-                securedGainTableData.push(rowData);
+           if (rowData.length > 0) {
+               securedGainTableData.push(rowData);
             }
-        });
-        return {
-            table: {
-                body: [
-                    header,
-                    ...securedGainTableData.map(row => [
+       });
+      return {
+           table: {
+               body: [
+                   [
+                       { text: 'colonne' ,style: 'tableHeader'},
+                       { text: 'Date', style: 'tableHeader',  },
+                        { text: 'Gain sécurisé', style: 'tableHeader' },
+                        { text: 'Intérêt du gain sécurisé', style: 'tableHeader' },
+                         {text : " " , style: 'tableHeader'}
+                    ],
+                   ...securedGainTableData.map(row => [
+                       { text: 'colonne' ,style: 'tableCell'},
                         row[0] || '-',
-                        row[1] || '-',
-                        row[2] || '-'
-                    ])
+                      row[1] || '-',
+                        row[2] || '-',
+                      {text : " " ,style: 'tableCell'}
+                   ])
                 ],
-                widths: ['auto', 'auto', '*'],
-                
+                widths: ['15%', 'auto', 'auto', '*', '15%'],
             },
-               layout: 'noBorders',
-            fontSize: 12,
-            margin: [0, 0, 0, 10],
-             alignment: 'center',
-
-        };
-    }
+             layout: 'noBorders',
+           margin: [0, 0, 0, 10],
+          fontSize: 12,
+         
+       };
+   }
 
     
 
