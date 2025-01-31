@@ -383,19 +383,19 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             table: {
               body: [
                 [
-                   { text: 'rien', style: 'tableHeader', alignment: 'center' },
-                    { text: 'Date', style: 'tableHeader', alignment: 'center' },
+                { text: 'Date', style: 'tableHeader', alignment: 'center' },
+                { text: 'Date', style: 'tableHeader', alignment: 'center' },
                   { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
                   { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' }
                 ],
                 ...securedGainTableData.map(row => [
-                  { text: 'rien2', style: 'tableCell', alignment: 'center' },  
+                         { text: row[0], style: 'tableCell', alignment: 'center' },
                   { text: row[0], style: 'tableCell', alignment: 'center' },
                   { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center' },
                   { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' }
                 ])
               ],
-              widths: ['20%, 20%', '20%', '40%'],
+              widths: ['20%', '20%', '20%', '40%'],
             },
             layout: 'noBorders',          
           };
