@@ -63,7 +63,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 margin: [15, 5, 0, 5]
             },
              tableCell: {
-                 margin: [0, 5, 0, 5]
+                 margin: [0, 5, 20, 5]
             },
             positive: {
                 color: 'green'
