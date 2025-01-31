@@ -231,11 +231,11 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         return {
             table: {
                 body: [
-                    [`Valeur finale du portefeuille: ${finalPortfolioValue} ${currencySymbol}`],
+                    [`Valeur finale du portefeuille : ${finalPortfolioValue} ${currencySymbol}`],
                     [
                         {
                             text: [
-                                'Gain ou Perte: ',
+                                'Gain ou Perte : ',
                                 { text: gainLossAmount + ' ' + currencySymbol + ' ', style: getStyleForValue(gainLossAmount) },
                                 ' soit : ',
                                 { text: gainLossPercentage, style: getStyleForValue(gainLossPercentage) },
@@ -245,7 +245,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     [
                         {
                             text: [
-                                'Montant de moins-value potentielle maximale: ',
+                                'Moins-value potentielle maximale : ',
                                 { text: maxLossAmount + ' ', style: getStyleForValue(maxLossAmount) },
                                 ' soit : ',
                                 { text: maxLossPercentage, style: getStyleForValue(maxLossPercentage) },
@@ -257,7 +257,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     [
                         {
                             text: [
-                                'Montant de plus-value potentielle maximale: ',
+                                'Plus-value potentielle maximale : ',
                                 { text: maxGainAmount + ' ', style: getStyleForValue(maxGainAmount) },
                                 ' soit : ',
                                 { text: maxGainPercentage, style: getStyleForValue(maxGainPercentage) },
@@ -269,9 +269,9 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 ],
                 widths: ['*']
             },
-            layout: 'noBorders',
-            fontSize: 10,
-            margin: [0, 0, 0, 10]
+             layout: 'noBorders',
+           fontSize: 12,
+           margin: [0, 0, 0, 10]
         };
     }
  function getResultsWithCapping() {
