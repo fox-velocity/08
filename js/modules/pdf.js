@@ -206,8 +206,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
     
-    ////////////////
-           function getResults() {
+    ///////////////sdfsdfsdfsdff/
+      function getResults() {
         const results = document.getElementById('results');
         if (!results) {
             return {};
