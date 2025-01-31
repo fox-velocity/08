@@ -431,7 +431,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 widths: ['30%', 'auto']  // On définit explicitement la largeur de la première colonne à 50%
             },
               layout: 'noBorders',
-                fontSize: 10,
+                fontSize: 12,
            margin: [0, 0, 0, 10]
         };
     }
