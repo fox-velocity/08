@@ -359,54 +359,52 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-     function getSecuredGainsTable() {
+    function getSecuredGainsTable() {
         const securedGainsTableBody = document.getElementById('securedGainsTableBody');
         if (!securedGainsTableBody) {
-            return {};
-        }
-        let securedGainTableData = [];
-        const header = ['Date', 'Gain sécurisé', 'Intérêt du gain sécurisé']
-        const rows = securedGainsTableBody.querySelectorAll('tr');
-        rows.forEach(row => {
+            return {
+               table: {
+                    body : [],
+                  widths: ['auto', 'auto', '*']
+                 },
+                 margin: [0, 0, 0, 10]
+            };
+       }
+      let securedGainTableData = [];
+       const header = ['Date', 'Gain sécurisé', 'Intérêt du gain sécurisé']
+       const rows = securedGainsTableBody.querySelectorAll('tr');
+         rows.forEach(row => {
             let rowData = [];
-            const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                rowData.push(cell.textContent);
-            });
-            if (rowData.length > 0) {
-                securedGainTableData.push(rowData);
+             const cells = row.querySelectorAll('td');
+             cells.forEach(cell => {
+                 rowData.push(cell.textContent);
+           });
+           if (rowData.length > 0) {
+              securedGainTableData.push(rowData);
             }
         });
-
-        return {
-  content: [
-    {
-      table: {
-        body: [
-          [
-            { text: '' }, // Colonne vide
-            { text: 'Date', style: 'tableHeader', alignment: 'center' },
-            { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
-            { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' },
-            { text: '' } // Colonne vide
-          ],
-          ...securedGainTableData.map(row => [
-            { text: '' }, // Colonne vide
-            { text: row[0], style: 'tableCell', alignment: 'center' },
-            { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center' },
-            { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' },
-            { text: ''} // Colonne vide
-          ])
-        ],
-        widths: ['15%', 'auto', 'auto', 'auto', '15%']
-      },
-      layout: 'noBorders',
-      fontSize: 12,
-      margin: [0, 0, 0, 10],
+       return {
+            stack: [
+                {
+                   table: {
+                      body: [
+                        header,
+                        ...securedGainTableData.map(row => [
+                           row[0] || '-',
+                            row[1] || '-',
+                             row[2] || '-'
+                        ])
+                    ],
+                     widths: ['auto', 'auto', '*']
+                  },
+                    layout: 'noBorders',
+                }
+             ],
+          margin: [0, 0, 0, 10],
+          fontSize: 12,
+         alignment: 'center'
+        };
     }
-  ],
-
-};
 
     }
 
