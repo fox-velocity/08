@@ -395,7 +395,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                   { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' }
                 ])
               ],
-              widths: ['20%', '20%', '20%', '30%'],
+              widths: ['15%', '20%', '20%', '30%'],
             },
             layout: 'noBorders',          
           };
