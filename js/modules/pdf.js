@@ -216,9 +216,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         const gainLossAmountText = document.querySelector('#finalGainLossPercentage span:first-child').textContent;
         const gainLossPercentageText = document.querySelector('#finalGainLossPercentage span:last-child').textContent;
         const gainLossPercentage = formatPercentage(gainLossPercentageText);
-        //////0
-            const gainLossAmount = gainLossAmountText.replace(/[^\d.-]/g, '');
-/////0
+        const gainLossAmount = formatNumber(gainLossAmountText.replace(/[^\d.-]/g, ''));
         const maxLossAmountElement = document.getElementById('finalMaxLossAmount');
         const maxLossAmount = maxLossAmountElement.querySelector('span:first-child').textContent;
         const maxLossPercentage = maxLossAmountElement.querySelector('span:last-child').textContent;
