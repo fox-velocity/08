@@ -384,9 +384,9 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             table: {
               body: [
                 [
-                  { text: 'Date', style: 'tableHeader', alignment: 'center' },
-                  { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
-                  { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' }
+                  { text: 'Date', style: 'tableHeader', alignment: 'center' ,fontSize: 12},
+                  { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center',fontSize: 12 },
+                  { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' ,fontSize: 12}
                 ],
                 ...securedGainTableData.map(row => [
                   { text: row[0], style: 'tableCell', alignment: 'center',fontSize: 12 },
