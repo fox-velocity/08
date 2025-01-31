@@ -227,8 +227,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             table: {
                 body: [
                     [`Valeur finale du portefeuille : ${finalPortfolioValue} ${currencySymbol}`],
-                    [""], // Ligne vide ajoutée
-                    [
+                      [
                         {
                             text: [
                                 'Gain ou Perte : ',
