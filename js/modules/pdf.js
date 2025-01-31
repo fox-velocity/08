@@ -349,7 +349,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                          }
                     ]
                 ],
-              widths: ['*', 'auto'] 
+               widths: ['*']
             },
            layout: 'noBorders',
              fontSize: 10,
