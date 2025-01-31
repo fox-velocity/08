@@ -352,7 +352,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                widths: ['*']
             },
            layout: 'noBorders',
-             fontSize: 10,
+             fontSize: 12,
              margin: [0, 0, 0, 10]
         }
         ]
