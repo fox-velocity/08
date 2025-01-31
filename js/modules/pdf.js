@@ -389,12 +389,12 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                   { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' }
                 ],
                 ...securedGainTableData.map(row => [
-                  { text: row[0], style: 'tableCell', alignment: 'center' },
-                  { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center' },
-                  { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' }
+                  { text: row[0], style: 'tableCell', alignment: 'center',fontSize: 12 },
+                  { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center',fontSize: 12 },
+                  { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' ,fontSize: 12}
                 ])
               ],
-              widths: ['20%', '20%', '30%'],
+              widths: ['15%', 'auto', '15%'],
             },
             layout: 'noBorders',
             fontSize: 12,
