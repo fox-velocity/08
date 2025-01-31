@@ -359,45 +359,48 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 ////////////////////////////////////////////////////////////////
-     function getSecuredGainsTable() {
+   
+    function getSecuredGainsTable() {
         const securedGainsTableBody = document.getElementById('securedGainsTableBody');
-         let securedGainTableData = [];
+        if (!securedGainsTableBody) {
+            return {};
+        }
+        let securedGainTableData = [];
         const header = ['Date', 'Gain sécurisé', 'Intérêt du gain sécurisé']
-         if(securedGainsTableBody){
-           const rows = securedGainsTableBody.querySelectorAll('tr');
-             rows.forEach(row => {
-                let rowData = [];
-              const cells = row.querySelectorAll('td');
-              cells.forEach(cell => {
-                    rowData.push(cell.textContent);
-               });
+        const rows = securedGainsTableBody.querySelectorAll('tr');
+        rows.forEach(row => {
+            let rowData = [];
+            const cells = row.querySelectorAll('td');
+            cells.forEach(cell => {
+                rowData.push(cell.textContent);
+            });
             if (rowData.length > 0) {
                 securedGainTableData.push(rowData);
-               }
-           });
-         }
-       console.log("securedGainTableData", securedGainTableData);
-      let body = [];
-        body.push([
-              { text: 'Date', style: 'tableHeader'},
-             { text: 'Gain sécurisé', style: 'tableHeader' },
-             { text: 'Intérêt du gain sécurisé', style: 'tableHeader' }           
-        ]);
-     securedGainTableData.forEach(row => {
-           body.push([
-                 row[0],
-                 row[1],
-                 row[2],
-           ]);
-       });
-       console.log("body", body);
-        return {
-           layout: 'noBorders',
-          fontSize: 12,
-         margin: [10, 0, 10, 30],
-     };
-    }
+            }
+        });
 
+        return {
+            table: {
+              body: [
+                [
+                  { text: 'Date', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Gain sécurisé', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Intérêt du gain sécurisé', style: 'tableHeader', alignment: 'center' }
+                ],
+                ...securedGainTableData.map(row => [
+                  { text: row[0], style: 'tableCell', alignment: 'center' },
+                  { text: formatNumber(row[1]), style: getStyleForValue(row[1]), alignment: 'center' },
+                  { text: formatNumber(row[2]), style: getStyleForValue(row[2]), alignment: 'right' }
+                ])
+              ],
+              widths: ['20%', '20%', '30%'],
+            },
+            layout: 'noBorders',
+            fontSize: 12,
+            margin: [0, 0, 0, 10],          
+          };
+          
+    }
     
 
  function getSecuredGainsTable() {
