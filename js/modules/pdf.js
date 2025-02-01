@@ -1,4 +1,4 @@
-// pdf.js 01
+// pdf.js 23 12 31 01
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -216,8 +216,9 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             return {};
         }
         const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
-        const finalGainLossPercentage = formatPercentage(document.getElementById('finalGainLossPercentage').textContent);
-          const finalMaxLossAmount = formatNumber(document.getElementById('finalMaxLossAmount').textContent.replace(/\s/g, ''));
+         const finalGainLossPercentage = document.getElementById('finalGainLossPercentage').textContent;
+        const finalGainLossAmount = formatNumber(document.getElementById('finalGainLossPercentage').textContent.replace(/\s/g, '').replace('%', ''));
+        const finalMaxLossAmount = formatNumber(document.getElementById('finalMaxLossAmount').textContent.replace(/\s/g, ''));
          const finalMaxGainAmount = formatNumber(document.getElementById('finalMaxGainAmount').textContent.replace(/\s/g, ''));
            const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
         return {
@@ -227,16 +228,10 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         { text: `Valeur finale du portefeuille :`, alignment: 'left' },
                         { text: `${finalPortfolioValue} ${currencySymbol}`, alignment: 'right' }
                     ],
-                     [
-                        {
-                            text: [
-                                'Gain/Perte : ',
-                                { text: finalGainLossPercentage, style: getStyleForValue(finalGainLossPercentage) }
-                            ],
-                            alignment: 'left'
-                        },
-                        { text: '', alignment: 'right' }
-                    ],
+                    [
+                        { text: `Gain/Perte :`, alignment: 'left' },
+                       { text: `${finalGainLossAmount} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalGainLossAmount)}
+                   ],
                      [
                         { text: `Moins-value potentielle maximale :`, alignment: 'left' },
                         { text: `${finalMaxLossAmount} ${currencySymbol}`, alignment: 'right' }
@@ -429,12 +424,12 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     }
 
     function getStyleForValue(value, isPercentage) {
-        const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
+         const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
         if (!isNaN(numericValue)) {
             return numericValue >= 0 ? 'positive' : 'negative';
         } else {
             const valueTest = value.replace(/<[^>]*>/g, '')
-            const numericValueTest = parseFloat(valueTest.replace(/[^\d.-]/g, ''));
+             const numericValueTest = parseFloat(valueTest.replace(/[^\d.-]/g, ''));
             if (isPercentage) {
                 return numericValueTest >= 0 ? 'positive' : 'negative';
             } else {
