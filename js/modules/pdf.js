@@ -229,7 +229,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         { text: `${finalPortfolioValue} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalPortfolioValue) }
                     ],
                     [
-                        { text: `Gain/Perte :`, alignment: 'left' },
+                        { text: `Gain ou Perte :`, alignment: 'left' },
                         { text: `${finalGainLossAmount} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalGainLossAmount) }
                     ],
                     [
@@ -282,7 +282,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         { text: `${finalTotalEcreteInterest} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalTotalEcreteInterest) }
                     ],
                     [
-                        { text: `Gain :`, alignment: 'left' },
+                        { text: `Gain ou Perte :`, alignment: 'left' },
                         { text: `${finalGainEcrete} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalGainEcrete) }
                     ],
                     [
