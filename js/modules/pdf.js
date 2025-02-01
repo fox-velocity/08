@@ -1,4 +1,4 @@
-// pdf.js 11 25 01 02
+// pdf.js 23 12 31 01 mais le 01 02
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -168,17 +168,17 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             return {};
         }
         // Formattez les nombres avec des espaces pour les milliers
-        const totalInvested = formatNumber(document.getElementById('finalTotalInvested')?.textContent?.replace(/\s/g, ''));
-        const investmentDuration = document.getElementById('finalNumberOfPayments')?.textContent;
-        const stockChangePercentage = formatPercentage(document.getElementById('finalStockChangePercentage')?.textContent)
-        const startDate = document.getElementById('startDate')?.value;
-        const endDate = document.getElementById('endDate')?.value;
-        const initialInvestment = formatNumber(document.getElementById('initialInvestment')?.value);
-        const monthlyInvestment = formatNumber(document.getElementById('monthlyInvestment')?.value);
-        const interestRate = document.getElementById('interestRate')?.value;
-        const cappingPercentage = document.getElementById('cappingPercentage')?.value;
-        const minCappingAmount = document.getElementById('minCappingAmount')?.value;
-        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent;
+        const totalInvested = formatNumber(document.getElementById('finalTotalInvested').textContent.replace(/\s/g, ''));
+        const investmentDuration = document.getElementById('finalNumberOfPayments').textContent;
+        const stockChangePercentage = formatPercentage(document.getElementById('finalStockChangePercentage').textContent)
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const initialInvestment = formatNumber(document.getElementById('initialInvestment').value);
+        const monthlyInvestment = formatNumber(document.getElementById('monthlyInvestment').value);
+        const interestRate = document.getElementById('interestRate').value;
+        const cappingPercentage = document.getElementById('cappingPercentage').value;
+        const minCappingAmount = document.getElementById('minCappingAmount').value;
+        const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
 
         return {
             table: {
@@ -210,19 +210,17 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-     function getResults() {
+    function getResults() {
         const resultsDiv = document.getElementById('results');
         if (!resultsDiv) {
             return {};
         }
-        const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue')?.textContent?.replace(/\s/g, ''));
-        const finalGainLossPercentage = document.getElementById('finalGainLossPercentage')?.textContent;
-        const finalGainLossAmount = parseFloat(document.getElementById('finalGainLossPercentage')?.textContent?.replace(/\s/g, '').replace('%', ''));
-         const finalMaxLossAmount = formatNumber(document.getElementById('finalMaxLossAmount')?.textContent?.replace(/\s/g, ''));
-        const finalMaxGainAmount = formatNumber(document.getElementById('finalMaxGainAmount')?.textContent?.replace(/\s/g, ''));
-        const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent;
-        const gainLossText = finalGainLossAmount >= 0 ? 'Gain' : 'Perte';
-
+        const finalPortfolioValue = formatNumber(document.getElementById('finalPortfolioValue').textContent.replace(/\s/g, ''));
+        const finalGainLossPercentage = document.getElementById('finalGainLossPercentage').textContent;
+        const finalGainLossAmount = formatNumber(document.getElementById('finalGainLossPercentage').textContent.replace(/\s/g, '').replace('%', ''));
+        const finalMaxLossAmount = formatNumber(document.getElementById('finalMaxLossAmount').textContent.replace(/\s/g, ''));
+        const finalMaxGainAmount = formatNumber(document.getElementById('finalMaxGainAmount').textContent.replace(/\s/g, ''));
+        const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
         return {
             table: {
                 body: [
@@ -231,8 +229,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                         { text: `${finalPortfolioValue} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalPortfolioValue) }
                     ],
                     [
-                         { text: `${gainLossText} :`, alignment: 'left' },
-                       { text: `${formatNumber(Math.abs(finalGainLossAmount))} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalGainLossAmount)}
+                        { text: `Gain/Perte :`, alignment: 'left' },
+                        { text: `${finalGainLossAmount} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalGainLossAmount) }
                     ],
                     [
                         { text: `Moins-value potentielle maximale :`, alignment: 'left' },
@@ -250,57 +248,56 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             margin: [0, 0, 0, 10]
         };
     }
-    
-       function getResultsWithCapping() {
+
+    function getResultsWithCapping() {
         const resultsWithCappingDiv = document.getElementById('resultsWithCapping');
         if (!resultsWithCappingDiv) {
             return {};
         }
-        const portfolioValueEcreteAvecGain = formatNumber(document.getElementById('portfolioValueEcreteAvecGain')?.textContent?.replace(/\s/g, ''));
-        const finalPortfolioValueEcrete = formatNumber(document.getElementById('finalPortfolioValueEcrete')?.textContent?.replace(/\s/g, ''));
-        const finalTotalEcrete = formatNumber(document.getElementById('finalTotalEcrete')?.textContent?.replace(/\s/g, ''));
-         const finalTotalEcreteInterest = formatNumber(document.getElementById('finalTotalEcreteInterest')?.textContent?.replace(/\s/g, ''));
-         const finalGainEcreteAmount = parseFloat(document.getElementById('finalGainEcrete')?.textContent?.replace(/\s/g, ''));
-        const finalMaxLossAmountEcrete = formatNumber(document.getElementById('finalMaxLossAmountEcrete')?.textContent?.replace(/\s/g, ''));
-        const finalMaxGainAmountEcrete = formatNumber(document.getElementById('finalMaxGainAmountEcrete')?.textContent?.replace(/\s/g, ''));
-         const currencySymbol = document.getElementById('currencySymbolLabel')?.textContent;
-         const gainText = finalGainEcreteAmount >= 0 ? 'Gain' : 'Perte';
+        const portfolioValueEcreteAvecGain = formatNumber(document.getElementById('portfolioValueEcreteAvecGain').textContent.replace(/\s/g, ''));
+        const finalPortfolioValueEcrete = formatNumber(document.getElementById('finalPortfolioValueEcrete').textContent.replace(/\s/g, ''));
+        const finalTotalEcrete = formatNumber(document.getElementById('finalTotalEcrete').textContent.replace(/\s/g, ''));
+        const finalTotalEcreteInterest = formatNumber(document.getElementById('finalTotalEcreteInterest').textContent.replace(/\s/g, ''));
+        const finalGainEcrete = formatNumber(document.getElementById('finalGainEcrete').textContent.replace(/\s/g, ''));
+        const finalMaxLossAmountEcrete = formatNumber(document.getElementById('finalMaxLossAmountEcrete').textContent.replace(/\s/g, ''));
+        const finalMaxGainAmountEcrete = formatNumber(document.getElementById('finalMaxGainAmountEcrete').textContent.replace(/\s/g, ''));
+        const currencySymbol = document.getElementById('currencySymbolLabel').textContent;
         return {
             table: {
                 body: [
                     [
                         { text: `Valeur portefeuille + Gain sécurisé :`, alignment: 'left' },
                         { text: `${portfolioValueEcreteAvecGain} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(portfolioValueEcreteAvecGain) }
-                   ],
+                    ],
                     [
                         { text: `Valeur finale du portefeuille écrêté :`, alignment: 'left' },
-                       { text: `${finalPortfolioValueEcrete} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalPortfolioValueEcrete) }
+                        { text: `${finalPortfolioValueEcrete} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalPortfolioValueEcrete) }
                     ],
                     [
                         { text: `Valeur totale écrêtée :`, alignment: 'left' },
-                        { text: `${finalTotalEcrete} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalTotalEcrete)}
+                        { text: `${finalTotalEcrete} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalTotalEcrete) }
                     ],
                     [
-                       { text: `Valeur totale des intérêts des gains écrêtés :`, alignment: 'left' },
-                       { text: `${finalTotalEcreteInterest} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalTotalEcreteInterest) }
-                   ],
+                        { text: `Valeur totale des intérêts des gains écrêtés :`, alignment: 'left' },
+                        { text: `${finalTotalEcreteInterest} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalTotalEcreteInterest) }
+                    ],
                     [
-                       { text: `${gainText} :`, alignment: 'left' },
-                        { text: `${formatNumber(Math.abs(finalGainEcreteAmount))} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalGainEcreteAmount)}
+                        { text: `Gain :`, alignment: 'left' },
+                        { text: `${finalGainEcrete} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalGainEcrete) }
                     ],
                     [
                         { text: `Moins-value potentielle maximale :`, alignment: 'left' },
                         { text: `${finalMaxLossAmountEcrete} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalMaxLossAmountEcrete) }
                     ],
                     [
-                       { text: `Plus-value potentielle maximale :`, alignment: 'left' },
+                        { text: `Plus-value potentielle maximale :`, alignment: 'left' },
                         { text: `${finalMaxGainAmountEcrete} ${currencySymbol}`, alignment: 'right', style: getStyleForValue(finalMaxGainAmountEcrete) }
                     ]
                 ],
                 widths: ['50%', '50%']
             },
             layout: 'noBorders',
-             fontSize: 12,
+            fontSize: 12,
             margin: [0, 0, 0, 10]
         };
     }
@@ -426,13 +423,13 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         };
     }
 
-  function getStyleForValue(value, isPercentage) {
-         const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
+    function getStyleForValue(value, isPercentage) {
+        const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
         if (!isNaN(numericValue)) {
             return numericValue >= 0 ? 'positive' : 'negative';
         } else {
             const valueTest = value.replace(/<[^>]*>/g, '')
-           const numericValueTest = parseFloat(valueTest.replace(/[^\d.-]/g, ''));
+            const numericValueTest = parseFloat(valueTest.replace(/[^\d.-]/g, ''));
             if (isPercentage) {
                 return numericValueTest >= 0 ? 'positive' : 'negative';
             } else {
@@ -443,11 +440,11 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
 
     function formatNumber(numberString) {
         // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
-        let number = numberString?.replace(/\s/g, '').replace(',', '.');
+        let number = numberString.replace(/\s/g, '').replace(',', '.');
         // Convertir la chaîne de caractères en nombre
         number = parseFloat(number);
         // Vérifier si la valeur est bien un nombre
-         if (isNaN(number)) {
+        if (isNaN(number)) {
             return numberString; // Retourne la valeur d'origine si ce n'est pas un nombre
         }
         const formattedNumber = number.toFixed(2);
@@ -458,7 +455,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
 
     function formatPercentage(numberString) {
         // Supprimer tous les espaces et les virgules existants pour ne garder que la partie numérique
-        let number = numberString?.replace(/\s/g, '').replace(',', '.').replace('%', '');
+        let number = numberString.replace(/\s/g, '').replace(',', '.').replace('%', '');
         // Convertir la chaîne de caractères en nombre
         number = parseFloat(number);
         // Vérifier si la valeur est bien un nombre
