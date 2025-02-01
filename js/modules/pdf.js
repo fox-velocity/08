@@ -1,4 +1,4 @@
-// pdf.js 02 08
+// pdf.js 11 25 01 02
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
