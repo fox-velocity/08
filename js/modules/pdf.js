@@ -1,5 +1,4 @@
 // pdf.js 23 12 31 01 mais le 01 02
-
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -24,11 +23,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 opacity: 0.2,
             };
         },
-         content: [
-            { text: 'Ceci est du texte en Roboto.', style: 'robotoText' },
-             { text: 'Ceci est du texte en Times.', style: 'timesText' },
-            { text: 'Ceci est du texte en Courier.', style: 'courierText' },
-           { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
+        content: [
+            { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
             getStockInfo(),
             { text: 'Synthèse investissement', style: 'subtitle' },
@@ -51,15 +47,6 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             { text: 'Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu\'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d\'investissement, afin d\'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.', style: 'paragraph' },
         ],
         styles: {
-            robotoText: {
-               fontFamily: 'Roboto'
-        },
-         timesText: {
-                fontFamily: 'Times'
-        },
-        courierText: {
-               fontFamily: 'Courier'
-         },
             title: {
                 fontSize: 18,
                 bold: true,
