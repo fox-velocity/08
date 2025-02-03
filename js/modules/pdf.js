@@ -1,10 +1,16 @@
-// pdf.js 23 12 31 01 mais le 01 02
+// pdf.js avec police
+import { fontsBase64 } from './fonts.js';
+
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
         console.error("pdfMake n'est pas chargé");
         return;
     }
+
+    pdfMake.vfs = {
+        'GeorgiaPro-Semibold.ttf': fontsBase64['GeorgiaPro-Semibold'],
+    };
 
     await waitForChart('investmentChart');
 
@@ -48,37 +54,45 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         ],
         styles: {
             title: {
+                font: 'GeorgiaPro-Semibold',
                 fontSize: 18,
                 bold: true,
                 alignment: 'center',
                 margin: [0, 0, 0, 15]
             },
             subtitle: {
+                font: 'GeorgiaPro-Semibold',
                 fontSize: 14,
                 bold: true,
                 alignment: 'center',
                 margin: [0, 10, 10, 15]
             },
             paragraph: {
+                font: 'GeorgiaPro-Semibold',
                 fontSize: 8,
                 alignment: 'justify',
                 margin: [10, 20, 10, 10]
             },
             tableHeader: {
+                font: 'GeorgiaPro-Semibold',
                 bold: true,
                 fillColor: '#dddddd',
                 margin: [15, 5, 0, 5]
             },
             tableCell: {
+                font: 'GeorgiaPro-Semibold',
                 margin: [0, 0, 0, 0]
             },
             positive: {
+                font: 'GeorgiaPro-Semibold',
                 color: 'green'
             },
             negative: {
+                font: 'GeorgiaPro-Semibold',
                 color: 'red'
             },
             chartContainer: {
+                font: 'GeorgiaPro-Semibold',
                 margin: [0, 0, 0, 20],
             }
         },
@@ -92,7 +106,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 text: 'Fox Velocity',
                                 alignment: 'center',
                                 fontSize: 8,
-                                margin: [0, 10, 0, 0]
+                                margin: [0, 10, 0, 0],
+                                font: 'GeorgiaPro-Semibold',
                             },
                             {
                                 image: logoBase64,
@@ -104,13 +119,22 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 text: `Page ${currentPage.toString()} sur ${pageCount}`,
                                 alignment: 'center',
                                 fontSize: 8,
-                                margin: [0, 10, 0, 0]
+                                margin: [0, 10, 0, 0],
+                                font: 'GeorgiaPro-Semibold',
                             }
                         ]
                     ]
                 },
                 layout: 'noBorders'
             };
+        },
+        fonts: {
+            'GeorgiaPro-Semibold': {
+                normal: 'GeorgiaPro-Semibold.ttf',
+                bold: 'GeorgiaPro-Semibold.ttf',
+                italics: 'GeorgiaPro-Semibold.ttf',
+                bolditalics: 'GeorgiaPro-Semibold.ttf'
+            }
         }
     };
 
@@ -155,7 +179,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                     [`Type : ${stockType}`],
                     [`Industrie : ${stockIndustry}`]
                 ],
-                widths: ['*']
+                widths: ['*'],
             },
             layout: 'noBorders',
             margin: [0, 0, 0, 10],
