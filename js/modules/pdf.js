@@ -1,4 +1,4 @@
-// pdf.js
+// pdf.js 13 59
 import { fontsBase64 } from './fonts.js';
 
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
