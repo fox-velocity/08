@@ -17,7 +17,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     const docDefinition = {
         pageSize: 'A4',
         pageMargins: [15, 15, 15, 50],
-         defaultStyle: {
+        defaultStyle: {
             font: 'GeorgiaPro-Semibold'
         },
         background: function (currentPage, pageSize) {
@@ -33,7 +33,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             };
         },
         content: [
-           { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
+            { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
             getStockInfo(),
             { text: 'Synthèse investissement', style: 'subtitle' },
@@ -122,12 +122,12 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             };
         },
          fonts: {
-          'GeorgiaPro-Semibold': {
-           normal: 'GeorgiaPro-Semibold.ttf',
+           'GeorgiaPro-Semibold': {
+             normal: 'GeorgiaPro-Semibold.ttf',
              bold: 'GeorgiaPro-Semibold.ttf',
              italics: 'GeorgiaPro-Semibold.ttf',
-              bolditalics: 'GeorgiaPro-Semibold.ttf'
-          }
+             bolditalics: 'GeorgiaPro-Semibold.ttf'
+           }
          }
     };
 
