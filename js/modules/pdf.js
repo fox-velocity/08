@@ -51,7 +51,8 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 fontSize: 18,
                 bold: true,
                 alignment: 'center',
-                margin: [0, 0, 0, 15]
+                margin: [0, 0, 0, 15],
+                fontFamily: 'Courier'
             },
             subtitle: {
                 fontSize: 14,
