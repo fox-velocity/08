@@ -63,6 +63,7 @@
                     <label for="monthlyInvestment">Montant mensuel investi :</label>
                     <input type="text" id="monthlyInvestment" value="100">
                     <span id="currencySymbolLabel"></span>
+                     <p>Pas d'investissement le dernier mois.</p>
                 </div>
                 <div class="form-group">
                     <button id="toggleButton" class="toggle-button">
@@ -104,7 +105,6 @@
                                 </td>
                             </tr>
                         </table>
-                         <p>Pas d'investissement le dernier mois.</p> 
                     </div>
                 </div>
                 <button onclick="fetchData()">Calculer</button>
@@ -122,12 +122,9 @@
 
             <!-- Conteneur pour le graphique des montants investis et de l'évolution du portefeuille -->
             <div id="investmentChartContainer">
-                <canvas id="investmentChart"></canvas>
-                    
+                <canvas id="investmentChart"></canvas>         
             </div>
-            <div class="stock-info">
-                    <p>Pas d'investissement le dernier mois.</p>    
-            </div>
+           
             <div class="results" id="results">
                 <h2>Synthèse investissement</h2>
                 <div class="table-container" id="topResults">
