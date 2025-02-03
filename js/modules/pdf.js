@@ -1,4 +1,4 @@
-// pdf.js 15 35
+// pdf.js 23 12 31 01 mais le 01 02
 
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
