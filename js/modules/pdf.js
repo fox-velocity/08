@@ -1,4 +1,24 @@
-// pdf.js 23 12 31 01 mais le 01 02
+// pdf.js 15 32
+const docDefinition = {
+    content: [
+        { text: 'Ceci est du texte en Roboto.', style: 'robotoText' },
+        { text: 'Ceci est du texte en Times.', style: 'timesText' },
+        { text: 'Ceci est du texte en Courier.', style: 'courierText' }
+    ],
+    styles: {
+        robotoText: {
+            fontFamily: 'Roboto'
+        },
+        timesText: {
+            fontFamily: 'Times'
+        },
+        courierText: {
+            fontFamily: 'Courier'
+        }
+    }
+};
+
+
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     if (!pdfMake) {
         alert('pdfMake n\'est pas disponible');
@@ -24,21 +44,6 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             };
         },
         content: [
-             { text: 'Ceci est du texte en Roboto.', style: 'robotoText' },
-     { text: 'Ceci est du texte en Times.', style: 'timesText' },
-    { text: 'Ceci est du texte en Courier.', style: 'courierText' }
-  ],
-    styles:{
-         robotoText: {
-               fontFamily: 'Roboto'
-        },
-         timesText: {
-                fontFamily: 'Times'
-        },
-        courierText: {
-               fontFamily: 'Courier'
-         }
-    }
             { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
             getStockInfo(),
@@ -66,8 +71,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 fontSize: 18,
                 bold: true,
                 alignment: 'center',
-                margin: [0, 0, 0, 15],
-                fontFamily: 'Times'
+                margin: [0, 0, 0, 15]
             },
             subtitle: {
                 fontSize: 14,
