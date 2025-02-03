@@ -17,7 +17,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     const docDefinition = {
         pageSize: 'A4',
         pageMargins: [15, 15, 15, 50],
-        defaultStyle: {
+         defaultStyle: {
             font: 'GeorgiaPro-Semibold'
         },
         background: function (currentPage, pageSize) {
@@ -33,7 +33,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             };
         },
         content: [
-            { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
+           { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
             getStockInfo(),
             { text: 'Synthèse investissement', style: 'subtitle' },
@@ -55,16 +55,16 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             getChartWithBorder('savingsChart'),
             { text: 'Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu\'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d\'investissement, afin d\'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.', style: 'paragraph' },
         ],
-        styles: {
+       styles: {
             title: {
                 fontSize: 18,
-                //bold: true,
+                bold: true,
                 alignment: 'center',
                 margin: [0, 0, 0, 15]
             },
             subtitle: {
                 fontSize: 14,
-                //bold: true,
+                bold: true,
                 alignment: 'center',
                 margin: [0, 10, 10, 15]
             },
@@ -74,7 +74,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 margin: [10, 20, 10, 10]
             },
             tableHeader: {
-                //bold: true,
+                bold: true,
                 fillColor: '#dddddd',
                 margin: [15, 5, 0, 5]
             },
@@ -121,14 +121,14 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 layout: 'noBorders'
             };
         },
-        fonts: {
-            'GeorgiaPro-Semibold': {
-                normal: 'GeorgiaPro-Semibold.ttf',
-                bold: 'GeorgiaPro-Semibold.ttf',
-                italics: 'GeorgiaPro-Semibold.ttf',
-                bolditalics: 'GeorgiaPro-Semibold.ttf'
-            }
-        }
+         fonts: {
+          'GeorgiaPro-Semibold': {
+           normal: 'GeorgiaPro-Semibold.ttf',
+             bold: 'GeorgiaPro-Semibold.ttf',
+             italics: 'GeorgiaPro-Semibold.ttf',
+              bolditalics: 'GeorgiaPro-Semibold.ttf'
+          }
+         }
     };
 
     // Création du pdf avec un nom de fichier personnalisé
