@@ -54,16 +54,14 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         ],
         styles: {
             title: {
-                font: 'GeorgiaPro-Semibold',
+                font: 'GeorgiaPro-Semi',
                 fontSize: 18,
-                bold: true,
-                alignment: 'center',
+               alignment: 'center',
                 margin: [0, 0, 0, 15]
             },
             subtitle: {
                 font: 'GeorgiaPro-Semibold',
                 fontSize: 14,
-                bold: true,
                 alignment: 'center',
                 margin: [0, 10, 10, 15]
             },
@@ -75,7 +73,6 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             },
             tableHeader: {
                 font: 'GeorgiaPro-Semibold',
-                bold: true,
                 fillColor: '#dddddd',
                 margin: [15, 5, 0, 5]
             },
@@ -130,10 +127,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
         },
         fonts: {
             'GeorgiaPro-Semibold': {
-                normal: 'GeorgiaPro-Semibold.ttf',
-                bold: 'GeorgiaPro-Semibold.ttf',
-                italics: 'GeorgiaPro-Semibold.ttf',
-                bolditalics: 'GeorgiaPro-Semibold.ttf'
+                normal: 'GeorgiaPro-Semibold.ttf'
             }
         }
     };
