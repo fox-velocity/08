@@ -125,10 +125,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 layout: 'noBorders'
             };
         },
-        fonts: {
-            'GeorgiaPro-Semibold': {
-                normal: 'GeorgiaPro-Semibold.ttf'
-            }
+        
         }
     };
 
