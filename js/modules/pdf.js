@@ -24,6 +24,21 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             };
         },
         content: [
+             { text: 'Ceci est du texte en Roboto.', style: 'robotoText' },
+     { text: 'Ceci est du texte en Times.', style: 'timesText' },
+    { text: 'Ceci est du texte en Courier.', style: 'courierText' }
+  ],
+    styles:{
+         robotoText: {
+               fontFamily: 'Roboto'
+        },
+         timesText: {
+                fontFamily: 'Times'
+        },
+        courierText: {
+               fontFamily: 'Courier'
+         }
+    }
             { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
             { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
             getStockInfo(),
