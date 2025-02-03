@@ -145,7 +145,6 @@ button:hover {
 /* Styles pour les suggestions de recherche */
 #suggestions {
     border: 1px solid #333;
-    max-height: 6rem;
     overflow-y: auto;
     display: none;
     background: #ffa500;
