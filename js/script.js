@@ -1,4 +1,4 @@
-// script.js 17 30 30 01 
+// script.js 3 ans
 import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
@@ -22,11 +22,11 @@ let searchTimeout = null; // Ajouter un timer pour la recherche
 // Initialisation au chargement de la page
 window.onload = function () {
     const today = new Date();
-    const lastYear = new Date();
-    lastYear.setFullYear(today.getFullYear() - 1);
+     const threeYearsAgo = new Date();
+    threeYearsAgo.setFullYear(today.getFullYear() - 3);
     const endDate = new Date(today.getFullYear(), today.getMonth(), 0);
     document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
-    document.getElementById('startDate').value = lastYear.toISOString().split('T')[0];
+    document.getElementById('startDate').value = threeYearsAgo.toISOString().split('T')[0];
     initializeTheme();
      // Masquer initialement les éléments
     setElementVisibility('results', false);
@@ -67,24 +67,32 @@ window.onload = function () {
         .catch(error => console.error('Error loading background image:', error));
 };
 
+
 // Gestion des changements de date
 document.getElementById('startDate').addEventListener('change', function () {
     const startDateInput = document.getElementById('startDate');
     const endDateInput = document.getElementById('endDate');
     const startDate = new Date(startDateInput.value);
     const endDate = new Date(endDateInput.value);
-    if (endDate <= startDate) {
-        endDateInput.value = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 1).toISOString().split('T')[0];
-    }
+    // S'assurer que la date de fin est toujours 3 ans après la date de début
+    const newEndDate = new Date(startDate);
+    newEndDate.setFullYear(startDate.getFullYear() + 3);
+     if (endDate.getTime() !== newEndDate.getTime()) {
+           endDateInput.value = newEndDate.toISOString().split('T')[0];
+       }
 });
 
 document.getElementById('endDate').addEventListener('change', function () {
-    const endDateInput = document.getElementById('endDate');
+   const endDateInput = document.getElementById('endDate');
     const startDateInput = document.getElementById('startDate');
     const endDate = new Date(endDateInput.value);
     const startDate = new Date(startDateInput.value);
-    if (startDate >= endDate) {
-        startDateInput.value = new Date(endDate.getFullYear(), endDate.getMonth() - 1, 1).toISOString().split('T')[0];
+
+    // S'assurer que la date de début est toujours 3 ans avant la date de fin
+    const newStartDate = new Date(endDate);
+    newStartDate.setFullYear(endDate.getFullYear() - 3);
+    if (startDate.getTime() !== newStartDate.getTime()) {
+         startDateInput.value = newStartDate.toISOString().split('T')[0];
     }
 });
 
