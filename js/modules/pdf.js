@@ -1,4 +1,4 @@
-// pdf.js
+// pdf.js 14 05
 import { fontsBase64 } from './fonts.js';
 
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
@@ -122,12 +122,12 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             };
         },
          fonts: {
-           'GeorgiaPro-Semibold': {
-             normal: 'GeorgiaPro-Semibold.ttf',
+          'GeorgiaPro-Semibold': {
+           normal: 'GeorgiaPro-Semibold.ttf',
              bold: 'GeorgiaPro-Semibold.ttf',
              italics: 'GeorgiaPro-Semibold.ttf',
-             bolditalics: 'GeorgiaPro-Semibold.ttf'
-           }
+              bolditalics: 'GeorgiaPro-Semibold.ttf'
+          }
          }
     };
 
