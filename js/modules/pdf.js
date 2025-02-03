@@ -1,4 +1,4 @@
-// pdf.js 14 11
+// pdf.js Courier.ttf
 import { fontsBase64 } from './fonts.js';
 
 export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
@@ -9,16 +9,17 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
     }
 
     pdfMake.vfs = {
-        'GeorgiaPro-Semibold.ttf': fontsBase64['GeorgiaPro-Semibold'],
-    };
+         'Courier.ttf': fontsBase64['Courier']
+      };
+
 
     await waitForChart('investmentChart');
 
     const docDefinition = {
         pageSize: 'A4',
         pageMargins: [15, 15, 15, 50],
-         defaultStyle: {
-            font: 'GeorgiaPro-Semibold'
+        defaultStyle: {
+            font: 'Courier'
         },
         background: function (currentPage, pageSize) {
             return {
@@ -33,35 +34,63 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
             };
         },
         content: [
-            { text: 'Simulateur de Rendement d\'Investissement' },
-            { text: 'Informations sur l\'instrument financier'},
+            { text: 'Simulateur de Rendement d\'Investissement', style: 'title' },
+            { text: 'Informations sur l\'instrument financier', style: 'subtitle' },
             getStockInfo(),
-            { text: 'Synthèse investissement' },
+            { text: 'Synthèse investissement', style: 'subtitle' },
             getChartWithBorder('evolutionChart'),
             getTopResults(),
             {
-                text: 'Résultats', pageBreak: 'before'
+                text: 'Résultats', style: 'subtitle', pageBreak: 'before'
             },
             getResults(),
             {
-                text: 'Résultats avec écrêtage des gains'
+                text: 'Résultats avec écrêtage des gains', style: 'subtitle'
             },
             getResultsWithCapping(),
             getSecuredGainsTable(),
-            { text: 'Résultats épargne placée à taux garanti' },
+            { text: 'Résultats épargne placée à taux garanti', style: 'subtitle' },
             getResultsTauxFixe(),
-            { text: 'Graphiques évolutions des portefeuilles', pageBreak: 'before' },
+            { text: 'Graphiques évolutions des portefeuilles', style: 'subtitle', pageBreak: 'before' },
             getChartWithBorder('investmentChart'),
             getChartWithBorder('savingsChart'),
-            { text: 'Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu\'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d\'investissement, afin d\'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.' },
+            { text: 'Les performances passées des instruments financiers ne garantissent en aucun cas leurs performances futures. Ce simulateur est destiné à fournir une estimation basée sur des données historiques et ne prend pas en compte les événements imprévus, les évolutions du marché ou les frais associés aux investissements. Il est important de noter que les résultats obtenus ne constituent pas un conseil en investissement et que tout investissement comporte des risques, y compris la perte partielle ou totale du capital. Il est fortement recommandé de consulter un professionnel, tel qu\'un conseiller en gestion de patrimoine (CGP), avant de prendre toute décision d\'investissement, afin d\'obtenir des conseils personnalisés en fonction de votre profil et de vos objectifs financiers.', style: 'paragraph' },
         ],
-          fonts: {
-           'GeorgiaPro-Semibold': {
-             normal: 'GeorgiaPro-Semibold.ttf',
-             bold: 'GeorgiaPro-Semibold.ttf',
-             italics: 'GeorgiaPro-Semibold.ttf',
-              bolditalics: 'GeorgiaPro-Semibold.ttf'
-           }
+       styles: {
+            title: {
+                fontSize: 18,
+                bold: true,
+                alignment: 'center',
+                margin: [0, 0, 0, 15]
+            },
+            subtitle: {
+                fontSize: 14,
+                bold: true,
+                alignment: 'center',
+                margin: [0, 10, 10, 15]
+            },
+            paragraph: {
+                fontSize: 8,
+                alignment: 'justify',
+                margin: [10, 20, 10, 10]
+            },
+            tableHeader: {
+                bold: true,
+                fillColor: '#dddddd',
+                margin: [15, 5, 0, 5]
+            },
+            tableCell: {
+                margin: [0, 0, 0, 0]
+            },
+            positive: {
+                color: 'green'
+            },
+            negative: {
+                color: 'red'
+            },
+            chartContainer: {
+                margin: [0, 0, 0, 20],
+            }
         },
         footer: function (currentPage, pageCount) {
             return {
@@ -73,7 +102,7 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                                 text: 'Fox Velocity',
                                 alignment: 'center',
                                 fontSize: 8,
-                                margin: [0, 10, 0, 0]
+                                margin: [0, 10, 0, 0],
                             },
                             {
                                 image: logoBase64,
@@ -92,7 +121,15 @@ export async function generatePDF(pdfMake, logoBase64, logoRenardBase64Gris) {
                 },
                 layout: 'noBorders'
             };
-        }
+        },
+        fonts: {
+          'Courier': {
+           normal: 'Courier.ttf',
+             bold: 'Courier.ttf',
+             italics: 'Courier.ttf',
+              bolditalics: 'Courier.ttf'
+           }
+         }
     };
 
     // Création du pdf avec un nom de fichier personnalisé
