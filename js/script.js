@@ -1,4 +1,4 @@
-// script.js 3 ans
+// script.js 3 ans au départ
 import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
@@ -8,7 +8,6 @@ import { generatePDF } from './modules/pdf.js';
 import { initializeTheme, toggleTheme } from './modules/theme.js';
 import { formatNumberInput, formatNumber } from './modules/utils.js';
 import { currencySymbols, exchangeToCurrency } from './modules/constants.js';
-
 
 let selectedSymbol = "";
 let currencySymbol = "";
@@ -22,20 +21,23 @@ let searchTimeout = null; // Ajouter un timer pour la recherche
 // Initialisation au chargement de la page
 window.onload = function () {
     const today = new Date();
-     const threeYearsAgo = new Date();
+    const threeYearsAgo = new Date();
     threeYearsAgo.setFullYear(today.getFullYear() - 3);
     const endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
     document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
     document.getElementById('startDate').value = threeYearsAgo.toISOString().split('T')[0];
     initializeTheme();
-     // Masquer initialement les éléments
+
+    // Masquer initialement les éléments
     setElementVisibility('results', false);
     setElementVisibility('resultsWithCapping', false);
     setElementVisibility('savingsChartContainer', false);
     setElementVisibility('evolutionChartContainer', false);
     setElementVisibility('investmentChartContainer', false);
-     setElementVisibility('resultsTauxFix', false);
-     setElementVisibility('BoutonTelechargement', false);
+    setElementVisibility('resultsTauxFix', false);
+    setElementVisibility('BoutonTelechargement', false);
+
     //pdfMake
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js';
@@ -54,7 +56,6 @@ window.onload = function () {
         .then(response => response.text())
         .then(data => {
             logoBase64 = data;
-
         })
         .catch(error => console.error('Error loading logo:', error));
 
@@ -62,11 +63,10 @@ window.onload = function () {
     fetch('./logorenard.base64Gris.base64') // Chemin vers ton fichier base64
         .then(response => response.text())
         .then(data => {
-            logoRenardBase64Gris =  data;
+            logoRenardBase64Gris = data;
         })
         .catch(error => console.error('Error loading background image:', error));
 };
-
 
 // Gestion des changements de date
 document.getElementById('startDate').addEventListener('change', function () {
@@ -74,28 +74,20 @@ document.getElementById('startDate').addEventListener('change', function () {
     const endDateInput = document.getElementById('endDate');
     const startDate = new Date(startDateInput.value);
     const endDate = new Date(endDateInput.value);
-    // S'assurer que la date de fin est toujours 3 ans après la date de début
-    const newEndDate = new Date(startDate);
-    newEndDate.setFullYear(startDate.getFullYear() + 3);
-     if (endDate.getTime() !== newEndDate.getTime()) {
-           endDateInput.value = newEndDate.toISOString().split('T')[0];
-       }
-});
-
-document.getElementById('endDate').addEventListener('change', function () {
-   const endDateInput = document.getElementById('endDate');
-    const startDateInput = document.getElementById('startDate');
-    const endDate = new Date(endDateInput.value);
-    const startDate = new Date(startDateInput.value);
-
-    // S'assurer que la date de début est toujours 3 ans avant la date de fin
-    const newStartDate = new Date(endDate);
-    newStartDate.setFullYear(endDate.getFullYear() - 3);
-    if (startDate.getTime() !== newStartDate.getTime()) {
-         startDateInput.value = newStartDate.toISOString().split('T')[0];
+    if (endDate <= startDate) {
+        endDateInput.value = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 1).toISOString().split('T')[0];
     }
 });
 
+document.getElementById('endDate').addEventListener('change', function () {
+    const endDateInput = document.getElementById('endDate');
+    const startDateInput = document.getElementById('startDate');
+    const endDate = new Date(endDateInput.value);
+    const startDate = new Date(startDateInput.value);
+    if (startDate >= endDate) {
+        startDateInput.value = new Date(endDate.getFullYear(), endDate.getMonth() - 1, 1).toISOString().split('T')[0];
+    }
+});
 
 // Recherche de symboles
 document.getElementById('searchInput').addEventListener('input', function () {
@@ -131,12 +123,12 @@ function selectSymbol(symbol, name, exchange, type, sector, industry) {
     document.getElementById('searchInput').value = symbol;
     setElementVisibility('suggestions', false);
     setElementVisibility('ModeEmploie', false);
-  
+
     const currency = exchangeToCurrency[exchange] || 'N/A';
     currencySymbol = currencySymbols[currency] || currency;
     updateStockInfo(name, symbol, exchange, currencySymbol, type, industry);
     fetchData()
-   
+
 }
 window.selectSymbol = selectSymbol; // Rend selectSymbol accessible globalement
 
@@ -173,48 +165,48 @@ async function fetchData() {
         const timestamps = result.timestamp;
         const prices = result.indicators.quote[0].close;
         const { chartData, cappedDatesAndAmountsWithInterest, results } = calculateInvestmentData(timestamps, prices, initialInvestment, monthlyInvestment, cappingPercentage, minCappingAmount, monthlyInterestRate, annualInterestRate);
-           updateResultsDisplay(results, currencySymbol);
-           updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
-           updateEvolutionChart(chartData.labels, chartData.prices);
-           updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
-           
-           let cumulativeSavingsFix3 = 0;
-           let savingsDataFix3 = [];
-           let totalInvestmentsFix3 = 0;
-    
-          for (let i = 0; i < chartData.labels.length; i++) {
-              totalInvestmentsFix3 += chartData.investments[i];
-             if (i === 0) {
+        updateResultsDisplay(results, currencySymbol);
+        updateSecuredGainsTable(cappedDatesAndAmountsWithInterest, currencySymbol)
+        updateEvolutionChart(chartData.labels, chartData.prices);
+        updateInvestmentChart(chartData.labels, chartData.investments, chartData.portfolio, chartData.portfolioValueEcreteAvecGain);
+
+        let cumulativeSavingsFix3 = 0;
+        let savingsDataFix3 = [];
+        let totalInvestmentsFix3 = 0;
+
+        for (let i = 0; i < chartData.labels.length; i++) {
+            totalInvestmentsFix3 += chartData.investments[i];
+            if (i === 0) {
                 cumulativeSavingsFix3 = chartData.investments[i];
                 savingsDataFix3.push(0);
             } else {
-                 cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i] - chartData.investments[i - 1]);
+                cumulativeSavingsFix3 = cumulativeSavingsFix3 * (1 + monthlyInterestRate) + (chartData.investments[i] - chartData.investments[i - 1]);
                 savingsDataFix3.push(cumulativeSavingsFix3 - chartData.investments[i]);
-             }
-          }
-            const finalAmountFix3 = cumulativeSavingsFix3;
-            const totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
-           const lastInvestment =  chartData.investments[chartData.investments.length-1]
-           const lastGainTauxFixe = cumulativeSavingsFix3 - lastInvestment;
-            
-           updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate,cumulativeSavingsFix3, lastInvestment,savingsDataFix3);
-           
-           // Mettre à jour l'affichage du taux d'intérêt
-           const interestRateValue = document.getElementById('interestRate').value;
-           document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
+            }
+        }
+        const finalAmountFix3 = cumulativeSavingsFix3;
+        const totalInterestFix3 = finalAmountFix3 - totalInvestmentsFix3;
+        const lastInvestment = chartData.investments[chartData.investments.length - 1]
+        const lastGainTauxFixe = cumulativeSavingsFix3 - lastInvestment;
 
-           document.getElementById('last-cumulative-savings').textContent = formatNumber(finalAmountFix3.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-          document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
-           document.getElementById('gain-taux-fixe').textContent = formatNumber(lastGainTauxFixe.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+        updateSavingsChart(chartData.labels, chartData.investments, chartData.portfolio, monthlyInterestRate, cumulativeSavingsFix3, lastInvestment, savingsDataFix3);
 
-           // Afficher les sections de résultat et les boutons de téléchargement ici
-           setElementVisibility('resultsWithCapping', true);
-            setElementVisibility('evolutionChartContainer', true);
-           setElementVisibility('investmentChartContainer', true);
-            setElementVisibility('results', true);
-            setElementVisibility('savingsChartContainer', true);
-          setElementVisibility('resultsTauxFix', true);
-          setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
+        // Mettre à jour l'affichage du taux d'intérêt
+        const interestRateValue = document.getElementById('interestRate').value;
+        document.getElementById('totalInterest').textContent = (parseFloat(interestRateValue) * 100).toFixed(2).replace('.', ',') + ' ' + '%';
+
+        document.getElementById('last-cumulative-savings').textContent = formatNumber(finalAmountFix3.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+        document.getElementById('last-investment').textContent = formatNumber(lastInvestment.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+        document.getElementById('gain-taux-fixe').textContent = formatNumber(lastGainTauxFixe.toFixed(2).replace('.', ',')) + ' ' + currencySymbol;
+
+        // Afficher les sections de résultat et les boutons de téléchargement ici
+        setElementVisibility('resultsWithCapping', true);
+        setElementVisibility('evolutionChartContainer', true);
+        setElementVisibility('investmentChartContainer', true);
+        setElementVisibility('results', true);
+        setElementVisibility('savingsChartContainer', true);
+        setElementVisibility('resultsTauxFix', true);
+        setElementVisibility('BoutonTelechargement', document.getElementById('resultsTauxFix').style.display !== 'none');
 
         // Stocker les données pour le fichier excel
         excelData = chartData;
