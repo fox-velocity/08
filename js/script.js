@@ -1,4 +1,4 @@
-// script.js 3 ans au départ
+// script.js
 import { fetchYahooData } from './modules/api.js';
 import { updateEvolutionChart, updateInvestmentChart, updateSavingsChart } from './modules/charts.js';
 import { calculateInvestmentData } from './modules/data.js';
