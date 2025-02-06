@@ -98,6 +98,7 @@ export const exchangeToCurrency = {
     'AMS': 'EUR',
     'LIS': 'EUR',
     'DUB': 'EUR',
+    'PNK': 'EUR',
     'LSE': 'GBP',
     'AIM': 'GBP',
     'TSE': 'JPY',
