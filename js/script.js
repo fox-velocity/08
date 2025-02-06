@@ -120,7 +120,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
 // Sélection d'un symbole
 function selectSymbol(symbol, name, exchange, type, sector, industry) {
     selectedSymbol = symbol;
-    document.getElementById('searchInput').value = symbol;
+    document.getElementById('searchInput').value = name;
     setElementVisibility('suggestions', false);
     setElementVisibility('ModeEmploie', false);
 
